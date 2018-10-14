@@ -37,13 +37,13 @@ class User(base):
     lastname = Column(TEXT)
     name = Column(TEXT)
     club = Column(TEXT)
-    score = Column(Integer)
-    kills = Column(Integer)
+    score = Column(Integer, default=0)
+    kills = Column(Integer, default=0)
 
     age = Column(Integer, ForeignKey('ages.age'))
     bow = Column(Integer, ForeignKey('bows.bow'))
-    part = Column(Integer)
-    rate = Column(Integer)
+    part = Column(Integer, default=1)
+    rate = Column(Integer, default=1)
     other = Column(TEXT)
 
     def __repr__(self):
@@ -57,9 +57,9 @@ class Age(base):
     age = Column(Integer, primary_key=True)
     short = Column(TEXT)
     name = Column(TEXT)
-    sep = Column(Integer)
-    adult = Column(Integer)
-    pos = Column(Integer)
+    sep = Column(Integer, default=1)
+    adult = Column(Integer, default=1)
+    pos = Column(Integer, default=0)
 
     def __repr__(self):
         return ("<Age(name='{0}', short='{1}', adult='{2}' sep='{3}'".
@@ -72,8 +72,19 @@ class Bow(base):
     bow = Column(Integer, primary_key=True)
     short = Column(TEXT)
     name = Column(TEXT)
-    pos = Column(Integer)
+    pos = Column(Integer, default=0)
 
     def __repr__(self):
         return ("<Bow(name='{0}', short='{1}' pos='{2}'".
                 format(self.name, self.short, self.pos))
+
+
+class Setting(base):
+    """characteristics of the cup winner bet table"""
+    __tablename__ = 'settings'
+    name = Column(TEXT, primary_key=True)
+    value = Column(TEXT)
+
+    def __repr__(self):
+        return ("<Setting(name='{0}', value='{1}')>".
+                format(self.name, self.value))

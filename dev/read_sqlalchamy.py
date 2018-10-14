@@ -29,7 +29,7 @@ from modules import model
 
 
 # Create an engine and create all the tables we need
-engine = create_engine('sqlite:///../test.sqlite', echo=False)
+engine = create_engine('sqlite:///../test1.sqlite', echo=False)
 model.base.metadata.bind = engine
 model.base.metadata.create_all(engine)
 
