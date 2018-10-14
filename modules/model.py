@@ -21,9 +21,9 @@ You should have received a copy of the GNU General Public License
 along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
-
+from sqlalchemy.types import TEXT
 # https://docs.sqlalchemy.org/en/latest/orm/tutorial.html
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -34,20 +34,17 @@ class User(base):
     """characteristics of the user table"""
     __tablename__ = 'users'
     nr = Column(Integer, primary_key=True)
-    lastname = Column(String)
-    name = Column(String)
-    club = Column(String)
+    lastname = Column(TEXT)
+    name = Column(TEXT)
+    club = Column(TEXT)
     score = Column(Integer)
     kills = Column(Integer)
 
-    age = relationship("CupWinnerBet",
-                                   order_by="CupWinnerBet.id",
-                                   backref="users")
-    bow = relationship("GameBet", order_by="GameBet.id",
-                             backref="users")
+    age = Column(Integer, ForeignKey('ages.age'))
+    bow = Column(Integer, ForeignKey('bows.bow'))
     part = Column(Integer)
     rate = Column(Integer)
-    other = Column(String)
+    other = Column(TEXT)
 
     def __repr__(self):
         return "<User(name='{0}', fullname='{1}', club='{2}')>".format(
@@ -58,8 +55,8 @@ class Age(base):
     """characteristics of the team table"""
     __tablename__ = 'ages'
     age = Column(Integer, primary_key=True)
-    short = Column(String)
-    name = Column(String)
+    short = Column(TEXT)
+    name = Column(TEXT)
     sep = Column(Integer)
     adult = Column(Integer)
     pos = Column(Integer)
@@ -73,21 +70,10 @@ class Bow(base):
     """characteristics of the competition table"""
     __tablename__ = 'bows'
     bow = Column(Integer, primary_key=True)
-    short = Column(String)
-    name = Column(String)
+    short = Column(TEXT)
+    name = Column(TEXT)
     pos = Column(Integer)
 
     def __repr__(self):
         return ("<Bow(name='{0}', short='{1}' pos='{2}'".
                 format(self.name, self.short, self.pos))
-
-
-class Setting(base):
-    """characteristics of the cup winner bet table"""
-    __tablename__ = 'settings'
-    name = Column(String)
-    value = Column(String)
-
-    def __repr__(self):
-        return ("<Setting(name='{0}', value='{1}')>".
-                format(self.name, self.value))

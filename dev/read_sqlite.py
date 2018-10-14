@@ -31,7 +31,7 @@ from tkinter.filedialog import askopenfilename
 
 from pathlib import Path
 
-
+"""Read an Archerrank .sqlite file"""
 my_file = Path('')
 if len(sys.argv) >= 2:
     my_file = Path(sys.argv[1])
@@ -40,7 +40,8 @@ if my_file.is_file():
 else:
     Tk().withdraw()  # we don't want a full GUI, so keep the root window from appearing
     filename = askopenfilename(title="select file",
-        filetypes=(("sqlite files", "*.sqlite"), ("all files", "*.*")))  # show an "Open" dialog box and return the path to the selected file
+        filetypes=(("sqlite files", "*.sqlite"), ("all files", "*.*")))
+    # show an "Open" dialog box and return the path to the selected file
 
 print(filename)
 conn = sqlite3.connect(filename)
