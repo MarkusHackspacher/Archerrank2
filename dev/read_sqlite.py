@@ -42,7 +42,9 @@ print(filename)
 conn = sqlite3.connect(filename)
 
 c = conn.cursor()
-for row in c.execute('SELECT * FROM results ORDER BY score, kills'):
+#for row in c.execute('SELECT * FROM results ORDER BY score, kills'):
+for row in c.execute('SELECT * FROM sqlite_master'):    
+    
     print(row)
     
     
