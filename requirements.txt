@@ -1,0 +1,6 @@
+sqlalchemy==1.2.12
+# unit test requirements
+pycodestyle
+isort
+
+
