@@ -36,23 +36,23 @@ class User(base):
     nr = Column(Integer, primary_key=True)
     lastname = Column(TEXT)
     name = Column(TEXT)
-    club = Column(TEXT)
+    club_id = Column(Integer, ForeignKey('clubs.short'))
     score = Column(Integer, default=0)
     kills = Column(Integer, default=0)
 
-    age = Column(Integer, ForeignKey('ages.age'))
-    bow = Column(Integer, ForeignKey('bows.bow'))
+    age_id = Column(Integer, ForeignKey('ages.age'))
+    bow_id = Column(Integer, ForeignKey('bows.bow'))
     part = Column(Integer, default=1)
     rate = Column(Integer, default=1)
     other = Column(TEXT)
 
     def __repr__(self):
-        return "<User(name='{0}', fullname='{1}', club='{2}')>".format(
-            self.name, self.lastname, self.club)
+        return ("<User(name='{0}', fullname='{1}', club='{2}', age='{3}', bow='{4}')>"
+            .format(self.name, self.lastname, self.club_id.short, self.age_id.name, self.bow_id.name))
 
 
 class Age(base):
-    """characteristics of the team table"""
+    """characteristics of the age grade table"""
     __tablename__ = 'ages'
     age = Column(Integer, primary_key=True)
     short = Column(TEXT)
@@ -67,7 +67,7 @@ class Age(base):
 
 
 class Bow(base):
-    """characteristics of the competition table"""
+    """characteristics of the bow grade table"""
     __tablename__ = 'bows'
     bow = Column(Integer, primary_key=True)
     short = Column(TEXT)
@@ -80,7 +80,7 @@ class Bow(base):
 
 
 class Setting(base):
-    """characteristics of the cup winner bet table"""
+    """characteristics of the setting table"""
     __tablename__ = 'settings'
     name = Column(TEXT, primary_key=True)
     value = Column(TEXT)
@@ -88,3 +88,25 @@ class Setting(base):
     def __repr__(self):
         return ("<Setting(name='{0}', value='{1}')>".
                 format(self.name, self.value))
+
+class Club(base):
+    """characteristics of the club table
+    payment: have pay for x players
+    advertising: 0 not set
+                 1 no advertising, no save address for further use
+                 2 can save address
+                 3 by email
+                 4 by letter
+                 5 by email and letter
+    """
+    __tablename__ = 'clubs'
+    short = Column(TEXT, primary_key=True)
+    name = Column(TEXT)
+    email = Column(TEXT)
+    address = Column(TEXT)
+    payment = Column(Integer, default=0)
+    advertising = Column(Integer, default=0)
+
+    def __repr__(self):
+        return ("<Club(short='{0}', name='{1}', payment'{2}')>".
+                format(self.short, self.name, self.payment))
