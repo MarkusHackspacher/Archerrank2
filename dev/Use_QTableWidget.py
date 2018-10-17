@@ -48,7 +48,9 @@ sm = orm.sessionmaker(bind=engine,
                       expire_on_commit=True)
 session = orm.scoped_session(sm)
 
-tablemodel = SqlAlchemyTableModel(session, model.Club, 3)
+tablemodel = SqlAlchemyTableModel(session, model.Club, [('Name', model.Club.name, "name", {"editable": False}),
+                                                        ('Short', model.Club.short, "short", {"editable": True}),
+                                                        ('payment', model.Club.payment, "payment", {"editable": True})])
 
 
 class DlgClub(QtWidgets.QDialog):
@@ -59,9 +61,26 @@ class DlgClub(QtWidgets.QDialog):
         """init Dialog
         """
         QtWidgets.QDialog.__init__(self)
-        self.ui = uic.loadUi(os.path.abspath(os.path.join(
-            os.path.dirname(sys.argv[0]),
-            "..", "modules", "gui", "club.ui")))
+        self.setModal(True)
+
+        #self.ui = uic.loadUi(os.path.abspath(os.path.join(
+        #    os.path.dirname(sys.argv[0]),
+        #    "..", "modules", "gui", "club.ui")))
+
+        #self.ui.tableView.setModel(tablemodel)
+        print(tablemodel)
+        print(session.query(model.Club).all())
+
+        table = QtWidgets.QTableView()
+        table.setModel(tablemodel)
+
+        self.boxLayout = QtWidgets.QBoxLayout(
+            QtWidgets.QBoxLayout.TopToBottom, self)
+
+        grid_layout = QtWidgets.QGridLayout()
+        grid_layout.addWidget(table, 0, 0, 1, 1)
+
+        self.boxLayout.addLayout(grid_layout)
 
 
 def window():

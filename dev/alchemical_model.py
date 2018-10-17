@@ -129,6 +129,7 @@ class SqlAlchemyTableModel(QSqlTableModel):
         name = self.fields[index.column()][2]
 
         try:
+            print(type(value), row, name, value)
             setattr(row, name, value.toString())
             self.session.commit()
         except Exception as ex:

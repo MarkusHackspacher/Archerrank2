@@ -44,6 +44,8 @@ print(session.query(model.Age).first())
 print(session.query(model.Bow).first())
 print(session.query(model.User).first())
 
-session.add(model.Age(name='fakename',short='fake'))
+session.add(model.Club(name='fakename', short='fake'))
+session.add(model.Age(name='fakename', short='fake'))
 
 print(session.query(model.Age).all())
+print(session.query(model.Club).all())

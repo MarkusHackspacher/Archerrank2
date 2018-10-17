@@ -21,9 +21,8 @@ You should have received a copy of the GNU General Public License
 along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
-from sqlalchemy.types import TEXT
 # https://docs.sqlalchemy.org/en/latest/orm/tutorial.html
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -34,8 +33,8 @@ class User(base):
     """characteristics of the user table"""
     __tablename__ = 'users'
     nr = Column(Integer, primary_key=True)
-    lastname = Column(TEXT)
-    name = Column(TEXT)
+    lastname = Column(String)
+    name = Column(String)
     club_id = Column(Integer, ForeignKey('clubs.short'))
     score = Column(Integer, default=0)
     kills = Column(Integer, default=0)
@@ -44,7 +43,7 @@ class User(base):
     bow_id = Column(Integer, ForeignKey('bows.bow'))
     part = Column(Integer, default=1)
     rate = Column(Integer, default=1)
-    other = Column(TEXT)
+    other = Column(String)
 
     def __repr__(self):
         return ("<User(name='{0}', fullname='{1}', club='{2}', age='{3}', bow='{4}')>"
@@ -55,8 +54,8 @@ class Age(base):
     """characteristics of the age grade table"""
     __tablename__ = 'ages'
     age = Column(Integer, primary_key=True)
-    short = Column(TEXT)
-    name = Column(TEXT)
+    short = Column(String)
+    name = Column(String)
     sep = Column(Integer, default=1)
     adult = Column(Integer, default=1)
     pos = Column(Integer, default=0)
@@ -70,8 +69,8 @@ class Bow(base):
     """characteristics of the bow grade table"""
     __tablename__ = 'bows'
     bow = Column(Integer, primary_key=True)
-    short = Column(TEXT)
-    name = Column(TEXT)
+    short = Column(String)
+    name = Column(String)
     pos = Column(Integer, default=0)
 
     def __repr__(self):
@@ -82,8 +81,8 @@ class Bow(base):
 class Setting(base):
     """characteristics of the setting table"""
     __tablename__ = 'settings'
-    name = Column(TEXT, primary_key=True)
-    value = Column(TEXT)
+    name = Column(String, primary_key=True)
+    value = Column(String)
 
     def __repr__(self):
         return ("<Setting(name='{0}', value='{1}')>".
@@ -100,13 +99,14 @@ class Club(base):
                  5 by email and letter
     """
     __tablename__ = 'clubs'
-    short = Column(TEXT, primary_key=True)
-    name = Column(TEXT)
-    email = Column(TEXT)
-    address = Column(TEXT)
+    id = Column(Integer, primary_key=True)
+    short = Column(String)
+    name = Column(String)
+    email = Column(String)
+    address = Column(String)
     payment = Column(Integer, default=0)
     advertising = Column(Integer, default=0)
 
     def __repr__(self):
-        return ("<Club(short='{0}', name='{1}', payment'{2}')>".
-                format(self.short, self.name, self.payment))
+        return ("<Club(id={0}', short='{1}', name='{2}', payment'{3}')>".
+                format(self.id, self.short, self.name, self.payment))
