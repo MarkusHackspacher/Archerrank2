@@ -47,5 +47,8 @@ print(session.query(model.User).first())
 session.add(model.Club(name='fakename', short='fake'))
 session.add(model.Age(name='fakename', short='fake'))
 
+print(session.query(model.Club).first())
+session.query(model.Club).first().short='asdydfedf'
+#session.commit()
 print(session.query(model.Age).all())
 print(session.query(model.Club).all())

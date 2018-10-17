@@ -129,8 +129,7 @@ class SqlAlchemyTableModel(QSqlTableModel):
         name = self.fields[index.column()][2]
 
         try:
-            print(type(value), row, name, value)
-            setattr(row, name, value.toString())
+            setattr(row, name, str(value))
             self.session.commit()
         except Exception as ex:
             # FIXME: data layer should not open GUI Messagebox!

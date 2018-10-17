@@ -44,7 +44,7 @@ model.base.metadata.create_all(engine)
 # Set up the session
 sm = orm.sessionmaker(bind=engine,
                       autoflush=True,
-                      autocommit=True,
+                      autocommit=False,
                       expire_on_commit=True)
 session = orm.scoped_session(sm)
 
@@ -68,7 +68,6 @@ class DlgClub(QtWidgets.QDialog):
         #    "..", "modules", "gui", "club.ui")))
 
         #self.ui.tableView.setModel(tablemodel)
-        print(tablemodel)
         print(session.query(model.Club).all())
 
         table = QtWidgets.QTableView()
