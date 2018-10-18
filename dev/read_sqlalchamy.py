@@ -40,12 +40,23 @@ sm = orm.sessionmaker(bind=engine,
                       expire_on_commit=True)
 session = orm.scoped_session(sm)
 
+
+if not session.query(model.Club).all():
+    session.add(model.Club(name='VfB Stuttgart', short='VfB'))
+if not session.query(model.Age).all():
+    session.add(model.Age(name='Best of All', short='Elite'))
+if not session.query(model.Bow).all():
+    session.add(model.Bow(name='Longbow', short='LB'))
+if not session.query(model.User).all():
+    session.add(model.User(name='John', lastname='Dow', club_id=1, age_id=1, bow_id=1))
+
+
 print(session.query(model.Age).first())
 print(session.query(model.Bow).first())
 print(session.query(model.User).first())
 
-session.add(model.Club(name='fakename', short='fake'))
-session.add(model.Age(name='fakename', short='fake'))
+#session.add(model.Club(name='fakename', short='fake'))
+#session.add(model.Age(name='fakename', short='fake'))
 
 print(session.query(model.Club).first())
 session.query(model.Club).first().short='asdydfedf'

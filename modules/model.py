@@ -35,7 +35,7 @@ class User(base):
     nr = Column(Integer, primary_key=True)
     lastname = Column(String)
     name = Column(String)
-    club_id = Column(Integer, ForeignKey('clubs.short'))
+    club_id = Column(Integer, ForeignKey('clubs.id'))
     score = Column(Integer, default=0)
     kills = Column(Integer, default=0)
 
@@ -45,9 +45,13 @@ class User(base):
     rate = Column(Integer, default=1)
     other = Column(String)
 
+    club = relationship("Club", primaryjoin="Club.id==User.club_id")
+    age = relationship("Age", primaryjoin="Age.age==User.age_id")
+    bow = relationship("Bow", primaryjoin="Bow.bow==User.bow_id")
+
     def __repr__(self):
         return ("<User(name='{0}', fullname='{1}', club='{2}', age='{3}', bow='{4}')>"
-            .format(self.name, self.lastname, self.club_id.short, self.age_id.name, self.bow_id.name))
+            .format(self.name, self.lastname, self.club.name, self.age.name, self.bow.name))
 
 
 class Age(base):
