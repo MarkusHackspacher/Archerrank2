@@ -132,8 +132,7 @@ class SqlAlchemyTableModel(QSqlTableModel):
             setattr(row, name, str(value))
             self.session.commit()
         except Exception as ex:
-            # FIXME: data layer should not open GUI Messagebox!
-            QMessageBox.critical(None, 'SQL Error', ex)
+            QMessageBox.critical(None, 'SQL Error', '{0} Check autocommit=False'.format(ex))
             return False
         else:
             self.dataChanged.emit(index, index)
