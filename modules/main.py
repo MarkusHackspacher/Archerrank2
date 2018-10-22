@@ -49,20 +49,20 @@ sm = orm.sessionmaker(bind=engine,
                       expire_on_commit=True)
 session = orm.scoped_session(sm)
 
-if not session.query(model.User).all():
-    session.add(model.User(name='John', lastname='Dow'))
 if not session.query(model.Club).all():
     session.add(model.Club(name='VfB Stuttgart', short='VfB'))
 if not session.query(model.Age).all():
     session.add(model.Age(name='Best of All', short='Elite'))
 if not session.query(model.Bow).all():
     session.add(model.Bow(name='Longbow', short='LB'))
+if not session.query(model.User).all():
+    session.add(model.User(name='John', lastname='Dow', club_id=1, age_id=1, bow_id=1))
 
 model_user = SqlAlchemyTableModel(session, model.User, [('Name', model.User.name, "name", {"editable": True}),
                                                         ('Lastname', model.User.lastname, "lastname", {"editable": True}),
-                                                        ('Club', model.User.club_id, "club_id", {"editable": True}),
-                                                        ('Age', model.User.age_id, "age_id", {"editable": True}),
-                                                        ('Bow', model.User.bow_id, "bow_id", {"editable": True})])
+                                                        ('Club', model.User.club_id, "clubname", {"editable": False}),
+                                                        ('Age', model.User.age_id, "agename", {"editable": False}),
+                                                        ('Bow', model.User.bow_id, "bowname", {"editable": False})])
 
 model_club = SqlAlchemyTableModel(session, model.Club, [('Name', model.Club.name, "name", {"editable": True, "dnd": True}),
                                                         ('Short', model.Club.short, "short", {"editable": True}),
@@ -107,8 +107,25 @@ class Main(QtCore.QObject):
         self.ui.tableView_club.setModel(model_club)
         self.ui.tableView_age.setModel(model_age)
         self.ui.tableView_bow.setModel(model_bow)
+        self.ui.tableView_user.pressed.connect(self.user_selected) #pressed clicked
+        self.ui.actionExit.triggered.connect(self.onexit)
 
         self.ui.show()
+
+    def user_selected(self, index):
+        """selected user
+
+        :param index:
+        :return:
+        """
+        print(index.row(), index.column())
+
+    def onexit(self):
+        """exit and close
+
+        :return:
+        """
+        self.ui.close()
 
     def main_loop(self):
         """application start

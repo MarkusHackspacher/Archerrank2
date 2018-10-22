@@ -32,7 +32,7 @@ base = declarative_base()
 class User(base):
     """characteristics of the user table"""
     __tablename__ = 'users'
-    nr = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     lastname = Column(String)
     name = Column(String)
     club_id = Column(Integer, ForeignKey('clubs.id'))
@@ -45,13 +45,21 @@ class User(base):
     rate = Column(Integer, default=1)
     other = Column(String)
 
-    club = relationship("Club", primaryjoin="Club.id==User.club_id")
-    age = relationship("Age", primaryjoin="Age.age==User.age_id")
-    bow = relationship("Bow", primaryjoin="Bow.bow==User.bow_id")
+    @property
+    def clubname(self):
+        return self.clubs.name
+
+    @property
+    def agename(self):
+        return self.ages.name
+
+    @property
+    def bowname(self):
+        return self.bows.name
 
     def __repr__(self):
         return ("<User(name='{0}', fullname='{1}', club='{2}', age='{3}', bow='{4}')>"
-            .format(self.name, self.lastname, self.club.name, self.age.name, self.bow.name))
+            .format(self.name, self.lastname, self.club, self.age, self.bow))
 
 
 class Age(base):
@@ -63,6 +71,7 @@ class Age(base):
     sep = Column(Integer, default=1)
     adult = Column(Integer, default=1)
     pos = Column(Integer, default=0)
+    members = relationship("User", order_by="User.id", backref="ages")
 
     def __repr__(self):
         return ("<Age(name='{0}', short='{1}', adult='{2}' sep='{3}'".
@@ -76,6 +85,7 @@ class Bow(base):
     short = Column(String)
     name = Column(String)
     pos = Column(Integer, default=0)
+    members = relationship("User", order_by="User.id", backref="bows")
 
     def __repr__(self):
         return ("<Bow(name='{0}', short='{1}' pos='{2}'".
@@ -110,6 +120,7 @@ class Club(base):
     address = Column(String)
     payment = Column(Integer, default=0)
     advertising = Column(Integer, default=0)
+    members = relationship("User", order_by="User.id", backref="clubs")
 
     def __repr__(self):
         return ("<Club(id={0}', short='{1}', name='{2}', payment'{3}')>".
