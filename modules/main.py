@@ -31,6 +31,7 @@ from sqlalchemy import orm, literal,  create_engine
 
 
 from modules.ext.alchemical_model import SqlAlchemyTableModel
+from modules.gui.club_new import DlgNewClub
 
 sys.path.append('..')
 
@@ -109,8 +110,44 @@ class Main(QtCore.QObject):
         self.ui.tableView_bow.setModel(model_bow)
         self.ui.tableView_user.pressed.connect(self.user_selected) #pressed clicked
         self.ui.actionExit.triggered.connect(self.onexit)
-
+        self.ui.pushButton_user.clicked.connect(self.user_new)
+        self.ui.pushButton_club.clicked.connect(self.club_new)
+        self.ui.pushButton_age.clicked.connect(self.age_new)
+        self.ui.pushButton_bow.clicked.connect(self.bow_new)
         self.ui.show()
+
+    def user_new(self):
+        """selected user
+
+        :param index:
+        :return:
+        """
+        print("new user")
+
+    def club_new(self):
+        """selected user
+
+        :param index:
+        :return:
+        """
+        print("new club")
+        a = DlgNewClub()
+
+    def age_new(self):
+        """selected age
+
+        :param index:
+        :return:
+        """
+        print("new age")
+
+    def bow_new(self):
+        """selected bow
+
+        :param index:
+        :return:
+        """
+        print("new bow")
 
     def user_selected(self, index):
         """selected user
