@@ -37,10 +37,10 @@ class User(base):
     name = Column(String)
     club_id = Column(Integer, ForeignKey('clubs.id'))
     score = Column(Integer, default=0)
-    kills = Column(Integer, default=0)
+    killpt = Column(Integer, default=0)
 
-    age_id = Column(Integer, ForeignKey('ages.age'))
-    bow_id = Column(Integer, ForeignKey('bows.bow'))
+    age_id = Column(Integer, ForeignKey('ages.id'))
+    bow_id = Column(Integer, ForeignKey('bows.id'))
     part = Column(Integer, default=1)
     rate = Column(Integer, default=1)
     other = Column(String)
@@ -59,18 +59,18 @@ class User(base):
 
     def __repr__(self):
         return ("<User(name='{0}', fullname='{1}', club='{2}', age='{3}', bow='{4}')>"
-            .format(self.name, self.lastname, self.club, self.age, self.bow))
+            .format(self.name, self.lastname, self.clubname, self.agename, self.bowname))
 
 
 class Age(base):
     """characteristics of the age grade table"""
     __tablename__ = 'ages'
-    age = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     short = Column(String)
     name = Column(String)
     sep = Column(Integer, default=1)
     adult = Column(Integer, default=1)
-    pos = Column(Integer, default=0)
+    sorting = Column(Integer, default=0)
     members = relationship("User", order_by="User.id", backref="ages")
 
     def __repr__(self):
@@ -81,15 +81,15 @@ class Age(base):
 class Bow(base):
     """characteristics of the bow grade table"""
     __tablename__ = 'bows'
-    bow = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     short = Column(String)
     name = Column(String)
-    pos = Column(Integer, default=0)
+    sorting = Column(Integer, default=0)
     members = relationship("User", order_by="User.id", backref="bows")
 
     def __repr__(self):
-        return ("<Bow(name='{0}', short='{1}' pos='{2}'".
-                format(self.name, self.short, self.pos))
+        return ("<Bow(name='{0}', short='{1}' sorting='{2}'".
+                format(self.name, self.short, self.sorting))
 
 
 class Setting(base):

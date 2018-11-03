@@ -32,6 +32,7 @@ from sqlalchemy import orm, literal,  create_engine
 
 from modules.ext.alchemical_model import SqlAlchemyTableModel
 from modules.gui.club_new import DlgNewClub
+from modules.gui.dialogsqltable import DlgSqlTable
 
 sys.path.append('..')
 
@@ -123,6 +124,8 @@ class Main(QtCore.QObject):
         :return:
         """
         print("new user")
+        dialog = DlgSqlTable(session, model.User)
+        dialog.exec_()
 
     def club_new(self):
         """selected user
@@ -139,7 +142,7 @@ class Main(QtCore.QObject):
         :param index:
         :return:
         """
-        print("new age")
+        print(DlgSqlTable.get_values(session, model.Age))
 
     def bow_new(self):
         """selected bow
@@ -148,6 +151,7 @@ class Main(QtCore.QObject):
         :return:
         """
         print("new bow")
+        print(DlgSqlTable.get_values(session, model.Bow))
 
     def user_selected(self, index):
         """selected user
