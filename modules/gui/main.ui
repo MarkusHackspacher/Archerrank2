@@ -70,6 +70,20 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_editclub">
+         <property name="text">
+          <string>edit club</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_deleteclub">
+         <property name="text">
+          <string>delete club</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
      <item>

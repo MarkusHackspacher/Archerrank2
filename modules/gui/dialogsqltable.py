@@ -24,13 +24,16 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 from sqlalchemy.orm.attributes import InstrumentedAttribute
 from sqlalchemy import Column
 
-from PyQt5 import QtGui, QtCore, QtWidgets
 from modules.ext.alchemical_model import SqlAlchemyTableModel
+from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.Qt import Qt
 
 
 
 class DlgSqlTable(QtWidgets.QDialog):
+    STRING = ('name', 'short', 'lastname', 'other', 'email', 'address')
+    INT = ('killpt', 'sorting', 'score', 'part', 'rate', 'sep', 'adult', 'payment', 'advertising')
+
     """
     Dialog generate from sql table
     """
@@ -56,19 +59,19 @@ class DlgSqlTable(QtWidgets.QDialog):
         self.labels = [QtWidgets.QLabel(self) for _ in methods]
         self.field = {}
         for buttonnumber, name in enumerate(methods):
-            if name in ('name', 'short', 'lastname', 'other'):
+            if name in self.STRING:
                 self.field[name] = QtWidgets.QLineEdit(self)
-            elif name in ('killpt', 'sorting', 'score', 'part', 'rate', 'sep', 'adult'):
+            elif name in self.INT:
                 self.field[name] = QtWidgets.QSpinBox(self)
             elif name in ('club_id'):
                 self.field[name] = QtWidgets.QComboBox(self)
                 self.model_club = SqlAlchemyTableModel(session, model.Club, [('Name', model.Club.name, "name", {"editable": True}),
-                                                                             ('Id', model.Age.id, "id", {"editable": False})])
+                                                                             ('Id', model.Club.id, "id", {"editable": False})])
                 self.field[name].setModel(self.model_club)
             elif name in ('bow_id'):
                 self.field[name] = QtWidgets.QComboBox(self)
                 self.model_bow = SqlAlchemyTableModel(session, model.Bow, [('Name', model.Bow.name, "name", {"editable": True}),
-                                                                           ('Id', model.Age.id, "id", {"editable": False})])
+                                                                           ('Id', model.Bow.id, "id", {"editable": False})])
                 self.field[name].setModel(self.model_bow)
             elif name in ('age_id'):
                 self.field[name] = QtWidgets.QComboBox(self)
@@ -98,6 +101,13 @@ class DlgSqlTable(QtWidgets.QDialog):
         self.buttonBox.rejected.connect(self.close)
 
 
+    def load_values(self, idnumber, model):
+        """Values
+
+        :return:
+        """
+        print(session.query(model).filter(id=idnumber))
+
 
     def values(self):
         """Values
@@ -106,7 +116,9 @@ class DlgSqlTable(QtWidgets.QDialog):
         """
         valve = {}
         for name in self.field:
-            if name in ('name', 'short', 'lastname', 'other'):
+            if name in self.STRING:
+                valve[name] = self.field[name].text()
+            elif name in self.INT:
                 valve[name] = self.field[name].text()
             elif name in ('age_id'):
                 ind = self.model_age.index(self.field[name].currentIndex(), 1)
@@ -119,18 +131,41 @@ class DlgSqlTable(QtWidgets.QDialog):
                 valve[name] = self.model_club.data(ind, Qt.DisplayRole)
         return (valve)
 
-
-
     @staticmethod
     def get_values(session, table, model):
         """static method to create the dialog and return
         (dialog.values, accepted)
 
-        :param sysdat: Lotto setting
-        :type sysdat: string
+        :param session: session
+        :type session: sqlalchemy session
+        :param table: Database actual table
+        :type table: table
+        :param model: Database model
+        :type model: model
         :returns: dialog.values, accepted
-        :rtype: array of int, bool
+        :rtype: dict, bool
         """
         dialog = DlgSqlTable(session, table, model)
+        result = dialog.exec_()
+        return (dialog.values(), result == QtWidgets.QDialog.Accepted)
+
+    @staticmethod
+    def edit_values(session, table, model, id):
+        """static method to create the dialog and return
+        (dialog.values, accepted)
+
+        :param session: session
+        :type session: sqlalchemy session
+        :param table: Database actual table
+        :type table: table
+        :param model: Database model
+        :type model: model
+        :param id: actual id to edit
+        :type id: int
+        :returns: dialog.values, accepted
+        :rtype: dict, bool
+        """
+        dialog = DlgSqlTable(session, table, model)
+        dialog.load_values(id, model)
         result = dialog.exec_()
         return (dialog.values(), result == QtWidgets.QDialog.Accepted)

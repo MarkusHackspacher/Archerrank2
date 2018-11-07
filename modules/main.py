@@ -31,7 +31,6 @@ from sqlalchemy import orm, literal,  create_engine
 
 
 from modules.ext.alchemical_model import SqlAlchemyTableModel
-from modules.gui.club_new import DlgNewClub
 from modules.gui.dialogsqltable import DlgSqlTable
 
 sys.path.append('..')
@@ -62,21 +61,27 @@ if not session.query(model.Bow).all():
 if not session.query(model.User).all():
     session.add(model.User(name='John', lastname='Dow', club_id=1, age_id=1, bow_id=1))
 
-model_user = SqlAlchemyTableModel(session, model.User, [('Name', model.User.name, "name", {"editable": True}),
+model_user = SqlAlchemyTableModel(session, model.User, [('Id', model.User.id, "id", {"editable": False}),
                                                         ('Lastname', model.User.lastname, "lastname", {"editable": True}),
+                                                        ('Name', model.User.name, "name", {"editable": True}),
+                                                        ('Score', model.User.score, "score", {"editable": True}),
+                                                        ('Kill Points', model.User.killpt, "killpt", {"editable": True}),
                                                         ('Club', model.User.club_id, "clubname", {"editable": False}),
                                                         ('Age', model.User.age_id, "agename", {"editable": False}),
                                                         ('Bow', model.User.bow_id, "bowname", {"editable": False})])
 
-model_club = SqlAlchemyTableModel(session, model.Club, [('Name', model.Club.name, "name", {"editable": True, "dnd": True}),
+model_club = SqlAlchemyTableModel(session, model.Club, [('Id', model.Club.id, "id", {"editable": False}),
+                                                        ('Name', model.Club.name, "name", {"editable": True, "dnd": True}),
                                                         ('Short', model.Club.short, "short", {"editable": True}),
                                                         ('payment', model.Club.payment, "payment", {"editable": True})])
 
-model_age = SqlAlchemyTableModel(session, model.Age, [('Name', model.Age.name, "name", {"editable": True}),
-                                                        ('Short', model.Age.short, "short", {"editable": True}), ])
+model_age = SqlAlchemyTableModel(session, model.Age, [('Id', model.Age.id, "id", {"editable": False}),
+                                                      ('Name', model.Age.name, "name", {"editable": True}),
+                                                      ('Short', model.Age.short, "short", {"editable": True}), ])
 
-model_bow = SqlAlchemyTableModel(session, model.Bow, [('Name', model.Bow.name, "name", {"editable": True}),
-                                                        ('Short', model.Bow.short, "short", {"editable": True}), ])
+model_bow = SqlAlchemyTableModel(session, model.Bow, [('Id', model.Bow.id, "id", {"editable": False}),
+                                                      ('Name', model.Bow.name, "name", {"editable": True}),
+                                                      ('Short', model.Bow.short, "short", {"editable": True}), ])
 
 
 class Main(QtCore.QObject):
@@ -111,7 +116,11 @@ class Main(QtCore.QObject):
         self.ui.tableView_club.setModel(model_club)
         self.ui.tableView_age.setModel(model_age)
         self.ui.tableView_bow.setModel(model_bow)
-        self.ui.tableView_user.pressed.connect(self.user_selected) #pressed clicked
+        self.ui.tableView_user.setColumnHidden(0, True)
+        self.ui.tableView_club.setColumnHidden(0, True)
+        self.ui.tableView_age.setColumnHidden(0, True)
+        self.ui.tableView_bow.setColumnHidden(0, True)
+        self.ui.tableView_user.pressed.connect(self.user_selected)
         self.ui.actionExit.triggered.connect(self.onexit)
         self.ui.pushButton_user.clicked.connect(self.user_new)
         self.ui.pushButton_club.clicked.connect(self.club_new)
@@ -128,6 +137,7 @@ class Main(QtCore.QObject):
         newdata = DlgSqlTable.get_values(session, model.User, model)
         if newdata[1]:
             session.add(model.User(**newdata[0]))
+            session.commit()
         model_user.refresh()
 
     def club_new(self):
@@ -139,6 +149,7 @@ class Main(QtCore.QObject):
         newdata = DlgSqlTable.get_values(session, model.Club, model)
         if newdata[1]:
             session.add(model.Club(**newdata[0]))
+            session.commit()
         model_club.refresh()
 
     def age_new(self):
@@ -150,6 +161,7 @@ class Main(QtCore.QObject):
         newdata = DlgSqlTable.get_values(session, model.Age, model)
         if newdata[1]:
             session.add(model.Age(**newdata[0]))
+            session.commit()
         model_age.refresh()
 
     def bow_new(self):
@@ -161,6 +173,7 @@ class Main(QtCore.QObject):
         newdata = DlgSqlTable.get_values(session, model.Bow, model)
         if newdata[1]:
             session.add(model.Bow(**newdata[0]))
+            session.commit()
         model_bow.refresh()
 
     def user_selected(self, index):
