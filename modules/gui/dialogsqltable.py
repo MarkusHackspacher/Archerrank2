@@ -101,12 +101,18 @@ class DlgSqlTable(QtWidgets.QDialog):
         self.buttonBox.rejected.connect(self.close)
 
 
-    def load_values(self, idnumber, model):
+    def load_values(self, index, session, table):
         """Values
 
         :return:
         """
-        print(session.query(model).filter(id=idnumber))
+        dataset = session.query(table).get(index)
+        for name in self.field:
+            if name in self.STRING:
+                self.field[name].setText(dataset.__dict__[name])
+            elif name in self.INT:
+                self.field[name].setValue(dataset.__dict__[name])
+            
 
 
     def values(self):
@@ -166,6 +172,6 @@ class DlgSqlTable(QtWidgets.QDialog):
         :rtype: dict, bool
         """
         dialog = DlgSqlTable(session, table, model)
-        dialog.load_values(id, model)
+        dialog.load_values(id, session, table)
         result = dialog.exec_()
         return (dialog.values(), result == QtWidgets.QDialog.Accepted)
