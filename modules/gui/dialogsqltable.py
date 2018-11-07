@@ -26,7 +26,7 @@ from sqlalchemy import Column
 
 from PyQt5 import QtGui, QtCore, QtWidgets
 from modules.ext.alchemical_model import SqlAlchemyTableModel
-
+from PyQt5.Qt import Qt
 
 
 
@@ -62,16 +62,18 @@ class DlgSqlTable(QtWidgets.QDialog):
                 self.field[name] = QtWidgets.QSpinBox(self)
             elif name in ('club_id'):
                 self.field[name] = QtWidgets.QComboBox(self)
-                model_club = SqlAlchemyTableModel(session, model.Club, [('Name', model.Club.name, "name", {"editable": True}),])
-                self.field[name].setModel(model_club)
+                self.model_club = SqlAlchemyTableModel(session, model.Club, [('Name', model.Club.name, "name", {"editable": True}),
+                                                                             ('Id', model.Age.id, "id", {"editable": False})])
+                self.field[name].setModel(self.model_club)
             elif name in ('bow_id'):
                 self.field[name] = QtWidgets.QComboBox(self)
-                model_bow = SqlAlchemyTableModel(session, model.Bow, [('Name', model.Bow.name, "name", {"editable": True}),])
-                self.field[name].setModel(model_bow)
+                self.model_bow = SqlAlchemyTableModel(session, model.Bow, [('Name', model.Bow.name, "name", {"editable": True}),
+                                                                           ('Id', model.Age.id, "id", {"editable": False})])
+                self.field[name].setModel(self.model_bow)
             elif name in ('age_id'):
                 self.field[name] = QtWidgets.QComboBox(self)
                 self.model_age = SqlAlchemyTableModel(session, model.Age, [('Name', model.Age.name, "name", {"editable": True}),
-                                                                      ('Id', model.Age.id, "id", {"editable": False})])
+                                                                           ('Id', model.Age.id, "id", {"editable": False})])
                 self.field[name].setModel(self.model_age)
 
 
@@ -102,13 +104,20 @@ class DlgSqlTable(QtWidgets.QDialog):
 
         :return:
         """
+        valve = {}
         for name in self.field:
             if name in ('name', 'short', 'lastname', 'other'):
-                print(name, self.field[name].text())
+                valve[name] = self.field[name].text()
             elif name in ('age_id'):
-                print(name, self.field[name].currentIndex())
-                print(self.model_age.data(0, 0))
-        return (str('d'))
+                ind = self.model_age.index(self.field[name].currentIndex(), 1)
+                valve[name] = self.model_age.data(ind, Qt.DisplayRole)
+            elif name in ('bow_id'):
+                ind = self.model_bow.index(self.field[name].currentIndex(), 1)
+                valve[name] = self.model_bow.data(ind, Qt.DisplayRole)
+            elif name in ('club_id'):
+                ind = self.model_club.index(self.field[name].currentIndex(), 1)
+                valve[name] = self.model_club.data(ind, Qt.DisplayRole)
+        return (valve)
 
 
 

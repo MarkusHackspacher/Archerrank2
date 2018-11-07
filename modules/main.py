@@ -125,7 +125,10 @@ class Main(QtCore.QObject):
         :param index:
         :return:
         """
-        print(DlgSqlTable.get_values(session, model.User, model))
+        newdata = DlgSqlTable.get_values(session, model.User, model)
+        if newdata[1]:
+            session.add(model.User(**newdata[0]))
+        model_user.refresh()
 
     def club_new(self):
         """selected user
@@ -133,8 +136,10 @@ class Main(QtCore.QObject):
         :param index:
         :return:
         """
-        print("new club")
-        a = DlgNewClub()
+        newdata = DlgSqlTable.get_values(session, model.Club, model)
+        if newdata[1]:
+            session.add(model.Club(**newdata[0]))
+        model_club.refresh()
 
     def age_new(self):
         """selected age
@@ -142,7 +147,10 @@ class Main(QtCore.QObject):
         :param index:
         :return:
         """
-        print(DlgSqlTable.get_values(session, model.Age, model))
+        newdata = DlgSqlTable.get_values(session, model.Age, model)
+        if newdata[1]:
+            session.add(model.Age(**newdata[0]))
+        model_age.refresh()
 
     def bow_new(self):
         """selected bow
@@ -150,8 +158,10 @@ class Main(QtCore.QObject):
         :param index:
         :return:
         """
-        print("new bow")
-        print(DlgSqlTable.get_values(session, model.Bow, model))
+        newdata = DlgSqlTable.get_values(session, model.Bow, model)
+        if newdata[1]:
+            session.add(model.Bow(**newdata[0]))
+        model_bow.refresh()
 
     def user_selected(self, index):
         """selected user
