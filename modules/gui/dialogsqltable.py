@@ -25,6 +25,8 @@ from sqlalchemy.orm.attributes import InstrumentedAttribute
 from sqlalchemy import Column
 
 from PyQt5 import QtGui, QtCore, QtWidgets
+from modules.ext.alchemical_model import SqlAlchemyTableModel
+
 
 
 
@@ -32,12 +34,13 @@ class DlgSqlTable(QtWidgets.QDialog):
     """
     Dialog generate from sql table
     """
-    def __init__(self, session, table):
+    def __init__(self, session, table, model):
         """Initial user interface and slots
 
         :returns: none
         """
         super(DlgSqlTable, self).__init__()
+
         self.setModal(True)
         self.buttonBox = QtWidgets.QDialogButtonBox(self)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
@@ -48,18 +51,37 @@ class DlgSqlTable(QtWidgets.QDialog):
         self.gridLayout = QtWidgets.QGridLayout()
         self.setWindowTitle(self.tr("Show Drawing"))
 
-        print(session.query(table).all())
-        print(dir(table))
-        print(table.__dict__.items())
+        methods = [m.key for m in table.__table__.columns if not len(m.key) == 2]
 
-        def methods(cls):
-            return [x for x, y in cls.__dict__.items() if type(y) == InstrumentedAttribute
-                    and not 'id' in x and not 's' in x[-1]]
+        self.labels = [QtWidgets.QLabel(self) for _ in methods]
+        self.field = {}
+        for buttonnumber, name in enumerate(methods):
+            if name in ('name', 'short', 'lastname', 'other'):
+                self.field[name] = QtWidgets.QLineEdit(self)
+            elif name in ('killpt', 'sorting', 'score', 'part', 'rate', 'sep', 'adult'):
+                self.field[name] = QtWidgets.QSpinBox(self)
+            elif name in ('club_id'):
+                self.field[name] = QtWidgets.QComboBox(self)
+                model_club = SqlAlchemyTableModel(session, model.Club, [('Name', model.Club.name, "name", {"editable": True}),])
+                self.field[name].setModel(model_club)
+            elif name in ('bow_id'):
+                self.field[name] = QtWidgets.QComboBox(self)
+                model_bow = SqlAlchemyTableModel(session, model.Bow, [('Name', model.Bow.name, "name", {"editable": True}),])
+                self.field[name].setModel(model_bow)
+            elif name in ('age_id'):
+                self.field[name] = QtWidgets.QComboBox(self)
+                self.model_age = SqlAlchemyTableModel(session, model.Age, [('Name', model.Age.name, "name", {"editable": True}),
+                                                                      ('Id', model.Age.id, "id", {"editable": False})])
+                self.field[name].setModel(self.model_age)
 
-        methods = methods(table)
 
-        self.labels = [QtWidgets.QLabel(self)
-                                for _ in methods]
+
+            else:
+                self.field[name] = QtWidgets.QComboBox(self)
+
+            self.gridLayout.addWidget(
+                self.field[name], buttonnumber, 2, 1, 1)
+
         for buttonnumber, label in enumerate(self.labels):
             #label.setMaximumSize(QtCore.QSize(58, 58))
             label.setAutoFillBackground(True)
@@ -80,12 +102,18 @@ class DlgSqlTable(QtWidgets.QDialog):
 
         :return:
         """
-        return (str('1'))
+        for name in self.field:
+            if name in ('name', 'short', 'lastname', 'other'):
+                print(name, self.field[name].text())
+            elif name in ('age_id'):
+                print(name, self.field[name].currentIndex())
+                print(self.model_age.data(0, 0))
+        return (str('d'))
 
 
 
     @staticmethod
-    def get_values(session, table):
+    def get_values(session, table, model):
         """static method to create the dialog and return
         (dialog.values, accepted)
 
@@ -94,6 +122,6 @@ class DlgSqlTable(QtWidgets.QDialog):
         :returns: dialog.values, accepted
         :rtype: array of int, bool
         """
-        dialog = DlgSqlTable(session, table)
+        dialog = DlgSqlTable(session, table, model)
         result = dialog.exec_()
         return (dialog.values(), result == QtWidgets.QDialog.Accepted)

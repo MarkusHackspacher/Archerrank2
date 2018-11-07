@@ -54,7 +54,9 @@ session = orm.scoped_session(sm)
 if not session.query(model.Club).all():
     session.add(model.Club(name='VfB Stuttgart', short='VfB'))
 if not session.query(model.Age).all():
+    session.add(model.Age(name='Beginner', short='start'))
     session.add(model.Age(name='Best of All', short='Elite'))
+    session.add(model.Age(name='Kid', short='Kid', id=23))
 if not session.query(model.Bow).all():
     session.add(model.Bow(name='Longbow', short='LB'))
 if not session.query(model.User).all():
@@ -123,9 +125,7 @@ class Main(QtCore.QObject):
         :param index:
         :return:
         """
-        print("new user")
-        dialog = DlgSqlTable(session, model.User)
-        dialog.exec_()
+        print(DlgSqlTable.get_values(session, model.User, model))
 
     def club_new(self):
         """selected user
@@ -142,7 +142,7 @@ class Main(QtCore.QObject):
         :param index:
         :return:
         """
-        print(DlgSqlTable.get_values(session, model.Age))
+        print(DlgSqlTable.get_values(session, model.Age, model))
 
     def bow_new(self):
         """selected bow
@@ -151,7 +151,7 @@ class Main(QtCore.QObject):
         :return:
         """
         print("new bow")
-        print(DlgSqlTable.get_values(session, model.Bow))
+        print(DlgSqlTable.get_values(session, model.Bow, model))
 
     def user_selected(self, index):
         """selected user
