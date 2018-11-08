@@ -127,8 +127,14 @@ class Main(QtCore.QObject):
         self.ui.pushButton_club.clicked.connect(self.club_new)
         self.ui.pushButton_age.clicked.connect(self.age_new)
         self.ui.pushButton_bow.clicked.connect(self.bow_new)
+        self.ui.pushButton_edituser.clicked.connect(self.user_edit)
+        self.ui.pushButton_deleteuser.clicked.connect(self.user_del)
         self.ui.pushButton_editclub.clicked.connect(self.club_edit)
         self.ui.pushButton_deleteclub.clicked.connect(self.club_del)
+        self.ui.pushButton_editage.clicked.connect(self.age_edit)
+        self.ui.pushButton_deleteage.clicked.connect(self.age_del)
+        self.ui.pushButton_editbow.clicked.connect(self.bow_edit)
+        self.ui.pushButton_deletebow.clicked.connect(self.bow_del)
         self.ui.show()
 
     def user_new(self):
@@ -167,6 +173,21 @@ class Main(QtCore.QObject):
             session.commit()
         model_bow.refresh()
 
+    def user_edit(self):
+        """open dialog for edit user
+        """
+        index = self.ui.tableView_user.currentIndex()
+        if index.row() < 0:
+            return
+        ind = model_user.index(index.row(), 0)
+        newdata = DlgSqlTable.edit_values(session, model.User, model, model_user.data(ind, Qt.DisplayRole))
+        data = session.query(model.User).get(model_user.data(ind, Qt.DisplayRole))
+        if newdata[1]:
+            for key, value in newdata[0].items():
+                setattr(data, key, value)
+            session.commit()
+        model_user.refresh()
+
     def club_edit(self):
         """open dialog for edit club
         """
@@ -182,15 +203,68 @@ class Main(QtCore.QObject):
             session.commit()
         model_club.refresh()
 
+    def age_edit(self):
+        """open dialog for edit age
+        """
+        index = self.ui.tableView_age.currentIndex()
+        if index.row() < 0:
+            return
+        ind = model_age.index(index.row(), 0)
+        newdata = DlgSqlTable.edit_values(session, model.Age, model, model_age.data(ind, Qt.DisplayRole))
+        data = session.query(model.Age).get(model_age.data(ind, Qt.DisplayRole))
+        if newdata[1]:
+            for key, value in newdata[0].items():
+                setattr(data, key, value)
+            session.commit()
+        model_age.refresh()
+
+    def bow_edit(self):
+        """open dialog for edit bow
+        """
+        index = self.ui.tableView_bow.currentIndex()
+        if index.row() < 0:
+            return
+        ind = model_bow.index(index.row(), 0)
+        newdata = DlgSqlTable.edit_values(session, model.bow, model, model_bow.data(ind, Qt.DisplayRole))
+        data = session.query(model.Bow).get(model_bow.data(ind, Qt.DisplayRole))
+        if newdata[1]:
+            for key, value in newdata[0].items():
+                setattr(data, key, value)
+            session.commit()
+        model_bow.refresh()
+
+    def user_del(self):
+        """open dialog for delete user
+        """
+        index = self.ui.tableView_user.currentIndex()
+        if index.row() < 0:
+            return
+        model_user.refresh()
+        
     def club_del(self):
-        """open dialog for edit club
+        """open dialog for delete club
         """
         index = self.ui.tableView_club.currentIndex()
         if index.row() < 0:
             return
         model_club.refresh()
         
-
+    def age_del(self):
+        """open dialog for delete age
+        """
+        index = self.ui.tableView_age.currentIndex()
+        if index.row() < 0:
+            return
+        model_age.refresh()
+        
+    def bow_del(self):
+        """open dialog for delete bow
+        """
+        index = self.ui.tableView_bow.currentIndex()
+        if index.row() < 0:
+            return
+        model_bow.refresh()
+        
     def user_selected(self, index):
         """selected user
 

@@ -15,14 +15,6 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="horizontalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>781</width>
-      <height>541</height>
-     </rect>
-    </property>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="17,10,10">
      <item>
       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
@@ -43,6 +35,20 @@
         <widget class="QPushButton" name="pushButton_user">
          <property name="text">
           <string>add new user</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_edituser">
+         <property name="text">
+          <string>edit user</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_deleteuser">
+         <property name="text">
+          <string>push user</string>
          </property>
         </widget>
        </item>
@@ -109,6 +115,20 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="pushButton_editage">
+         <property name="text">
+          <string>add new age</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_deleteage">
+         <property name="text">
+          <string>add new age</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QLabel" name="label_bow">
          <property name="text">
           <string>bow grade table</string>
@@ -125,6 +145,20 @@
         <widget class="QPushButton" name="pushButton_bow">
          <property name="text">
           <string>add new bow</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_editbow">
+         <property name="text">
+          <string>edit bow</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_deletebow">
+         <property name="text">
+          <string>delete bow</string>
          </property>
         </widget>
        </item>
