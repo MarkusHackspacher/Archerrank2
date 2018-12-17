@@ -65,21 +65,23 @@ class DlgSqlTable(QtWidgets.QDialog):
                 self.field[name] = QtWidgets.QSpinBox(self)
             elif name in ('club_id'):
                 self.field[name] = QtWidgets.QComboBox(self)
-                self.model_club = SqlAlchemyTableModel(session, model.Club, [('Name', model.Club.name, "name", {"editable": True}),
-                                                                             ('Id', model.Club.id, "id", {"editable": False})])
+                self.model_club = SqlAlchemyTableModel(session, model.Club, [
+                    ('Name', model.Club.name, "name", {"editable": True}),
+                    ('Id', model.Club.id, "id", {"editable": False})])
+                self.model_club.setHeaderData(1, Qt.Horizontal, "id")
                 self.field[name].setModel(self.model_club)
             elif name in ('bow_id'):
                 self.field[name] = QtWidgets.QComboBox(self)
-                self.model_bow = SqlAlchemyTableModel(session, model.Bow, [('Name', model.Bow.name, "name", {"editable": True}),
-                                                                           ('Id', model.Bow.id, "id", {"editable": False})])
+                self.model_bow = SqlAlchemyTableModel(session, model.Bow, [
+                    ('Name', model.Bow.name, "name", {"editable": True}),
+                    ('Id', model.Bow.id, "id", {"editable": False})])
                 self.field[name].setModel(self.model_bow)
             elif name in ('age_id'):
                 self.field[name] = QtWidgets.QComboBox(self)
-                self.model_age = SqlAlchemyTableModel(session, model.Age, [('Name', model.Age.name, "name", {"editable": True}),
-                                                                           ('Id', model.Age.id, "id", {"editable": False})])
+                self.model_age = SqlAlchemyTableModel(session, model.Age, [
+                    ('Name', model.Age.name, "name", {"editable": True}),
+                    ('Id', model.Age.id, "id", {"editable": False})])
                 self.field[name].setModel(self.model_age)
-
-
 
             else:
                 self.field[name] = QtWidgets.QComboBox(self)
@@ -92,14 +94,13 @@ class DlgSqlTable(QtWidgets.QDialog):
             label.setAutoFillBackground(True)
             self.gridLayout.addWidget(
                 label, buttonnumber, 1, 1, 1)
-            label.setText(self.tr("Item {} {}".format(buttonnumber, methods[buttonnumber])))
+            label.setText(self.tr("{} {}".format(buttonnumber, methods[buttonnumber])))
 
         self.boxLayout.addLayout(self.gridLayout)
         self.boxLayout.addWidget(self.buttonBox)
 
         self.buttonBox.accepted.connect(self.accept)
         self.buttonBox.rejected.connect(self.close)
-
 
     def load_values(self, index, session, table):
         """Values
@@ -112,8 +113,24 @@ class DlgSqlTable(QtWidgets.QDialog):
                 self.field[name].setText(dataset.__dict__[name])
             elif name in self.INT:
                 self.field[name].setValue(dataset.__dict__[name])
-            
-
+            elif name in ('age_id'):
+                matches = self.model_age.match(
+                    self.model_age.index(0, 1), QtCore.Qt.DisplayRole,
+                    dataset.__dict__[name], 1, QtCore.Qt.MatchExactly)
+                if matches:
+                    self.field[name].setCurrentIndex(matches[0].row())
+            elif name in ('bow_id'):
+                matches = self.model_bow.match(
+                    self.model_bow.index(0, 1), QtCore.Qt.DisplayRole,
+                    dataset.__dict__[name], 1, QtCore.Qt.MatchExactly)
+                if matches:
+                    self.field[name].setCurrentIndex(matches[0].row())
+            elif name in ('club_id'):
+                matches = self.model_club.match(
+                    self.model_club.index(0, 1), QtCore.Qt.DisplayRole,
+                    dataset.__dict__[name], 1, QtCore.Qt.MatchExactly)
+                if matches:
+                    self.field[name].setCurrentIndex(matches[0].row())
 
     def values(self):
         """Values
