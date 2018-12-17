@@ -21,6 +21,7 @@ You should have received a copy of the GNU General Public License
 along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import functools
 import sys
 import os
 from os.path import join
@@ -123,147 +124,102 @@ class Main(QtCore.QObject):
         self.ui.tableView_bow.setColumnHidden(0, True)
         self.ui.tableView_user.pressed.connect(self.user_selected)
         self.ui.actionExit.triggered.connect(self.onexit)
-        self.ui.pushButton_user.clicked.connect(self.user_new)
-        self.ui.pushButton_club.clicked.connect(self.club_new)
-        self.ui.pushButton_age.clicked.connect(self.age_new)
-        self.ui.pushButton_bow.clicked.connect(self.bow_new)
-        self.ui.pushButton_edituser.clicked.connect(self.user_edit)
-        self.ui.pushButton_deleteuser.clicked.connect(self.user_del)
-        self.ui.pushButton_editclub.clicked.connect(self.club_edit)
-        self.ui.pushButton_deleteclub.clicked.connect(self.club_del)
-        self.ui.pushButton_editage.clicked.connect(self.age_edit)
-        self.ui.pushButton_deleteage.clicked.connect(self.age_del)
-        self.ui.pushButton_editbow.clicked.connect(self.bow_edit)
-        self.ui.pushButton_deletebow.clicked.connect(self.bow_del)
+        user_new = functools.partial(self.entry_new, model.User, model_user)
+        club_new = functools.partial(self.entry_new, model.Club, model_club)
+        age_new = functools.partial(self.entry_new, model.Age, model_age)
+        bow_new = functools.partial(self.entry_new, model.Bow, model_bow)
+        self.ui.pushButton_user.clicked.connect(user_new)
+        self.ui.pushButton_club.clicked.connect(club_new)
+        self.ui.pushButton_age.clicked.connect(age_new)
+        self.ui.pushButton_bow.clicked.connect(bow_new)
+        user_edit = functools.partial(self.entry_edit, model.User, model_user)
+        club_edit = functools.partial(self.entry_edit, model.Club, model_club)
+        age_edit = functools.partial(self.entry_edit, model.Age, model_age)
+        bow_edit = functools.partial(self.entry_edit, model.Bow, model_bow)
+        self.ui.pushButton_edituser.clicked.connect(user_edit)
+        self.ui.pushButton_editclub.clicked.connect(club_edit)
+        self.ui.pushButton_editage.clicked.connect(age_edit)
+        self.ui.pushButton_editbow.clicked.connect(bow_edit)
+        user_del = functools.partial(self.entry_del, model.User, model_user)
+        club_del = functools.partial(self.entry_del, model.Club, model_club)
+        age_del = functools.partial(self.entry_del, model.Age, model_age)
+        bow_del = functools.partial(self.entry_del, model.Bow, model_bow)
+        self.ui.pushButton_deleteuser.clicked.connect(user_del)
+        self.ui.pushButton_deleteclub.clicked.connect(club_del)
+        self.ui.pushButton_deleteage.clicked.connect(age_del)
+        self.ui.pushButton_deletebow.clicked.connect(bow_del)
         self.ui.show()
 
-    def user_new(self):
-        """open dialog for new user
-        """
-        newdata = DlgSqlTable.get_values(session, model.User, model)
-        if newdata[1]:
-            session.add(model.User(**newdata[0]))
-            session.commit()
-        model_user.refresh()
+    def entry_new(self, datatable, tablemodel):
+        """open dialog for new entry
 
-    def club_new(self):
-        """open dialog for new club
+        datatable is model.User
+        tablemodel is model_user
         """
-        newdata = DlgSqlTable.get_values(session, model.Club, model)
+        newdata = DlgSqlTable.get_values(session, datatable, model)
         if newdata[1]:
-            session.add(model.Club(**newdata[0]))
+            session.add(datatable(**newdata[0]))
             session.commit()
-        model_club.refresh()
+        tablemodel.refresh()
 
-    def age_new(self):
-        """open dialog for new age
-        """
-        newdata = DlgSqlTable.get_values(session, model.Age, model)
-        if newdata[1]:
-            session.add(model.Age(**newdata[0]))
-            session.commit()
-        model_age.refresh()
+    def select_index(self, tablemodel):
+        if tablemodel == model_user:
+            index = self.ui.tableView_user.currentIndex()
+        elif tablemodel == model_club:
+            index = self.ui.tableView_club.currentIndex()
+        elif tablemodel == model_age:
+            index = self.ui.tableView_age.currentIndex()
+        elif tablemodel == model_bow:
+            index = self.ui.tableView_bow.currentIndex()
+        return index
 
-    def bow_new(self):
-        """open dialog for new bow
-        """
-        newdata = DlgSqlTable.get_values(session, model.Bow, model)
-        if newdata[1]:
-            session.add(model.Bow(**newdata[0]))
-            session.commit()
-        model_bow.refresh()
+    def entry_edit(self, datatable, tablemodel):
+        """open dialog for edit entry
 
-    def user_edit(self):
-        """open dialog for edit user
+        datatable is model.User
+        tablemodel is model_user
         """
-        index = self.ui.tableView_user.currentIndex()
+        index = self.select_index(tablemodel)
         if index.row() < 0:
+            QtWidgets.QMessageBox.information(self.ui, 'Info', 'No line select')
             return
-        ind = model_user.index(index.row(), 0)
-        newdata = DlgSqlTable.edit_values(session, model.User, model, model_user.data(ind, Qt.DisplayRole))
-        data = session.query(model.User).get(model_user.data(ind, Qt.DisplayRole))
+        ind = tablemodel.index(index.row(), 0)
+        newdata = DlgSqlTable.edit_values(session, datatable, model, tablemodel.data(ind, Qt.DisplayRole))
+        data = session.query(datatable).get(tablemodel.data(ind, Qt.DisplayRole))
         if newdata[1]:
             for key, value in newdata[0].items():
                 setattr(data, key, value)
             session.commit()
-        model_user.refresh()
+        tablemodel.refresh()
 
-    def club_edit(self):
-        """open dialog for edit club
-        """
-        index = self.ui.tableView_club.currentIndex()
-        if index.row() < 0:
-            return
-        ind = model_club.index(index.row(), 0)
-        newdata = DlgSqlTable.edit_values(session, model.Club, model, model_club.data(ind, Qt.DisplayRole))
-        data = session.query(model.Club).get(model_club.data(ind, Qt.DisplayRole))
-        if newdata[1]:
-            for key, value in newdata[0].items():
-                setattr(data, key, value)
-            session.commit()
-        model_club.refresh()
+    def entry_del(self, datatable, tablemodel):
+        """open dialog for delete entry
 
-    def age_edit(self):
-        """open dialog for edit age
+        datatable is model.User
+        tablemodel is model_user
+        table_id is club_id
         """
-        index = self.ui.tableView_age.currentIndex()
+        index = self.select_index(tablemodel)
         if index.row() < 0:
+            QtWidgets.QMessageBox.information(self.ui, 'Info', 'No line select')
             return
-        ind = model_age.index(index.row(), 0)
-        newdata = DlgSqlTable.edit_values(session, model.Age, model, model_age.data(ind, Qt.DisplayRole))
-        data = session.query(model.Age).get(model_age.data(ind, Qt.DisplayRole))
-        if newdata[1]:
-            for key, value in newdata[0].items():
-                setattr(data, key, value)
-            session.commit()
-        model_age.refresh()
-
-    def bow_edit(self):
-        """open dialog for edit bow
-        """
-        index = self.ui.tableView_bow.currentIndex()
-        if index.row() < 0:
+        ind = tablemodel.index(index.row(), 0)
+        data = session.query(datatable).get(tablemodel.data(ind, Qt.DisplayRole))
+        if tablemodel == model_user:
+            userdata = None
+        elif tablemodel == model_club:
+            userdata = session.query(model.User).filter_by(club_id=data.id).first()
+        elif tablemodel == model_age:
+            userdata = session.query(model.User).filter_by(age_id=data.id).first()
+        elif tablemodel == model_bow:
+            userdata = session.query(model.User).filter_by(bow_id=data.id).first()
+        if userdata:
+            QtWidgets.QMessageBox.information(self.ui, 'Info',
+                'Cannot delete, reference by {},{}'.format(userdata.name, userdata.lastname))
             return
-        ind = model_bow.index(index.row(), 0)
-        newdata = DlgSqlTable.edit_values(session, model.bow, model, model_bow.data(ind, Qt.DisplayRole))
-        data = session.query(model.Bow).get(model_bow.data(ind, Qt.DisplayRole))
-        if newdata[1]:
-            for key, value in newdata[0].items():
-                setattr(data, key, value)
-            session.commit()
-        model_bow.refresh()
-
-    def user_del(self):
-        """open dialog for delete user
-        """
-        index = self.ui.tableView_user.currentIndex()
-        if index.row() < 0:
-            return
-        model_user.refresh()
-        
-    def club_del(self):
-        """open dialog for delete club
-        """
-        index = self.ui.tableView_club.currentIndex()
-        if index.row() < 0:
-            return
-        model_club.refresh()
-        
-    def age_del(self):
-        """open dialog for delete age
-        """
-        index = self.ui.tableView_age.currentIndex()
-        if index.row() < 0:
-            return
-        model_age.refresh()
-        
-    def bow_del(self):
-        """open dialog for delete bow
-        """
-        index = self.ui.tableView_bow.currentIndex()
-        if index.row() < 0:
-            return
-        model_bow.refresh()
+        session.delete(data)
+        session.commit()
+        tablemodel.refresh()
         
     def user_selected(self, index):
         """selected user
