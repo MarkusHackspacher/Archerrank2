@@ -123,6 +123,8 @@ class Main(QtCore.QObject):
         self.ui.tableView_age.setColumnHidden(0, True)
         self.ui.tableView_bow.setColumnHidden(0, True)
         self.ui.tableView_user.pressed.connect(self.user_selected)
+        self.ui.actionOpen.triggered.connect(self.onopen)
+        self.ui.actionNew.triggered.connect(self.onnew)
         self.ui.actionExit.triggered.connect(self.onexit)
         user_new = functools.partial(self.entry_new, model.User, model_user)
         club_new = functools.partial(self.entry_new, model.Club, model_club)
@@ -228,6 +230,25 @@ class Main(QtCore.QObject):
         :return:
         """
         print(index.row(), index.column())
+
+    def onopen(self):
+        """open file
+
+        :return:
+        """
+        fname = QtWidgets.QFileDialog.getOpenFileName(self.ui, 'Open file',
+                                                      '.', "SQLite files (*.sqlite)")
+        print(fname)
+
+    def onnew(self):
+        """save as file
+
+        :return:
+        """
+        fname = QtWidgets.QFileDialog.getSaveFileName(self.ui, 'New file',
+                                                      '.', "SQLite files (*.sqlite)")
+        print(fname)
+
 
     def onexit(self):
         """exit and close
