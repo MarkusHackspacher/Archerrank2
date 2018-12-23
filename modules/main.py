@@ -123,8 +123,7 @@ class Main(QtCore.QObject):
         self.ui.tableView_age.setColumnHidden(0, True)
         self.ui.tableView_bow.setColumnHidden(0, True)
         self.ui.tableView_user.pressed.connect(self.user_selected)
-        self.ui.actionOpen.triggered.connect(self.onopen)
-        self.ui.actionNew.triggered.connect(self.onnew)
+        self.ui.actionInfo.triggered.connect(self.oninfo)
         self.ui.actionExit.triggered.connect(self.onexit)
         user_new = functools.partial(self.entry_new, model.User, model_user)
         club_new = functools.partial(self.entry_new, model.Club, model_club)
@@ -231,24 +230,22 @@ class Main(QtCore.QObject):
         """
         print(index.row(), index.column())
 
-    def onopen(self):
-        """open file
+    def oninfo(self):
+        """Set the text for the info message box in html format
 
-        :return:
+        :returns: none
         """
-        fname = QtWidgets.QFileDialog.getOpenFileName(self.ui, 'Open file',
-                                                      '.', "SQLite files (*.sqlite)")
-        print(fname)
-
-    def onnew(self):
-        """save as file
-
-        :return:
-        """
-        fname = QtWidgets.QFileDialog.getSaveFileName(self.ui, 'New file',
-                                                      '.', "SQLite files (*.sqlite)")
-        print(fname)
-
+        infobox = QtWidgets.QMessageBox()
+        infobox.setWindowTitle(self.tr('Info'))
+        infobox.setText(self.tr(
+            'Archerrank2. A tool for the evaluation of archery tournaments.<br>'
+            'Archerrank2 is free software and use GNU General Public License '
+            '<a href="http://www.gnu.org/licenses/">www.gnu.org/licenses</a>'))
+        infobox.setInformativeText(self.tr(
+            'More Information about the program at '
+            '<a href="https://github.com/MarkusHackspacher/Archerrank2">'
+            'github.com/MarkusHackspacher/Archerrank2</a>'))
+        infobox.exec_()
 
     def onexit(self):
         """exit and close

@@ -25,6 +25,27 @@ import sys
 
 from modules import main
 
+
+def onopen(self):
+    """open file
+
+    :return:
+    """
+    fname = QtWidgets.QFileDialog.getOpenFileName(self.ui, 'Open file',
+                                                  '.', "SQLite files (*.sqlite)")
+    print(fname)
+
+
+def onnew(self):
+    """save as file
+
+    :return:
+    """
+    fname = QtWidgets.QFileDialog.getSaveFileName(self.ui, 'New file',
+                                                  '.', "SQLite files (*.sqlite)")
+    print(fname)
+
+
 if __name__ == "__main__":
     app = main.Main(sys.argv)
     app.main_loop()
