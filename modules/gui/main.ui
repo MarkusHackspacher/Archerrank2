@@ -249,7 +249,14 @@
     </property>
     <addaction name="actionInfo"/>
    </widget>
+   <widget class="QMenu" name="menuEvaluation">
+    <property name="title">
+     <string>E&amp;valuation</string>
+    </property>
+    <addaction name="actionOverview"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEvaluation"/>
    <addaction name="menuInfo"/>
   </widget>
   <action name="actionExit">
@@ -275,6 +282,11 @@
   <action name="actionInfo">
    <property name="text">
     <string>Info</string>
+   </property>
+  </action>
+  <action name="actionOverview">
+   <property name="text">
+    <string>Overview</string>
    </property>
   </action>
  </widget>

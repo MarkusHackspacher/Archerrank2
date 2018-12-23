@@ -123,6 +123,7 @@ class Main(QtCore.QObject):
         self.ui.tableView_age.setColumnHidden(0, True)
         self.ui.tableView_bow.setColumnHidden(0, True)
         self.ui.tableView_user.pressed.connect(self.user_selected)
+        self.ui.actionOverview.triggered.connect(self.onoverview)
         self.ui.actionInfo.triggered.connect(self.oninfo)
         self.ui.actionExit.triggered.connect(self.onexit)
         user_new = functools.partial(self.entry_new, model.User, model_user)
@@ -229,6 +230,25 @@ class Main(QtCore.QObject):
         :return:
         """
         print(index.row(), index.column())
+
+    def onoverview(self):
+        """Set the text for the info message box in html format
+
+        :returns: none
+        """
+        users = session.query(model.User).order_by(model.User.bow_id).order_by(
+            model.User.age_id).order_by(model.User.score).order_by(
+            model.User.killpt).all()
+        names = []
+        for userdata in users:
+            names.append('{}, {}, {}, {} {} {}<br>'.format(
+                userdata.name, userdata.lastname, userdata.score, userdata.killpt, userdata.bowname, userdata.agename))
+        infobox = QtWidgets.QMessageBox()
+        infobox.setWindowTitle(self.tr('Info'))
+
+        infobox.setText(self.tr(
+            'Overview.<br>{}'.format("".join(names))))
+        infobox.exec_()
 
     def oninfo(self):
         """Set the text for the info message box in html format
