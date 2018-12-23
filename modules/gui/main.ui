@@ -254,6 +254,7 @@
      <string>E&amp;valuation</string>
     </property>
     <addaction name="actionOverview"/>
+    <addaction name="actionPrintPreview"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEvaluation"/>
@@ -287,6 +288,11 @@
   <action name="actionOverview">
    <property name="text">
     <string>Overview</string>
+   </property>
+  </action>
+  <action name="actionPrintPreview">
+   <property name="text">
+    <string>Print Preview</string>
    </property>
   </action>
  </widget>

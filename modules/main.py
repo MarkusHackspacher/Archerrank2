@@ -27,6 +27,7 @@ import os
 from os.path import join
 
 from PyQt5 import QtGui, QtCore, QtWidgets, uic
+from PyQt5.QtPrintSupport import QPrinter, QPrintDialog, QPrintPreviewDialog
 from PyQt5.Qt import Qt
 
 from sqlalchemy import orm, literal,  create_engine
@@ -123,6 +124,7 @@ class Main(QtCore.QObject):
         self.ui.tableView_age.setColumnHidden(0, True)
         self.ui.tableView_bow.setColumnHidden(0, True)
         self.ui.tableView_user.pressed.connect(self.user_selected)
+        self.ui.actionPrintPreview.triggered.connect(self.onprint)
         self.ui.actionOverview.triggered.connect(self.onoverview)
         self.ui.actionInfo.triggered.connect(self.oninfo)
         self.ui.actionExit.triggered.connect(self.onexit)
@@ -231,14 +233,34 @@ class Main(QtCore.QObject):
         """
         print(index.row(), index.column())
 
+    def onprint(self):
+        """Print Preview"""
+        self.editor = QtWidgets.QTextEdit()
+        printer = QPrinter(QPrinter.HighResolution)
+        previewDialog = QPrintPreviewDialog(printer, self.ui)
+
+        users = session.query(model.User).order_by(model.User.bow_id).order_by(
+            model.User.age_id).order_by(model.User.score.desc()).order_by(
+            model.User.killpt.desc()).all()
+        names = []
+        for userdata in users:
+            names.append('{}, {}, {}, {} {} {}<br>'.format(
+                userdata.name, userdata.lastname, userdata.score, userdata.killpt, userdata.bowname, userdata.agename))
+        self.editor.setHtml('<h1>Headline</h1>{}'.format("".join(names)))
+        self.editor.append('{}'.format("".join(names)))
+        previewDialog.paintRequested.connect(self.editor.print_)
+        previewDialog.exec_()
+
+
+
     def onoverview(self):
         """Set the text for the info message box in html format
 
         :returns: none
         """
         users = session.query(model.User).order_by(model.User.bow_id).order_by(
-            model.User.age_id).order_by(model.User.score).order_by(
-            model.User.killpt).all()
+            model.User.age_id).order_by(model.User.score.desc()).order_by(
+            model.User.killpt.desc()).all()
         names = []
         for userdata in users:
             names.append('{}, {}, {}, {} {} {}<br>'.format(
