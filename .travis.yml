@@ -10,8 +10,8 @@ install:
   - pip install coverage codacy-coverage
 script:
  - isort -c -rc
- - pycodestyle lotto/ tests/ *.py*
- - xvfb-run nosetests --with-coverage --cover-erase --cover-package=lotto --cover-html
+ - pycodestyle modules/ tests/ *.py*
+ - xvfb-run nosetests --with-coverage --cover-erase --cover-package=modules --cover-html
 after_success:
   - coverage report -m
   - coverage xml
