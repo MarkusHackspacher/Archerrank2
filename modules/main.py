@@ -3,7 +3,7 @@
 """
 Archerank2
 
-Copyright (C) <2018> Markus Hackspacher
+Copyright (C) <2018-2019> Markus Hackspacher
 
 This file is part of Archerank2.
 
@@ -30,8 +30,7 @@ from PyQt5 import QtGui, QtCore, QtWidgets, uic
 from PyQt5.QtPrintSupport import QPrinter, QPrintDialog, QPrintPreviewDialog
 from PyQt5.Qt import Qt
 
-from sqlalchemy import orm, literal,  create_engine
-
+from sqlalchemy import orm, literal, create_engine
 
 from modules.ext.alchemical_model import SqlAlchemyTableModel
 from modules.gui.dialogsqltable import DlgSqlTable
@@ -39,7 +38,6 @@ from modules.gui.dialogsqltable import DlgSqlTable
 sys.path.append('..')
 
 from modules import model
-
 
 # Create an engine and create all the tables we need
 engine = create_engine('sqlite:///test2.sqlite', echo=False)
@@ -94,6 +92,7 @@ model_bow = SqlAlchemyTableModel(session, model.Bow, [
 class Main(QtCore.QObject):
     """The GUI and program of the pyLottoSimu.
     """
+
     def __init__(self, arguments):
         """Initial user interface and slots
 
@@ -188,7 +187,7 @@ class Main(QtCore.QObject):
         """
         index = self.select_index(tablemodel)
         if index.row() < 0:
-            QtWidgets.QMessageBox.information(self.ui, 'Info', 'No line select')
+            QtWidgets.QMessageBox.information(self.ui, self.tr('Info'), self.tr('No line select'))
             return
         ind = tablemodel.index(index.row(), 0)
         newdata = DlgSqlTable.edit_values(session, datatable, model,
@@ -209,7 +208,7 @@ class Main(QtCore.QObject):
         """
         index = self.select_index(tablemodel)
         if index.row() < 0:
-            QtWidgets.QMessageBox.information(self.ui, 'Info', 'No line select')
+            QtWidgets.QMessageBox.information(self.ui, self.tr('Info'), self.tr('No line select'))
             return
         ind = tablemodel.index(index.row(), 0)
         data = session.query(datatable).get(tablemodel.data(ind, Qt.DisplayRole))
@@ -223,8 +222,8 @@ class Main(QtCore.QObject):
             userdata = session.query(model.User).filter_by(bow_id=data.id).first()
         if userdata:
             QtWidgets.QMessageBox.information(
-                self.ui, 'Info',
-                'Cannot delete, reference by {},{}'.format(userdata.name, userdata.lastname))
+                self.ui, self.tr('Info'),
+                self.tr('Cannot delete, reference by {},{}'.format(userdata.name, userdata.lastname)))
             return
         session.delete(data)
         session.commit()
@@ -236,7 +235,7 @@ class Main(QtCore.QObject):
         :param index:
         :return:
         """
-        print(index.row(), index.column())
+        pass
 
     def onprint(self):
         """Print Preview"""
@@ -246,18 +245,42 @@ class Main(QtCore.QObject):
 
         users = session.query(model.User).order_by(model.User.bow_id).order_by(
             model.User.age_id).order_by(model.User.score.desc()).order_by(
-            model.User.killpt.desc()).all()
+            model.User.killpt.desc()).order_by(
+            model.User.rate.desc()).all()
         names = []
+        saveBowAge = ['', '']
+        rank = 1
+        namesSamePoints = []
+        samePoints = [0, 0, 0]
         for userdata in users:
-            names.append('{}, {}, {}, {} {} {}<br>'.format(
-                userdata.name, 
-                userdata.lastname, 
-                userdata.score, 
-                userdata.killpt, 
-                userdata.bowname, 
-                userdata.agename))
-        self.editor.setHtml('<h1>Headline</h1>{}'.format("".join(names)))
-        self.editor.append('{}'.format("".join(names)))
+            if (saveBowAge != [userdata.bowname, userdata.agename]):
+                names.append('<h2>{}, {}</h2>'.format(
+                    userdata.bowname,
+                    userdata.agename))
+                saveBowAge = [userdata.bowname, userdata.agename]
+                rank = 1
+                samePoints = [0, 0, 0]
+            if samePoints == [userdata.score, userdata.killpt, userdata.rate]:
+                namesSamePoints.append('{} {}'.format(userdata.name, userdata.lastname))
+                rank -= 1
+            names.append('{} {}, {}, {}, {}, {}, {}<br>'.format(
+                rank,
+                userdata.name,
+                userdata.lastname,
+                userdata.score,
+                userdata.killpt,
+                userdata.rate,
+                userdata.clubname))
+            rank += 1
+            samePoints = [userdata.score, userdata.killpt, userdata.rate]
+        if namesSamePoints:
+            infobox = QtWidgets.QMessageBox()
+            infobox.setWindowTitle(self.tr('Info'))
+            infobox.setText(self.tr(
+                'With same Points.<br>{}'.format("<br>".join(namesSamePoints))))
+            infobox.exec_()
+
+        self.editor.setHtml(self.tr('<h1>Overview</h1>Rang Name Score Kill Rate Club<br>{}'.format("".join(names))))
         previewDialog.paintRequested.connect(self.editor.print_)
         previewDialog.exec_()
 

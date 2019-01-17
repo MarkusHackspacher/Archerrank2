@@ -3,7 +3,7 @@
 """
 Archerank2
 
-Copyright (C) <2018> Markus Hackspacher
+Copyright (C) <2018-2019> Markus Hackspacher
 
 This file is part of Archerank2.
 
@@ -47,23 +47,28 @@ class User(base):
 
     @property
     def clubname(self):
-        return self.clubs.name
+        if self.clubs:
+            return self.clubs.name
+        else:
+            return None
 
     @property
     def agename(self):
-        return self.ages.name
+        if self.ages:
+            return self.ages.name
+        else:
+            return None
 
     @property
     def bowname(self):
-        return self.bows.name
+        if self.bows:
+            return self.bows.name
+        else:
+            return None
 
     def __repr__(self):
         return ("<User(name='{0}', fullname='{1}', club='{2}', age='{3}', bow='{4}')>"
-                .format(self.name,
-                        self.lastname,
-                        self.clubname if self.clubname else 'Not select',
-                        self.agename if self.agename else 'Not select',
-                        self.bowname if self.bowname else 'Not select'))
+                .format(self.name, self.lastname, self.clubname, self.agename, self.bowname))
 
 
 class Age(base):

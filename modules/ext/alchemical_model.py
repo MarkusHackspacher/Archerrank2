@@ -54,7 +54,7 @@ class SqlAlchemyTableModel(QSqlTableModel):
 
     def setFilter(self, newFilter):
         """Sets or clears the newFilter.
-        
+
         Clear the filter by setting newFilter to None
         """
         self.filter = newFilter
@@ -66,7 +66,7 @@ class SqlAlchemyTableModel(QSqlTableModel):
         self.layoutAboutToBeChanged.emit()
 
         q = self.session.query
-        
+
         if self.sort is not None:
             order, col = self.sort
             col = self.fields[col][1]
@@ -74,7 +74,7 @@ class SqlAlchemyTableModel(QSqlTableModel):
                 col = col.desc()
         else:
             col = None
-            
+
         if self.filter is not None:
             q = q.filter(self.filter)
 

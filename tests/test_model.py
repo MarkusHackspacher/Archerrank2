@@ -3,7 +3,7 @@
 """
 Archerank2
 
-Copyright (C) <2018> Markus Hackspacher
+Copyright (C) <2019> Markus Hackspacher
 
 This file is part of Archerank2.
 
@@ -69,6 +69,7 @@ class TestCodeFormat(unittest.TestCase):
         self.assertEqual(our_age.sep, 1)
         self.assertEqual(our_age.adult, 1)
         self.assertEqual(our_age.sorting , 0)
+        print(self.session.query(model.Age).first())
 
     def test_bow_model(self):
         """Test the bow model
@@ -79,6 +80,7 @@ class TestCodeFormat(unittest.TestCase):
         self.assertEqual(our_bow.name, 'long bow')
         self.assertEqual(our_bow.short, 'long')
         self.assertEqual(our_bow.sorting, 0)
+        print(self.session.query(model.Bow).first())
 
     def test_club_model(self):
         """Test the club model
@@ -92,6 +94,7 @@ class TestCodeFormat(unittest.TestCase):
         self.assertEqual(our_club.address, None)
         self.assertEqual(our_club.payment, 0)
         self.assertEqual(our_club.advertising, 0)
+        print(self.session.query(model.Club).first())
 
     def test_setting_model(self):
         """Test the setting model
@@ -101,3 +104,4 @@ class TestCodeFormat(unittest.TestCase):
                 name='lastlayout').first()
         self.assertEqual(our_set.name, 'lastlayout')
         self.assertEqual(our_set.value, 'long')
+        print(self.session.query(model.Setting).first())
