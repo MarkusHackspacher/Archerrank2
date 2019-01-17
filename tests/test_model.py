@@ -53,6 +53,10 @@ class TestCodeFormat(unittest.TestCase):
         our_user = self.session.query(model.User).filter_by(name='Ed').first()
         self.assertEqual(our_user.name, 'Ed')
         self.assertEqual(our_user.lastname, 'Jones')
+        print(self.session.query(model.User).first())
+        self.assertEqual(our_user.clubname , None)
+        self.assertEqual(our_user.agename , None)
+        self.assertEqual(our_user.bowname , None)
 
     def test_age_model(self):
         """Test the age model
@@ -61,7 +65,7 @@ class TestCodeFormat(unittest.TestCase):
         our_age = self.session.query(model.Age).filter_by(
                 name='young talented').first()
         self.assertEqual(our_age.name, 'young talented')
-        self.assertEqual(our_age.short , 'advanced')
+        self.assertEqual(our_age.short, 'advanced')
         self.assertEqual(our_age.sep, 1)
         self.assertEqual(our_age.adult, 1)
         self.assertEqual(our_age.sorting , 0)
@@ -73,8 +77,8 @@ class TestCodeFormat(unittest.TestCase):
         our_bow = self.session.query(model.Bow).filter_by(
                 name='long bow').first()
         self.assertEqual(our_bow.name, 'long bow')
-        self.assertEqual(our_bow.short , 'long')
-        self.assertEqual(our_bow.sorting , 0)
+        self.assertEqual(our_bow.short, 'long')
+        self.assertEqual(our_bow.sorting, 0)
 
     def test_club_model(self):
         """Test the club model
@@ -83,11 +87,11 @@ class TestCodeFormat(unittest.TestCase):
         our_club = self.session.query(model.Club).filter_by(
                 name='long bow club').first()
         self.assertEqual(our_club.name, 'long bow club')
-        self.assertEqual(our_club.short , 'long')
-        self.assertEqual(our_club.email  , '')
-        self.assertEqual(our_club.address  , '')
-        self.assertEqual(our_club.payment  , 0)
-        self.assertEqual(our_club.advertising  , 0)
+        self.assertEqual(our_club.short, 'long')
+        self.assertEqual(our_club.email, None)
+        self.assertEqual(our_club.address, None)
+        self.assertEqual(our_club.payment, 0)
+        self.assertEqual(our_club.advertising, 0)
 
     def test_setting_model(self):
         """Test the setting model
@@ -96,4 +100,4 @@ class TestCodeFormat(unittest.TestCase):
         our_set = self.session.query(model.Setting).filter_by(
                 name='lastlayout').first()
         self.assertEqual(our_set.name, 'lastlayout')
-        self.assertEqual(our_set.value  , 'long')
+        self.assertEqual(our_set.value, 'long')
