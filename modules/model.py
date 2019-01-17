@@ -59,7 +59,11 @@ class User(base):
 
     def __repr__(self):
         return ("<User(name='{0}', fullname='{1}', club='{2}', age='{3}', bow='{4}')>"
-            .format(self.name, self.lastname, self.clubname, self.agename, self.bowname))
+                .format(self.name,
+                        self.lastname,
+                        self.clubname if self.clubname else 'Not select',
+                        self.agename if self.agename else 'Not select',
+                        self.bowname if self.bowname else 'Not select'))
 
 
 class Age(base):
@@ -101,6 +105,7 @@ class Setting(base):
     def __repr__(self):
         return ("<Setting(name='{0}', value='{1}')>".
                 format(self.name, self.value))
+
 
 class Club(base):
     """characteristics of the club table
