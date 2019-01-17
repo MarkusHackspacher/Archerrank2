@@ -64,27 +64,31 @@ if not session.query(model.Bow).all():
 if not session.query(model.User).all():
     session.add(model.User(name='John', lastname='Dow', club_id=1, age_id=1, bow_id=1))
 
-model_user = SqlAlchemyTableModel(session, model.User, [('Id', model.User.id, "id", {"editable": False}),
-                                                        ('Lastname', model.User.lastname, "lastname", {"editable": True}),
-                                                        ('Name', model.User.name, "name", {"editable": True}),
-                                                        ('Score', model.User.score, "score", {"editable": True}),
-                                                        ('Kill Points', model.User.killpt, "killpt", {"editable": True}),
-                                                        ('Club', model.User.club_id, "clubname", {"editable": False}),
-                                                        ('Age', model.User.age_id, "agename", {"editable": False}),
-                                                        ('Bow', model.User.bow_id, "bowname", {"editable": False})])
+model_user = SqlAlchemyTableModel(session, model.User, [
+    ('Id', model.User.id, "id", {"editable": False}),
+    ('Lastname', model.User.lastname, "lastname", {"editable": True}),
+    ('Name', model.User.name, "name", {"editable": True}),
+    ('Score', model.User.score, "score", {"editable": True}),
+    ('Kill Points', model.User.killpt, "killpt", {"editable": True}),
+    ('Club', model.User.club_id, "clubname", {"editable": False}),
+    ('Age', model.User.age_id, "agename", {"editable": False}),
+    ('Bow', model.User.bow_id, "bowname", {"editable": False})])
 
-model_club = SqlAlchemyTableModel(session, model.Club, [('Id', model.Club.id, "id", {"editable": False}),
-                                                        ('Name', model.Club.name, "name", {"editable": True, "dnd": True}),
-                                                        ('Short', model.Club.short, "short", {"editable": True}),
-                                                        ('payment', model.Club.payment, "payment", {"editable": True})])
+model_club = SqlAlchemyTableModel(session, model.Club, [
+    ('Id', model.Club.id, "id", {"editable": False}),
+    ('Name', model.Club.name, "name", {"editable": True, "dnd": True}),
+    ('Short', model.Club.short, "short", {"editable": True}),
+    ('payment', model.Club.payment, "payment", {"editable": True})])
 
-model_age = SqlAlchemyTableModel(session, model.Age, [('Id', model.Age.id, "id", {"editable": False}),
-                                                      ('Name', model.Age.name, "name", {"editable": True}),
-                                                      ('Short', model.Age.short, "short", {"editable": True}), ])
+model_age = SqlAlchemyTableModel(session, model.Age, [
+    ('Id', model.Age.id, "id", {"editable": False}),
+    ('Name', model.Age.name, "name", {"editable": True}),
+    ('Short', model.Age.short, "short", {"editable": True}), ])
 
-model_bow = SqlAlchemyTableModel(session, model.Bow, [('Id', model.Bow.id, "id", {"editable": False}),
-                                                      ('Name', model.Bow.name, "name", {"editable": True}),
-                                                      ('Short', model.Bow.short, "short", {"editable": True}), ])
+model_bow = SqlAlchemyTableModel(session, model.Bow, [
+    ('Id', model.Bow.id, "id", {"editable": False}),
+    ('Name', model.Bow.name, "name", {"editable": True}),
+    ('Short', model.Bow.short, "short", {"editable": True}), ])
 
 
 class Main(QtCore.QObject):
@@ -106,12 +110,11 @@ class Main(QtCore.QObject):
         translator.load(join("modules", "pyfbm_" + locale))
         self.app.installTranslator(translator)
 
-
         # Set up the user interface from Designer.
         self.ui = uic.loadUi(os.path.abspath(os.path.join(
             os.path.dirname(sys.argv[0]),
             "modules", "gui", "main.ui")))
-        #self.ui.setWindowIcon(
+        # self.ui.setWindowIcon(
         #    QtGui.QIcon(os.path.abspath(os.path.join(
         #        os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
 
@@ -188,7 +191,8 @@ class Main(QtCore.QObject):
             QtWidgets.QMessageBox.information(self.ui, 'Info', 'No line select')
             return
         ind = tablemodel.index(index.row(), 0)
-        newdata = DlgSqlTable.edit_values(session, datatable, model, tablemodel.data(ind, Qt.DisplayRole))
+        newdata = DlgSqlTable.edit_values(session, datatable, model,
+                                          tablemodel.data(ind, Qt.DisplayRole))
         data = session.query(datatable).get(tablemodel.data(ind, Qt.DisplayRole))
         if newdata[1]:
             for key, value in newdata[0].items():
@@ -218,13 +222,14 @@ class Main(QtCore.QObject):
         elif tablemodel == model_bow:
             userdata = session.query(model.User).filter_by(bow_id=data.id).first()
         if userdata:
-            QtWidgets.QMessageBox.information(self.ui, 'Info',
+            QtWidgets.QMessageBox.information(
+                self.ui, 'Info',
                 'Cannot delete, reference by {},{}'.format(userdata.name, userdata.lastname))
             return
         session.delete(data)
         session.commit()
         tablemodel.refresh()
-        
+
     def user_selected(self, index):
         """selected user
 
@@ -245,13 +250,16 @@ class Main(QtCore.QObject):
         names = []
         for userdata in users:
             names.append('{}, {}, {}, {} {} {}<br>'.format(
-                userdata.name, userdata.lastname, userdata.score, userdata.killpt, userdata.bowname, userdata.agename))
+                userdata.name, 
+                userdata.lastname, 
+                userdata.score, 
+                userdata.killpt, 
+                userdata.bowname, 
+                userdata.agename))
         self.editor.setHtml('<h1>Headline</h1>{}'.format("".join(names)))
         self.editor.append('{}'.format("".join(names)))
         previewDialog.paintRequested.connect(self.editor.print_)
         previewDialog.exec_()
-
-
 
     def onoverview(self):
         """Set the text for the info message box in html format
@@ -264,7 +272,12 @@ class Main(QtCore.QObject):
         names = []
         for userdata in users:
             names.append('{}, {}, {}, {} {} {}<br>'.format(
-                userdata.name, userdata.lastname, userdata.score, userdata.killpt, userdata.bowname, userdata.agename))
+                userdata.name,
+                userdata.lastname,
+                userdata.score,
+                userdata.killpt,
+                userdata.bowname,
+                userdata.agename))
         infobox = QtWidgets.QMessageBox()
         infobox.setWindowTitle(self.tr('Info'))
 
