@@ -20,12 +20,14 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
-from sqlalchemy import orm, literal,  create_engine
-
 import sys
-sys.path.append('..')
+
+from sqlalchemy import create_engine, literal, orm
 
 from modules import model
+
+sys.path.append('..')
+
 
 
 # Create an engine and create all the tables we need

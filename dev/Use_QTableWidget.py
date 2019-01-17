@@ -21,19 +21,17 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
-import sys
 import os
+import sys
 
-from PyQt5 import QtGui, QtCore, QtWidgets, uic
-
-from sqlalchemy import orm, literal,  create_engine
-
+from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from sqlalchemy import create_engine, literal, orm
 
 from alchemical_model import SqlAlchemyTableModel
+from modules import model
 
 sys.path.append('..')
 
-from modules import model
 
 
 # Create an engine and create all the tables we need
@@ -103,4 +101,3 @@ def new_club():
 
 if __name__ == '__main__':
     window()
-

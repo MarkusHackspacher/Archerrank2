@@ -21,10 +21,10 @@ You should have received a copy of the GNU General Public License
 along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from sqlalchemy import Column, String, Integer, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, ForeignKey, Integer, String
 # https://docs.sqlalchemy.org/en/latest/orm/tutorial.html
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
 base = declarative_base()
 

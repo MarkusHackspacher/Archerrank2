@@ -4,9 +4,9 @@
 """
 Qt data models that bind to SQLAlchemy queries
 """
-from PyQt5.QtWidgets import QMessageBox 
+from PyQt5.Qt import Qt, QVariant
 from PyQt5.QtSql import QSqlTableModel
-from PyQt5.Qt import QVariant, Qt
+from PyQt5.QtWidgets import QMessageBox
 
 
 class SqlAlchemyTableModel(QSqlTableModel):
@@ -14,7 +14,7 @@ class SqlAlchemyTableModel(QSqlTableModel):
 
     Example:
     >>> model = AlchemicalTableModel(Session,
-            Entity, 
+            Entity,
             [('Name', Entity.name, "name", {"editable": True} )])
     >>> table = QTableView()
     >>> table.setModel(model)
@@ -22,9 +22,9 @@ class SqlAlchemyTableModel(QSqlTableModel):
 
     def __init__(self, session, entity, columns):
         """Constructor for the model.
-        
+
         @param session: The SQLAlchemy session object.
-        @param entity: The entity class that represents the SQLAlchemy data object 
+        @param entity: The entity class that represents the SQLAlchemy data object
         @param columns: A list of column 4-tuples
           (header, sqlalchemy column, column name, extra parameters as dict)
           if the sqlalchemy column object is 'Entity.name', then column name
@@ -32,9 +32,9 @@ class SqlAlchemyTableModel(QSqlTableModel):
           'Entity.name' is what will be used when setting data and sorting,
           'name' will be used to retrieve the data.
         """
-        
+
         super().__init__()
-        #TODO self.sort_data = None
+        # TODO self.sort_data = None
         self.session = session
         self.fields = columns
         self.query = session.query

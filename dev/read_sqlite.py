@@ -22,14 +22,11 @@ You should have received a copy of the GNU General Public License
 along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import sys
-
 import sqlite3
-
+import sys
+from pathlib import Path
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
-
-from pathlib import Path
 
 """Read an Archerrank .sqlite file"""
 my_file = Path('')

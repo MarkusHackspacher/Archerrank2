@@ -3,7 +3,7 @@
 """
 Archerank2
 
-Copyright (C) <2018> Markus Hackspacher
+Copyright (C) <2018-2019> Markus Hackspacher
 
 This file is part of Archerank2.
 
@@ -21,13 +21,12 @@ You should have received a copy of the GNU General Public License
 along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from sqlalchemy.orm.attributes import InstrumentedAttribute
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.Qt import Qt
 from sqlalchemy import Column
+from sqlalchemy.orm.attributes import InstrumentedAttribute
 
 from modules.ext.alchemical_model import SqlAlchemyTableModel
-from PyQt5 import QtGui, QtCore, QtWidgets
-from PyQt5.Qt import Qt
-
 
 
 class DlgSqlTable(QtWidgets.QDialog):
@@ -90,7 +89,6 @@ class DlgSqlTable(QtWidgets.QDialog):
                 self.field[name], buttonnumber, 2, 1, 1)
 
         for buttonnumber, label in enumerate(self.labels):
-            #label.setMaximumSize(QtCore.QSize(58, 58))
             label.setAutoFillBackground(True)
             self.gridLayout.addWidget(
                 label, buttonnumber, 1, 1, 1)

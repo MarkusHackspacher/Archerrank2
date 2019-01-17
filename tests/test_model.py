@@ -22,6 +22,7 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import unittest
+
 from sqlalchemy import create_engine, orm
 
 from modules import model
@@ -54,9 +55,9 @@ class TestCodeFormat(unittest.TestCase):
         self.assertEqual(our_user.name, 'Ed')
         self.assertEqual(our_user.lastname, 'Jones')
         print(self.session.query(model.User).first())
-        self.assertEqual(our_user.clubname , None)
-        self.assertEqual(our_user.agename , None)
-        self.assertEqual(our_user.bowname , None)
+        self.assertEqual(our_user.clubname, None)
+        self.assertEqual(our_user.agename, None)
+        self.assertEqual(our_user.bowname, None)
 
     def test_age_model(self):
         """Test the age model
@@ -68,7 +69,7 @@ class TestCodeFormat(unittest.TestCase):
         self.assertEqual(our_age.short, 'advanced')
         self.assertEqual(our_age.sep, 1)
         self.assertEqual(our_age.adult, 1)
-        self.assertEqual(our_age.sorting , 0)
+        self.assertEqual(our_age.sorting, 0)
         print(self.session.query(model.Age).first())
 
     def test_bow_model(self):

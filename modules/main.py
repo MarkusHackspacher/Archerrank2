@@ -22,22 +22,21 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import functools
-import sys
 import os
+import sys
 from os.path import join
 
-from PyQt5 import QtGui, QtCore, QtWidgets, uic
-from PyQt5.QtPrintSupport import QPrinter, QPrintDialog, QPrintPreviewDialog
+from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.Qt import Qt
+from PyQt5.QtPrintSupport import QPrintDialog, QPrinter, QPrintPreviewDialog
+from sqlalchemy import create_engine, literal, orm
 
-from sqlalchemy import orm, literal, create_engine
-
+from modules import model
 from modules.ext.alchemical_model import SqlAlchemyTableModel
 from modules.gui.dialogsqltable import DlgSqlTable
 
 sys.path.append('..')
 
-from modules import model
 
 # Create an engine and create all the tables we need
 engine = create_engine('sqlite:///test2.sqlite', echo=False)
