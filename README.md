@@ -1,6 +1,8 @@
 Archerank2
 ==========
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/28c624d32d36476ab7d0e9c831318127)](https://app.codacy.com/app/Malta/Archerrank2?utm_source=github.com&utm_medium=referral&utm_content=MarkusHackspacher/Archerrank2&utm_campaign=Badge_Grade_Dashboard)
+
 For the evaluation of archery tournaments.
 
 motivation
