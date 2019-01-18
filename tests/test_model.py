@@ -106,3 +106,17 @@ class TestCodeFormat(unittest.TestCase):
         self.assertEqual(our_set.name, 'lastlayout')
         self.assertEqual(our_set.value, 'long')
         print(self.session.query(model.Setting).first())
+
+    def test_user_model_with_other(self):
+        """Test the user model and add club, bow and age.
+        """
+        self.session.add(model.Club(name='long bow club', short='long'))
+        self.session.add(model.Bow(name='long bow', short='long'))
+        self.session.add(model.Age(name='young talented', short='advanced'))
+        self.session.add(model.User(
+            name='Ed', lastname='Jones', club_id=1, age_id=1, bow_id=1))
+        print(self.session.query(model.User).first())
+        our_user = self.session.query(model.User).filter_by(name='Ed').first()
+        self.assertEqual(our_user.clubname, 'long bow club')
+        self.assertEqual(our_user.agename, 'young talented')
+        self.assertEqual(our_user.bowname, 'long bow')

@@ -26,10 +26,10 @@ import os
 import sys
 from os.path import join
 
-from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.Qt import Qt
-from PyQt5.QtPrintSupport import QPrintDialog, QPrinter, QPrintPreviewDialog
-from sqlalchemy import create_engine, literal, orm
+from PyQt5.QtPrintSupport import QPrinter, QPrintPreviewDialog
+from sqlalchemy import create_engine, orm
 
 from modules import model
 from modules.ext.alchemical_model import SqlAlchemyTableModel
@@ -222,7 +222,8 @@ class Main(QtCore.QObject):
         if userdata:
             QtWidgets.QMessageBox.information(
                 self.ui, self.tr('Info'),
-                self.tr('Cannot delete, reference by {},{}'.format(userdata.name, userdata.lastname)))
+                self.tr('Cannot delete, reference by {},{}'.format(
+                    userdata.name, userdata.lastname)))
             return
         session.delete(data)
         session.commit()
@@ -279,7 +280,8 @@ class Main(QtCore.QObject):
                 'With same Points.<br>{}'.format("<br>".join(namesSamePoints))))
             infobox.exec_()
 
-        self.editor.setHtml(self.tr('<h1>Overview</h1>Rang Name Score Kill Rate Club<br>{}'.format("".join(names))))
+        self.editor.setHtml(self.tr(
+            '<h1>Overview</h1>Rang Name Score Kill Rate Club<br>{}'.format("".join(names))))
         previewDialog.paintRequested.connect(self.editor.print_)
         previewDialog.exec_()
 
