@@ -22,7 +22,7 @@ install
 
 Clone from Github
 
-```
+```bash
 git clone https://github.com/MarkusHackspacher/Archerrank2.git
 ```
 
@@ -30,7 +30,7 @@ Download and install Python 3.6 or higher from www.python.org
 
 Install pyqt5 and sqlalchemy
 
-```
+```bash
 pip3 install -r requirements.txt
 ```
 
@@ -38,12 +38,12 @@ Start with
 
 Linux
 
-```
+```bash
 ./archerrank2.py
 ```
 
 Windows
 
-```
+```commandline
 python archerrank2.py
 ```
