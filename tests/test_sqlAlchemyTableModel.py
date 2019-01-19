@@ -23,12 +23,11 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 
 from unittest import TestCase
 
+from PyQt5.Qt import QMetaType, QModelIndex, Qt
 from sqlalchemy import create_engine, orm
-from PyQt5.Qt import Qt, QMetaType, QTableView, QModelIndex
 
 from modules import model
 from modules.ext.alchemical_model import SqlAlchemyTableModel
-
 
 
 class TestSqlAlchemyTableModel(TestCase):
@@ -106,10 +105,3 @@ class TestSqlAlchemyTableModel(TestCase):
         self.assertEqual(self.model_user.data(index, Qt.DisplayRole), 'John')
         self.assertEqual(self.model_user.setData(index, 'Jonny'), True)
         self.assertEqual(self.model_user.data(index, Qt.DisplayRole), 'Jonny')
-
-    def test_sort(self):
-        self.model_user.setSort(1, Qt.DescendingOrder)
-        self.assertEqual(self.model_user.sort, None)
-        self.model_user.sort1(3, Qt.DescendingOrder)
-        self.assertEqual(self.model_user.sort, (1, 3))
-

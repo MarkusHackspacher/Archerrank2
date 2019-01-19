@@ -137,9 +137,3 @@ class SqlAlchemyTableModel(QSqlTableModel):
         else:
             self.dataChanged.emit(index, index)
             return True
-
-    def sort1(self, col, order):
-        """Sort table by given column number."""
-        if self.sort != (order, col):
-            self.sort = order, col
-            self.refresh()

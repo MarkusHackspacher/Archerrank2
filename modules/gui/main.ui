@@ -211,14 +211,14 @@
         <item>
          <widget class="QPushButton" name="pushButton_editage">
           <property name="text">
-           <string>add new age</string>
+           <string>edit age</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_deleteage">
           <property name="text">
-           <string>add new age</string>
+           <string>delete age</string>
           </property>
          </widget>
         </item>
@@ -282,17 +282,17 @@
   </action>
   <action name="actionInfo">
    <property name="text">
-    <string>Info</string>
+    <string>&amp;Info</string>
    </property>
   </action>
   <action name="actionOverview">
    <property name="text">
-    <string>Overview</string>
+    <string>&amp;Overview</string>
    </property>
   </action>
   <action name="actionPrintPreview">
    <property name="text">
-    <string>Print Preview</string>
+    <string>&amp;Print Preview</string>
    </property>
   </action>
  </widget>
