@@ -113,5 +113,5 @@ class TestSqlAlchemyTableModel(TestCase):
         self.session.add(model.User(name='John', lastname='Dow'))
         self.model_user.refresh()
         self.model_user.sort = (1, 3)
-        self.assertEqual(self.model_user.sort, (1,3))
+        self.assertEqual(self.model_user.sort, (1, 3))
         self.model_user.refresh()
