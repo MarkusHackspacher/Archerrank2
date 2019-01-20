@@ -163,7 +163,7 @@ class DlgSqlTable(QtWidgets.QDialog):
         return (dialog.values(), result == QtWidgets.QDialog.Accepted)
 
     @staticmethod
-    def edit_values(session, table, model, id):
+    def edit_values(session, table, model, idEdit):
         """static method to create the dialog and return
         (dialog.values, accepted)
 
@@ -173,17 +173,18 @@ class DlgSqlTable(QtWidgets.QDialog):
         :type table: table
         :param model: Database model
         :type model: model
-        :param id: actual id to edit
-        :type id: int
+        :param idEdit: actual id to edit
+        :type idEdit: int
         :returns: dialog.values, accepted
         :rtype: dict, bool
         """
         dialog = DlgSqlTable(session, table, model)
-        dialog.load_values(id, session, table)
+        dialog.load_values(idEdit, session, table)
         result = dialog.exec_()
         return (dialog.values(), result == QtWidgets.QDialog.Accepted)
 
-    def MyTableModel(self, model, session):
+    @classmethod
+    def MyTableModel(cls, model, session):
         return SqlAlchemyTableModel(session, model, [
             ('Name', model.name, "name", {"editable": True}),
             ('Id', model.id, "id", {"editable": False})])

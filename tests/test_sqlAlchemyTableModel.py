@@ -81,7 +81,10 @@ class TestSqlAlchemyTableModel(TestCase):
         self.session.add(model.User(name='John', lastname='Dow'))
         self.model_user.refresh()
         index = self.model_user.createIndex(0, 2)
-        self.model_user.dropMimeData('a', Qt.MoveAction, 0, 2, index)
+        self.assertEqual(
+            self.model_user.dropMimeData('name', Qt.MoveAction, 0, 2, index), False)
+        self.assertEqual(
+            self.model_user.dropMimeData('a', Qt.DropAction, 0, 2, index), None)
         self.assertEqual(self.model_user.data(index, Qt.DisplayRole), 'John')
 
     def test_rowCount(self):
@@ -105,3 +108,10 @@ class TestSqlAlchemyTableModel(TestCase):
         self.assertEqual(self.model_user.data(index, Qt.DisplayRole), 'John')
         self.assertEqual(self.model_user.setData(index, 'Jonny'), True)
         self.assertEqual(self.model_user.data(index, Qt.DisplayRole), 'Jonny')
+
+    def test_refresh(self):
+        self.session.add(model.User(name='John', lastname='Dow'))
+        self.model_user.refresh()
+        self.model_user.sort = (1, 3)
+        self.assertEqual(self.model_user.sort, (1,3))
+        self.model_user.refresh()
