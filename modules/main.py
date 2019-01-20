@@ -155,7 +155,8 @@ class Main(QtCore.QObject):
         self.ui.pushButton_deletebow.clicked.connect(bow_del)
         self.ui.show()
 
-    def entry_new(self, datatable, tablemodel):
+    @classmethod
+    def entry_new(cls, datatable, tablemodel):
         """open dialog for new entry
 
         datatable is model.User

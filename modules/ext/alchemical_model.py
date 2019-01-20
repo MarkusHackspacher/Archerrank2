@@ -76,6 +76,8 @@ class SqlAlchemyTableModel(QSqlTableModel):
             col = None
 
         if self.filter is not None:
+            # not working
+            # AttributeError: 'function' object has no attribute 'filter'
             q = q.filter(self.filter)
 
         self.results = q(self.entity).all()
