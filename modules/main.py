@@ -26,6 +26,7 @@ import os
 import sys
 from os.path import join
 
+from mailmerge import MailMerge
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.Qt import Qt
 from PyQt5.QtPrintSupport import QPrinter, QPrintPreviewDialog
@@ -129,6 +130,9 @@ class Main(QtCore.QObject):
         self.ui.actionOverview.triggered.connect(self.onoverview)
         self.ui.actionInfo.triggered.connect(self.oninfo)
         self.ui.actionExit.triggered.connect(self.onexit)
+        self.ui.actionCreate_certificates.triggered.connect(self.oncreate)
+        self.ui.actionLoad_file.triggered.connect(self.onload)
+        self.ui.actionSave_file_as.triggered.connect(self.onsave)
         user_new = functools.partial(self.entry_new, model.User, model_user)
         club_new = functools.partial(self.entry_new, model.Club, model_club)
         age_new = functools.partial(self.entry_new, model.Age, model_age)
@@ -326,6 +330,19 @@ class Main(QtCore.QObject):
             '<a href="https://github.com/MarkusHackspacher/Archerrank2">'
             'github.com/MarkusHackspacher/Archerrank2</a>'))
         infobox.exec_()
+
+    def oncreate(self):
+        with MailMerge('input.docx') as document:
+            print(document.get_merge_fields())
+            document.merge(Editor='docx Mail Merge',
+                           Note='Can be used for merging docx documents')
+            document.write('output.docx')
+
+    def onload(self):
+        pass
+
+    def onsave(self):
+        pass
 
     def onexit(self):
         """exit and close

@@ -64,15 +64,15 @@ class DlgSqlTable(QtWidgets.QDialog):
                 self.field[name] = QtWidgets.QSpinBox(self)
             elif name in 'club_id':
                 self.field[name] = QtWidgets.QComboBox(self)
-                self.model_club = self.MyTableModel(model.Club, session)
+                self.model_club = self.my_table_model(model.Club, session)
                 self.field[name].setModel(self.model_club)
             elif name in 'bow_id':
                 self.field[name] = QtWidgets.QComboBox(self)
-                self.model_bow = self.MyTableModel(model.Bow, session)
+                self.model_bow = self.my_table_model(model.Bow, session)
                 self.field[name].setModel(self.model_bow)
             elif name in 'age_id':
                 self.field[name] = QtWidgets.QComboBox(self)
-                self.model_age = self.MyTableModel(model.Age, session)
+                self.model_age = self.my_table_model(model.Age, session)
                 self.field[name].setModel(self.model_age)
             else:
                 self.field[name] = QtWidgets.QComboBox(self)
@@ -104,21 +104,15 @@ class DlgSqlTable(QtWidgets.QDialog):
             elif name in self.INT:
                 self.field[name].setValue(dataset.__dict__[name])
             elif name in ('age_id'):
-                matches = self.model_age.match(
-                    self.model_age.index(0, 1), QtCore.Qt.DisplayRole,
-                    dataset.__dict__[name], 1, QtCore.Qt.MatchExactly)
+                matches = self.my_match(self.model_age, dataset)
                 if matches:
                     self.field[name].setCurrentIndex(matches[0].row())
             elif name in ('bow_id'):
-                matches = self.model_bow.match(
-                    self.model_bow.index(0, 1), QtCore.Qt.DisplayRole,
-                    dataset.__dict__[name], 1, QtCore.Qt.MatchExactly)
+                matches = self.my_match(self.model_bow, dataset)
                 if matches:
                     self.field[name].setCurrentIndex(matches[0].row())
             elif name in ('club_id'):
-                matches = self.model_club.match(
-                    self.model_club.index(0, 1), QtCore.Qt.DisplayRole,
-                    dataset.__dict__[name], 1, QtCore.Qt.MatchExactly)
+                matches = self.my_match(self.model_club, dataset)
                 if matches:
                     self.field[name].setCurrentIndex(matches[0].row())
 
@@ -184,7 +178,13 @@ class DlgSqlTable(QtWidgets.QDialog):
         return (dialog.values(), result == QtWidgets.QDialog.Accepted)
 
     @classmethod
-    def MyTableModel(cls, model, session):
+    def my_table_model(cls, model, session):
         return SqlAlchemyTableModel(session, model, [
             ('Name', model.name, "name", {"editable": True}),
             ('Id', model.id, "id", {"editable": False})])
+
+    @classmethod
+    def my_match(cls, model, dataset):
+        return model.match(
+            model.index(0, 1), QtCore.Qt.DisplayRole,
+            dataset.__dict__[name], 1, QtCore.Qt.MatchExactly)
