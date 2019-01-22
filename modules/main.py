@@ -30,6 +30,7 @@ from mailmerge import MailMerge
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.Qt import Qt
 from PyQt5.QtPrintSupport import QPrinter, QPrintPreviewDialog
+from PyQt5.QtWidgets import QMessageBox, QFileDialog
 from sqlalchemy import create_engine, orm
 
 from modules import model
@@ -37,7 +38,6 @@ from modules.ext.alchemical_model import SqlAlchemyTableModel
 from modules.gui.dialogsqltable import DlgSqlTable
 
 sys.path.append('..')
-
 
 # Create an engine and create all the tables we need
 engine = create_engine('sqlite:///test2.sqlite', echo=False)
@@ -108,6 +108,8 @@ class Main(QtCore.QObject):
         translator = QtCore.QTranslator(self.app)
         translator.load(join("modules", "pyfbm_" + locale))
         self.app.installTranslator(translator)
+
+        print(yes_no_cancel_dlg('You want load a file or create a new file'))
 
         # Set up the user interface from Designer.
         self.ui = uic.loadUi(os.path.abspath(os.path.join(
@@ -357,3 +359,24 @@ class Main(QtCore.QObject):
         :return:
         """
         self.app.exec_()
+
+
+def yes_no_cancel_dlg(text):
+    msgBox = QMessageBox()
+    msgBox.setIcon(QMessageBox.Question)
+    msgBox.setText("Question")
+    msgBox.setInformativeText(text)
+    msgBox.addButton('Load', QMessageBox.YesRole)
+    msgBox.addButton('New', QMessageBox.NoRole)
+    reply = msgBox.exec_()
+    print(reply)
+    if reply == 0:
+        fileName, _ = QFileDialog.getOpenFileName(
+            None, "QFileDialog.getOpenFileName()", "",
+            "All Files (*);;Python Files (*.py)")
+        return fileName
+
+    elif reply == 1:
+        return "no"
+    else:
+        return "cancel"
