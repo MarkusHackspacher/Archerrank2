@@ -37,8 +37,6 @@ from modules import model
 from modules.ext.alchemical_model import SqlAlchemyTableModel
 from modules.gui.dialogsqltable import DlgSqlTable
 
-sys.path.append('..')
-
 # Create an engine and create all the tables we need
 engine = create_engine('sqlite:///test2.sqlite', echo=False)
 model.base.metadata.bind = engine
@@ -109,7 +107,7 @@ class Main(QtCore.QObject):
         translator.load(join("modules", "pyfbm_" + locale))
         self.app.installTranslator(translator)
 
-        print(yes_no_cancel_dlg('You want load a file or create a new file'))
+        print(file_dlg('You want load a file or create a new file'))
 
         # Set up the user interface from Designer.
         self.ui = uic.loadUi(os.path.abspath(os.path.join(
@@ -361,7 +359,7 @@ class Main(QtCore.QObject):
         self.app.exec_()
 
 
-def yes_no_cancel_dlg(text):
+def file_dlg(text):
     msgBox = QMessageBox()
     msgBox.setIcon(QMessageBox.Question)
     msgBox.setText("Question")
