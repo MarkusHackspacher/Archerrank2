@@ -366,17 +366,21 @@ def yes_no_cancel_dlg(text):
     msgBox.setIcon(QMessageBox.Question)
     msgBox.setText("Question")
     msgBox.setInformativeText(text)
-    msgBox.addButton('Load', QMessageBox.YesRole)
-    msgBox.addButton('New', QMessageBox.NoRole)
+    msgBox.addButton('Load', QMessageBox.AcceptRole)
+    msgBox.addButton('New', QMessageBox.AcceptRole)
+    msgBox.addButton('Exit', QMessageBox.NoRole)
     reply = msgBox.exec_()
     print(reply)
     if reply == 0:
         fileName, _ = QFileDialog.getOpenFileName(
             None, "QFileDialog.getOpenFileName()", "",
-            "All Files (*);;Python Files (*.py)")
+            "Acherrang2 Files (*.sqlite)")
         return fileName
 
     elif reply == 1:
-        return "no"
+        fileName, _ = QFileDialog.getSaveFileName(
+            None, "QFileDialog.getSaveFileName()", "",
+            "Acherrang2 Files (*.sqlite)")
+        return fileName
     else:
-        return "cancel"
+        return "exit"
