@@ -27,10 +27,10 @@ import sys
 from os.path import join
 
 from mailmerge import MailMerge
-from PyQt5 import QtCore, QtWidgets, uic
+from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.Qt import Qt
 from PyQt5.QtPrintSupport import QPrinter, QPrintPreviewDialog
-from PyQt5.QtWidgets import QMessageBox, QFileDialog
+from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from sqlalchemy import create_engine, orm
 
 from modules import model
@@ -113,9 +113,9 @@ class Main(QtCore.QObject):
         self.ui = uic.loadUi(os.path.abspath(os.path.join(
             os.path.dirname(sys.argv[0]),
             "modules", "gui", "main.ui")))
-        # self.ui.setWindowIcon(
-        #    QtGui.QIcon(os.path.abspath(os.path.join(
-        #        os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+        self.ui.setWindowIcon(
+            QtGui.QIcon(os.path.abspath(os.path.join(
+                os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
 
         self.ui.tableView_user.setModel(model_user)
         self.ui.tableView_club.setModel(model_club)
