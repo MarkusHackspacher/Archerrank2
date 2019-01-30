@@ -44,7 +44,6 @@ except ImportError:
     importmailmerge = False
 
 
-
 class Main(QtCore.QObject):
     """The GUI and program of the pyLottoSimu.
     """
@@ -64,7 +63,6 @@ class Main(QtCore.QObject):
         translator = QtCore.QTranslator(self.app)
         translator.load(join("modules", "pyfbm_" + locale))
         self.app.installTranslator(translator)
-
 
         # Set up the user interface from Designer.
         self.ui = uic.loadUi(os.path.abspath(os.path.join(
@@ -133,7 +131,6 @@ class Main(QtCore.QObject):
                               expire_on_commit=True)
         self.session = orm.scoped_session(sm)
 
-
         self.model_user = SqlAlchemyTableModel(self.session, model.User, [
             ('Id', model.User.id, "id", {"editable": False}),
             ('Lastname', model.User.lastname, "lastname", {"editable": True}),
@@ -159,7 +156,6 @@ class Main(QtCore.QObject):
             ('Id', model.Bow.id, "id", {"editable": False}),
             ('Name', model.Bow.name, "name", {"editable": True}),
             ('Short', model.Bow.short, "short", {"editable": True}), ])
-
 
     def entry_new(self, datatable, tablemodel):
         """open dialog for new entry
