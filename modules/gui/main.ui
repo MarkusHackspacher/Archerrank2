@@ -255,6 +255,7 @@
     </property>
     <addaction name="actionOverview"/>
     <addaction name="actionPrintPreview"/>
+    <addaction name="actionCreate_certificates"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEvaluation"/>
@@ -293,6 +294,21 @@
   <action name="actionPrintPreview">
    <property name="text">
     <string>&amp;Print Preview</string>
+   </property>
+  </action>
+  <action name="actionLoad_file">
+   <property name="text">
+    <string>&amp;Load file</string>
+   </property>
+  </action>
+  <action name="actionSave_file_as">
+   <property name="text">
+    <string>&amp;Save file as</string>
+   </property>
+  </action>
+  <action name="actionCreate_certificates">
+   <property name="text">
+    <string>&amp;Create certificates</string>
    </property>
   </action>
  </widget>
