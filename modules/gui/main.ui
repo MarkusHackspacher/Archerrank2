@@ -241,8 +241,6 @@
     <property name="title">
      <string>Fi&amp;le</string>
     </property>
-    <addaction name="actionLoad_file"/>
-    <addaction name="actionSave_file_as"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuInfo">
@@ -310,7 +308,7 @@
   </action>
   <action name="actionCreate_certificates">
    <property name="text">
-    <string>Create certificates</string>
+    <string>&amp;Create certificates</string>
    </property>
   </action>
  </widget>

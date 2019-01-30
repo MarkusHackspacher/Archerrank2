@@ -26,7 +26,6 @@ import os
 import sys
 from os.path import join
 
-from mailmerge import MailMerge
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.Qt import Qt
 from PyQt5.QtPrintSupport import QPrinter, QPrintPreviewDialog
@@ -37,54 +36,13 @@ from modules import model
 from modules.ext.alchemical_model import SqlAlchemyTableModel
 from modules.gui.dialogsqltable import DlgSqlTable
 
-# Create an engine and create all the tables we need
-engine = create_engine('sqlite:///test2.sqlite', echo=False)
-model.base.metadata.bind = engine
-model.base.metadata.create_all(engine)
+importmailmerge = True
+try:
+    from mailmerge import MailMerge
+except ImportError:
+    print('Not found docx-mailmerge, no export docx possible')
+    importmailmerge = False
 
-# Set up the session
-sm = orm.sessionmaker(bind=engine,
-                      autoflush=True,
-                      autocommit=False,
-                      expire_on_commit=True)
-session = orm.scoped_session(sm)
-
-if not session.query(model.Club).all():
-    session.add(model.Club(name='VfB Stuttgart', short='VfB'))
-if not session.query(model.Age).all():
-    session.add(model.Age(name='Beginner', short='start'))
-    session.add(model.Age(name='Best of All', short='Elite'))
-    session.add(model.Age(name='Kid', short='Kid', id=23))
-if not session.query(model.Bow).all():
-    session.add(model.Bow(name='Longbow', short='LB'))
-if not session.query(model.User).all():
-    session.add(model.User(name='John', lastname='Dow', club_id=1, age_id=1, bow_id=1))
-
-model_user = SqlAlchemyTableModel(session, model.User, [
-    ('Id', model.User.id, "id", {"editable": False}),
-    ('Lastname', model.User.lastname, "lastname", {"editable": True}),
-    ('Name', model.User.name, "name", {"editable": True}),
-    ('Score', model.User.score, "score", {"editable": True}),
-    ('Kill Points', model.User.killpt, "killpt", {"editable": True}),
-    ('Club', model.User.club_id, "clubname", {"editable": False}),
-    ('Age', model.User.age_id, "agename", {"editable": False}),
-    ('Bow', model.User.bow_id, "bowname", {"editable": False})])
-
-model_club = SqlAlchemyTableModel(session, model.Club, [
-    ('Id', model.Club.id, "id", {"editable": False}),
-    ('Name', model.Club.name, "name", {"editable": True, "dnd": True}),
-    ('Short', model.Club.short, "short", {"editable": True}),
-    ('payment', model.Club.payment, "payment", {"editable": True})])
-
-model_age = SqlAlchemyTableModel(session, model.Age, [
-    ('Id', model.Age.id, "id", {"editable": False}),
-    ('Name', model.Age.name, "name", {"editable": True}),
-    ('Short', model.Age.short, "short", {"editable": True}), ])
-
-model_bow = SqlAlchemyTableModel(session, model.Bow, [
-    ('Id', model.Bow.id, "id", {"editable": False}),
-    ('Name', model.Bow.name, "name", {"editable": True}),
-    ('Short', model.Bow.short, "short", {"editable": True}), ])
 
 
 class Main(QtCore.QObject):
@@ -107,7 +65,6 @@ class Main(QtCore.QObject):
         translator.load(join("modules", "pyfbm_" + locale))
         self.app.installTranslator(translator)
 
-        print(file_dlg('You want load a file or create a new file'))
 
         # Set up the user interface from Designer.
         self.ui = uic.loadUi(os.path.abspath(os.path.join(
@@ -116,11 +73,11 @@ class Main(QtCore.QObject):
         self.ui.setWindowIcon(
             QtGui.QIcon(os.path.abspath(os.path.join(
                 os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
-
-        self.ui.tableView_user.setModel(model_user)
-        self.ui.tableView_club.setModel(model_club)
-        self.ui.tableView_age.setModel(model_age)
-        self.ui.tableView_bow.setModel(model_bow)
+        self.initDataBase()
+        self.ui.tableView_user.setModel(self.model_user)
+        self.ui.tableView_club.setModel(self.model_club)
+        self.ui.tableView_age.setModel(self.model_age)
+        self.ui.tableView_bow.setModel(self.model_bow)
         self.ui.tableView_user.setColumnHidden(0, True)
         self.ui.tableView_club.setColumnHidden(0, True)
         self.ui.tableView_age.setColumnHidden(0, True)
@@ -131,55 +88,99 @@ class Main(QtCore.QObject):
         self.ui.actionInfo.triggered.connect(self.oninfo)
         self.ui.actionExit.triggered.connect(self.onexit)
         self.ui.actionCreate_certificates.triggered.connect(self.oncreate)
-        self.ui.actionLoad_file.triggered.connect(self.onload)
-        self.ui.actionSave_file_as.triggered.connect(self.onsave)
-        user_new = functools.partial(self.entry_new, model.User, model_user)
-        club_new = functools.partial(self.entry_new, model.Club, model_club)
-        age_new = functools.partial(self.entry_new, model.Age, model_age)
-        bow_new = functools.partial(self.entry_new, model.Bow, model_bow)
+        user_new = functools.partial(self.entry_new, model.User, self.model_user)
+        club_new = functools.partial(self.entry_new, model.Club, self.model_club)
+        age_new = functools.partial(self.entry_new, model.Age, self.model_age)
+        bow_new = functools.partial(self.entry_new, model.Bow, self.model_bow)
         self.ui.pushButton_user.clicked.connect(user_new)
         self.ui.pushButton_club.clicked.connect(club_new)
         self.ui.pushButton_age.clicked.connect(age_new)
         self.ui.pushButton_bow.clicked.connect(bow_new)
-        user_edit = functools.partial(self.entry_edit, model.User, model_user)
-        club_edit = functools.partial(self.entry_edit, model.Club, model_club)
-        age_edit = functools.partial(self.entry_edit, model.Age, model_age)
-        bow_edit = functools.partial(self.entry_edit, model.Bow, model_bow)
+        user_edit = functools.partial(self.entry_edit, model.User, self.model_user)
+        club_edit = functools.partial(self.entry_edit, model.Club, self.model_club)
+        age_edit = functools.partial(self.entry_edit, model.Age, self.model_age)
+        bow_edit = functools.partial(self.entry_edit, model.Bow, self.model_bow)
         self.ui.pushButton_edituser.clicked.connect(user_edit)
         self.ui.pushButton_editclub.clicked.connect(club_edit)
         self.ui.pushButton_editage.clicked.connect(age_edit)
         self.ui.pushButton_editbow.clicked.connect(bow_edit)
-        user_del = functools.partial(self.entry_del, model.User, model_user)
-        club_del = functools.partial(self.entry_del, model.Club, model_club)
-        age_del = functools.partial(self.entry_del, model.Age, model_age)
-        bow_del = functools.partial(self.entry_del, model.Bow, model_bow)
+        user_del = functools.partial(self.entry_del, model.User, self.model_user)
+        club_del = functools.partial(self.entry_del, model.Club, self.model_club)
+        age_del = functools.partial(self.entry_del, model.Age, self.model_age)
+        bow_del = functools.partial(self.entry_del, model.Bow, self.model_bow)
         self.ui.pushButton_deleteuser.clicked.connect(user_del)
         self.ui.pushButton_deleteclub.clicked.connect(club_del)
         self.ui.pushButton_deleteage.clicked.connect(age_del)
         self.ui.pushButton_deletebow.clicked.connect(bow_del)
+        self.ui.actionCreate_certificates.setEnabled(importmailmerge)
         self.ui.show()
 
-    @classmethod
-    def entry_new(cls, datatable, tablemodel):
+    def initDataBase(self):
+        filename = False
+        while not filename:
+            filename = file_dlg('You want load a file or create a new file')
+        if 'exit' == filename:
+            sys.exit(1)
+        # Create an engine and create all the tables we need
+        engine = create_engine('sqlite:///{}'.format(filename), echo=False)
+        model.base.metadata.bind = engine
+        model.base.metadata.create_all(engine)
+
+        # Set up the session
+        sm = orm.sessionmaker(bind=engine,
+                              autoflush=True,
+                              autocommit=False,
+                              expire_on_commit=True)
+        self.session = orm.scoped_session(sm)
+
+
+        self.model_user = SqlAlchemyTableModel(self.session, model.User, [
+            ('Id', model.User.id, "id", {"editable": False}),
+            ('Lastname', model.User.lastname, "lastname", {"editable": True}),
+            ('Name', model.User.name, "name", {"editable": True}),
+            ('Score', model.User.score, "score", {"editable": True}),
+            ('Kill Points', model.User.killpt, "killpt", {"editable": True}),
+            ('Club', model.User.club_id, "clubname", {"editable": False}),
+            ('Age', model.User.age_id, "agename", {"editable": False}),
+            ('Bow', model.User.bow_id, "bowname", {"editable": False})])
+
+        self.model_club = SqlAlchemyTableModel(self.session, model.Club, [
+            ('Id', model.Club.id, "id", {"editable": False}),
+            ('Name', model.Club.name, "name", {"editable": True, "dnd": True}),
+            ('Short', model.Club.short, "short", {"editable": True}),
+            ('payment', model.Club.payment, "payment", {"editable": True})])
+
+        self.model_age = SqlAlchemyTableModel(self.session, model.Age, [
+            ('Id', model.Age.id, "id", {"editable": False}),
+            ('Name', model.Age.name, "name", {"editable": True}),
+            ('Short', model.Age.short, "short", {"editable": True}), ])
+
+        self.model_bow = SqlAlchemyTableModel(self.session, model.Bow, [
+            ('Id', model.Bow.id, "id", {"editable": False}),
+            ('Name', model.Bow.name, "name", {"editable": True}),
+            ('Short', model.Bow.short, "short", {"editable": True}), ])
+
+
+    def entry_new(self, datatable, tablemodel):
         """open dialog for new entry
 
-        datatable is model.User
-        tablemodel is model_user
+        datatable could be model.User
+        tablemodel could be self.model_user
         """
-        newdata = DlgSqlTable.get_values(session, datatable, model)
+        newdata = DlgSqlTable.get_values(self.session, datatable, model)
         if newdata[1]:
-            session.add(datatable(**newdata[0]))
-            session.commit()
+            self.session.add(datatable(**newdata[0]))
+            self.session.commit()
         tablemodel.refresh()
 
     def select_index(self, tablemodel):
-        if tablemodel == model_user:
+        if tablemodel == self.model_user:
             index = self.ui.tableView_user.currentIndex()
-        elif tablemodel == model_club:
+        elif tablemodel == self.model_club:
             index = self.ui.tableView_club.currentIndex()
-        elif tablemodel == model_age:
+        elif tablemodel == self.model_age:
             index = self.ui.tableView_age.currentIndex()
-        elif tablemodel == model_bow:
+        elif tablemodel == self.model_bow:
             index = self.ui.tableView_bow.currentIndex()
         return index
 
@@ -187,27 +188,27 @@ class Main(QtCore.QObject):
         """open dialog for edit entry
 
         datatable is model.User
-        tablemodel is model_user
+        tablemodel is self.model_user
         """
         index = self.select_index(tablemodel)
         if index.row() < 0:
             QtWidgets.QMessageBox.information(self.ui, self.tr('Info'), self.tr('No line select'))
             return
         ind = tablemodel.index(index.row(), 0)
-        newdata = DlgSqlTable.edit_values(session, datatable, model,
+        newdata = DlgSqlTable.edit_values(self.session, datatable, model,
                                           tablemodel.data(ind, Qt.DisplayRole))
-        data = session.query(datatable).get(tablemodel.data(ind, Qt.DisplayRole))
+        data = self.session.query(datatable).get(tablemodel.data(ind, Qt.DisplayRole))
         if newdata[1]:
             for key, value in newdata[0].items():
                 setattr(data, key, value)
-            session.commit()
+            self.session.commit()
         tablemodel.refresh()
 
     def entry_del(self, datatable, tablemodel):
         """open dialog for delete entry
 
         datatable is model.User
-        tablemodel is model_user
+        tablemodel is self.model_user
         table_id is club_id
         """
         index = self.select_index(tablemodel)
@@ -215,23 +216,23 @@ class Main(QtCore.QObject):
             QtWidgets.QMessageBox.information(self.ui, self.tr('Info'), self.tr('No line select'))
             return
         ind = tablemodel.index(index.row(), 0)
-        data = session.query(datatable).get(tablemodel.data(ind, Qt.DisplayRole))
-        if tablemodel == model_user:
+        data = self.session.query(datatable).get(tablemodel.data(ind, Qt.DisplayRole))
+        if tablemodel == self.model_user:
             userdata = None
-        elif tablemodel == model_club:
-            userdata = session.query(model.User).filter_by(club_id=data.id).first()
-        elif tablemodel == model_age:
-            userdata = session.query(model.User).filter_by(age_id=data.id).first()
-        elif tablemodel == model_bow:
-            userdata = session.query(model.User).filter_by(bow_id=data.id).first()
+        elif tablemodel == self.model_club:
+            userdata = self.session.query(model.User).filter_by(club_id=data.id).first()
+        elif tablemodel == self.model_age:
+            userdata = self.session.query(model.User).filter_by(age_id=data.id).first()
+        elif tablemodel == self.model_bow:
+            userdata = self.session.query(model.User).filter_by(bow_id=data.id).first()
         if userdata:
             QtWidgets.QMessageBox.information(
                 self.ui, self.tr('Info'),
                 self.tr('Cannot delete, reference by {},{}'.format(
                     userdata.name, userdata.lastname)))
             return
-        session.delete(data)
-        session.commit()
+        self.session.delete(data)
+        self.session.commit()
         tablemodel.refresh()
 
     def user_selected(self, index):
@@ -248,7 +249,7 @@ class Main(QtCore.QObject):
         printer = QPrinter(QPrinter.HighResolution)
         previewDialog = QPrintPreviewDialog(printer, self.ui)
 
-        users = session.query(model.User).order_by(model.User.bow_id).order_by(
+        users = self.session.query(model.User).order_by(model.User.bow_id).order_by(
             model.User.age_id).order_by(model.User.score.desc()).order_by(
             model.User.killpt.desc()).order_by(
             model.User.rate.desc()).all()
@@ -295,7 +296,7 @@ class Main(QtCore.QObject):
 
         :returns: none
         """
-        users = session.query(model.User).order_by(model.User.bow_id).order_by(
+        users = self.session.query(model.User).order_by(model.User.bow_id).order_by(
             model.User.age_id).order_by(model.User.score.desc()).order_by(
             model.User.killpt.desc()).all()
         names = []
@@ -338,12 +339,6 @@ class Main(QtCore.QObject):
                            Note='Can be used for merging docx documents')
             document.write('output.docx')
 
-    def onload(self):
-        pass
-
-    def onsave(self):
-        pass
-
     def onexit(self):
         """exit and close
 
@@ -362,23 +357,28 @@ class Main(QtCore.QObject):
 def file_dlg(text):
     msgBox = QMessageBox()
     msgBox.setIcon(QMessageBox.Question)
+    msgBox.setWindowIcon(
+        QtGui.QIcon(os.path.abspath(os.path.join(
+            os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
     msgBox.setText("Question")
     msgBox.setInformativeText(text)
     msgBox.addButton('Load', QMessageBox.AcceptRole)
     msgBox.addButton('New', QMessageBox.AcceptRole)
     msgBox.addButton('Exit', QMessageBox.NoRole)
     reply = msgBox.exec_()
-    print(reply)
     if reply == 0:
         fileName, _ = QFileDialog.getOpenFileName(
             None, "QFileDialog.getOpenFileName()", "",
             "Acherrang2 Files (*.sqlite)")
         return fileName
-
     elif reply == 1:
-        fileName, _ = QFileDialog.getSaveFileName(
-            None, "QFileDialog.getSaveFileName()", "",
-            "Acherrang2 Files (*.sqlite)")
-        return fileName
+        filedialog = QFileDialog()
+        filedialog.setFilter(filedialog.filter() | QtCore.QDir.Hidden)
+        filedialog.setDefaultSuffix('sqlite')
+        filedialog.setAcceptMode(QFileDialog.AcceptSave)
+        filedialog.setNameFilters(["Acherrang2 Files (*.sqlite)"])
+        if filedialog.exec_() == QFileDialog.Accepted:
+            return filedialog.selectedFiles()[0]
+        return
     else:
         return "exit"
