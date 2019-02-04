@@ -129,7 +129,7 @@ class DlgSqlTable(QtWidgets.QDialog):
                 self.field[name].setValue(dataset.__dict__[name])
             elif name in ('age_id'):
                 logging.debug("Show age_id index %s from user %s",
-                    dataset.__dict__[name], dataset.__dict__['name'])
+                              dataset.__dict__[name], dataset.__dict__['name'])
                 matches = self.matchIndex(self.model_age, dataset.__dict__[name])
                 if matches:
                     self.field[name].setCurrentIndex(matches[0].row())

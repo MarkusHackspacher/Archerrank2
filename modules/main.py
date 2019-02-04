@@ -94,7 +94,7 @@ class Main(QtCore.QObject):
         self.ui.tableView_user.pressed.connect(self.user_selected)
         self.ui.actionPrintPreview.triggered.connect(self.onPrint)
         self.ui.actionOverview.triggered.connect(self.onOverView)
-        self.ui.actionInfo.triggered.connect(self.oninfo)
+        self.ui.actionInfo.triggered.connect(self.onInfo)
         self.ui.actionExit.triggered.connect(self.onexit)
         self.ui.actionCreate_certificates.triggered.connect(self.oncreate)
         user_new = functools.partial(self.entry_new, model.User, self.model_user)
@@ -255,41 +255,38 @@ class Main(QtCore.QObject):
             model.User.age_id).order_by(model.User.score.desc()).order_by(
             model.User.killpt.desc()).order_by(
             model.User.rate.desc()).all()
-        saveBowAge = ['', '']
+        save_bow_age = ['', '']
         rank = 1
-        namesSamePoints = []
-        samePoints = [-1, -1, -1]
+        names_same_points = []
+        same_points = [-1, -1, -1]
         for userdata in users:
-            if (saveBowAge != [userdata.bowname, userdata.agename]):
-                saveBowAge = [userdata.bowname, userdata.agename]
+            if (save_bow_age != [userdata.bowname, userdata.agename]):
+                save_bow_age = [userdata.bowname, userdata.agename]
                 rank = 1
-                samePoints = [-1, -1, -1]
-            if samePoints == [userdata.score, userdata.killpt, userdata.rate]:
-                namesSamePoints.append(userdata.id)
+                same_points = [-1, -1, -1]
+            if same_points == [userdata.score, userdata.killpt, userdata.rate]:
+                names_same_points.append(userdata.id)
                 rank -= 1
             userdata.rank = rank
             rank += 1
-            samePoints = [userdata.score, userdata.killpt, userdata.rate]
-            #logging.DEBUG('User Age sorting %s', self.session.query(model.Age).filter_by(userdata.age_id).first())
-            #print(self.session.query(model.Age).filter_by(userdata.age_id).first())
-           
+            same_points = [userdata.score, userdata.killpt, userdata.rate]
+
         self.session.commit()
         users = self.session.query(model.User).order_by(model.User.bow_id).order_by(
             model.User.age_id).order_by(model.User.rank).all()
-        return namesSamePoints, users
+        return names_same_points, users
 
     def onPrint(self):
         """Print Preview"""
         same_rank, users= self.userRangRefresh()
         names = []
-        saveBowAge = ['', '']
-        samePoints = [0, 0, 0]
+        save_bow_age = ['', '']
         for userdata in users:
-            if (saveBowAge != [userdata.bowname, userdata.agename]):
+            if (save_bow_age != [userdata.bowname, userdata.agename]):
                 names.append('<h2>{}, {}</h2>'.format(
                     userdata.bowname,
                     userdata.agename))
-                saveBowAge = [userdata.bowname, userdata.agename]
+                save_bow_age = [userdata.bowname, userdata.agename]
             names.append('{} {}, {}, {}, {}, {}, {}<br>'.format(
                 userdata.rank,
                 userdata.name,
@@ -336,11 +333,10 @@ class Main(QtCore.QObject):
         text = self.tr('Sorting Club<br>{}'.format("".join(names)))
         infobox = QtWidgets.QMessageBox()
         infobox.setWindowTitle(self.tr('Info'))
-        
         infobox.setText(text_user + text)
         infobox.exec_()
 
-    def oninfo(self, test=None):
+    def onInfo(self, test=None):
         """Set the text for the info message box in html format
 
         :returns: none
