@@ -37,12 +37,12 @@ from modules.ext.alchemical_model import SqlAlchemyTableModel
 from modules.gui.dialogsqltable import DlgSqlTable
 from modules.gui.printdialog import Window
 
-importmailmerge = True
+import_mailmerge = True
 try:
     from mailmerge import MailMerge
 except ImportError:
     print('Not found docx-mailmerge, no export docx possible')
-    importmailmerge = False
+    import_mailmerge = False
 
 
 class Main(QtCore.QObject):
@@ -95,38 +95,38 @@ class Main(QtCore.QObject):
         self.ui.actionPrintPreview.triggered.connect(self.onPrint)
         self.ui.actionOverview.triggered.connect(self.onOverView)
         self.ui.actionInfo.triggered.connect(self.onInfo)
-        self.ui.actionExit.triggered.connect(self.onexit)
-        self.ui.actionCreate_certificates.triggered.connect(self.oncreate)
-        user_new = functools.partial(self.entry_new, model.User, self.model_user)
-        club_new = functools.partial(self.entry_new, model.Club, self.model_club)
-        age_new = functools.partial(self.entry_new, model.Age, self.model_age)
-        bow_new = functools.partial(self.entry_new, model.Bow, self.model_bow)
+        self.ui.actionExit.triggered.connect(self.onExit)
+        self.ui.actionCreate_certificates.triggered.connect(self.onCreate)
+        user_new = functools.partial(self.entryNew, model.User, self.model_user)
+        club_new = functools.partial(self.entryNew, model.Club, self.model_club)
+        age_new = functools.partial(self.entryNew, model.Age, self.model_age)
+        bow_new = functools.partial(self.entryNew, model.Bow, self.model_bow)
         self.ui.pushButton_user.clicked.connect(user_new)
         self.ui.pushButton_club.clicked.connect(club_new)
         self.ui.pushButton_age.clicked.connect(age_new)
         self.ui.pushButton_bow.clicked.connect(bow_new)
-        user_edit = functools.partial(self.entry_edit, model.User, self.model_user)
-        club_edit = functools.partial(self.entry_edit, model.Club, self.model_club)
-        age_edit = functools.partial(self.entry_edit, model.Age, self.model_age)
-        bow_edit = functools.partial(self.entry_edit, model.Bow, self.model_bow)
+        user_edit = functools.partial(self.entryEdit, model.User, self.model_user)
+        club_edit = functools.partial(self.entryEdit, model.Club, self.model_club)
+        age_edit = functools.partial(self.entryEdit, model.Age, self.model_age)
+        bow_edit = functools.partial(self.entryEdit, model.Bow, self.model_bow)
         self.ui.pushButton_edituser.clicked.connect(user_edit)
         self.ui.pushButton_editclub.clicked.connect(club_edit)
         self.ui.pushButton_editage.clicked.connect(age_edit)
         self.ui.pushButton_editbow.clicked.connect(bow_edit)
-        user_del = functools.partial(self.entry_del, model.User, self.model_user)
-        club_del = functools.partial(self.entry_del, model.Club, self.model_club)
-        age_del = functools.partial(self.entry_del, model.Age, self.model_age)
-        bow_del = functools.partial(self.entry_del, model.Bow, self.model_bow)
+        user_del = functools.partial(self.entryDelete, model.User, self.model_user)
+        club_del = functools.partial(self.entryDelete, model.Club, self.model_club)
+        age_del = functools.partial(self.entryDelete, model.Age, self.model_age)
+        bow_del = functools.partial(self.entryDelete, model.Bow, self.model_bow)
         self.ui.pushButton_deleteuser.clicked.connect(user_del)
         self.ui.pushButton_deleteclub.clicked.connect(club_del)
         self.ui.pushButton_deleteage.clicked.connect(age_del)
         self.ui.pushButton_deletebow.clicked.connect(bow_del)
-        self.ui.actionCreate_certificates.setEnabled(importmailmerge)
+        self.ui.actionCreate_certificates.setEnabled(import_mailmerge)
         self.ui.show()
 
     def initDataBase(self, filename=None):
         while not filename:
-            filename = file_dlg('You want load a file or create a new file')
+            filename = fileDlg('You want load a file or create a new file')
         if 'exit' == filename:
             sys.exit(1)
         # Create an engine and create all the tables we need
@@ -168,7 +168,7 @@ class Main(QtCore.QObject):
             ('Name', model.Bow.name, "name", {"editable": True}),
             ('Short', model.Bow.short, "short", {"editable": True}), ])
 
-    def entry_new(self, datatable, tablemodel):
+    def entryNew(self, datatable, tablemodel):
         """open dialog for new entry
 
         datatable could be model.User
@@ -180,7 +180,7 @@ class Main(QtCore.QObject):
             self.session.commit()
         tablemodel.refresh()
 
-    def select_index(self, tablemodel):
+    def selectIndex(self, tablemodel):
         if tablemodel == self.model_user:
             index = self.ui.tableView_user.currentIndex()
         elif tablemodel == self.model_club:
@@ -191,13 +191,13 @@ class Main(QtCore.QObject):
             index = self.ui.tableView_bow.currentIndex()
         return index
 
-    def entry_edit(self, datatable, tablemodel):
+    def entryEdit(self, datatable, tablemodel):
         """open dialog for edit entry
 
         datatable is model.User
         tablemodel is self.model_user
         """
-        index = self.select_index(tablemodel)
+        index = self.selectIndex(tablemodel)
         if index.row() < 0:
             QtWidgets.QMessageBox.information(self.ui, self.tr('Info'), self.tr('No line select'))
             return
@@ -211,14 +211,14 @@ class Main(QtCore.QObject):
             self.session.commit()
         tablemodel.refresh()
 
-    def entry_del(self, datatable, tablemodel):
+    def entryDelete(self, datatable, tablemodel):
         """open dialog for delete entry
 
         datatable is model.User
         tablemodel is self.model_user
         table_id is club_id
         """
-        index = self.select_index(tablemodel)
+        index = self.selectIndex(tablemodel)
         if index.row() < 0:
             QtWidgets.QMessageBox.information(self.ui, self.tr('Info'), self.tr('No line select'))
             return
@@ -366,21 +366,21 @@ class Main(QtCore.QObject):
             QtCore.QTimer.singleShot(0, button.clicked)
         infobox.exec_()
 
-    def oncreate(self):
+    def onCreate(self):
         with MailMerge('input.docx') as document:
             print(document.get_merge_fields())
             document.merge(Editor='docx Mail Merge',
                            Note='Can be used for merging docx documents')
             document.write('output.docx')
 
-    def onexit(self):
+    def onExit(self):
         """exit and close
 
         :return:
         """
         self.ui.close()
 
-    def main_loop(self):
+    def mainLoop(self):
         """application start
 
         :return:
@@ -388,23 +388,23 @@ class Main(QtCore.QObject):
         self.app.exec_()
 
 
-def file_dlg(text):
-    msgBox = QMessageBox()
-    msgBox.setIcon(QMessageBox.Question)
+def fileDlg(text):
+    msg_box = QMessageBox()
+    msg_box.setIcon(QMessageBox.Question)
     try:
-        msgBox.setWindowIcon(
+        msg_box.setWindowIcon(
             QtGui.QIcon(os.path.join(
                 "misc", "archerrank2.svg")))
     except FileNotFoundError:
-        msgBox.setWindowIcon(
+        msg_box.setWindowIcon(
             QtGui.QIcon(os.path.abspath(os.path.join(
                 os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
-    msgBox.setText("Question")
-    msgBox.setInformativeText(text)
-    msgBox.addButton('Load', QMessageBox.AcceptRole)
-    msgBox.addButton('New', QMessageBox.AcceptRole)
-    msgBox.addButton('Exit', QMessageBox.NoRole)
-    reply = msgBox.exec_()
+    msg_box.setText("Question")
+    msg_box.setInformativeText(text)
+    msg_box.addButton('Load', QMessageBox.AcceptRole)
+    msg_box.addButton('New', QMessageBox.AcceptRole)
+    msg_box.addButton('Exit', QMessageBox.NoRole)
+    reply = msg_box.exec_()
     if reply == 0:
         fileName, _ = QFileDialog.getOpenFileName(
             None, "QFileDialog.getOpenFileName()", "",
