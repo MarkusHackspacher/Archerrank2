@@ -41,9 +41,11 @@ class User(base):
 
     age_id = Column(Integer, ForeignKey('ages.id'))
     bow_id = Column(Integer, ForeignKey('bows.id'))
-    part = Column(Integer, default=1)
+    rank = Column(Integer, default=1)
     rate = Column(Integer, default=1)
     other = Column(String)
+    age = relationship("Age")
+    bow = relationship("Bow")
 
     @property
     def clubname(self):

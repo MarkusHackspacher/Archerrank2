@@ -22,19 +22,20 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import functools
+import logging
 import os
 import sys
 from os.path import join
 
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.Qt import Qt
-from PyQt5.QtPrintSupport import QPrinter, QPrintPreviewDialog
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from sqlalchemy import create_engine, orm
 
 from modules import model
 from modules.ext.alchemical_model import SqlAlchemyTableModel
 from modules.gui.dialogsqltable import DlgSqlTable
+from modules.gui.printdialog import Window
 
 importmailmerge = True
 try:
@@ -55,23 +56,33 @@ class Main(QtCore.QObject):
         """
         super(Main, self).__init__()
         self.app = QtWidgets.QApplication([])
-        if len(arguments) > 1:
-            locale = arguments[1]
+        logging.basicConfig(format='%(levelname)s:%(message)s', level=arguments.log * 10)
+        if arguments.language:
+            locale = arguments.language
         else:
             locale = str(QtCore.QLocale.system().name())
-            print("locale: " + locale)
+        logging.info("locale: %s", locale)
         translator = QtCore.QTranslator(self.app)
         translator.load(join("modules", "pyfbm_" + locale))
         self.app.installTranslator(translator)
 
         # Set up the user interface from Designer.
-        self.ui = uic.loadUi(os.path.abspath(os.path.join(
-            os.path.dirname(sys.argv[0]),
-            "modules", "gui", "main.ui")))
-        self.ui.setWindowIcon(
-            QtGui.QIcon(os.path.abspath(os.path.join(
-                os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
-        self.initDataBase()
+        try:
+            self.ui = uic.loadUi(os.path.join(
+                "modules", "gui", "main.ui"))
+        except FileNotFoundError:
+            self.ui = uic.loadUi(os.path.abspath(os.path.join(
+                os.path.dirname(sys.argv[0]),
+                "modules", "gui", "main.ui")))
+        try:
+            self.ui.setWindowIcon(
+                QtGui.QIcon(os.path.join(
+                    "misc", "archerrank2.svg")))
+        except FileNotFoundError:
+            self.ui.setWindowIcon(
+                QtGui.QIcon(os.path.abspath(os.path.join(
+                    os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+        self.initDataBase(arguments.database)
         self.ui.tableView_user.setModel(self.model_user)
         self.ui.tableView_club.setModel(self.model_club)
         self.ui.tableView_age.setModel(self.model_age)
@@ -81,8 +92,8 @@ class Main(QtCore.QObject):
         self.ui.tableView_age.setColumnHidden(0, True)
         self.ui.tableView_bow.setColumnHidden(0, True)
         self.ui.tableView_user.pressed.connect(self.user_selected)
-        self.ui.actionPrintPreview.triggered.connect(self.onprint)
-        self.ui.actionOverview.triggered.connect(self.onoverview)
+        self.ui.actionPrintPreview.triggered.connect(self.onPrint)
+        self.ui.actionOverview.triggered.connect(self.onOverView)
         self.ui.actionInfo.triggered.connect(self.oninfo)
         self.ui.actionExit.triggered.connect(self.onexit)
         self.ui.actionCreate_certificates.triggered.connect(self.oncreate)
@@ -113,13 +124,13 @@ class Main(QtCore.QObject):
         self.ui.actionCreate_certificates.setEnabled(importmailmerge)
         self.ui.show()
 
-    def initDataBase(self):
-        filename = False
+    def initDataBase(self, filename=None):
         while not filename:
             filename = file_dlg('You want load a file or create a new file')
         if 'exit' == filename:
             sys.exit(1)
         # Create an engine and create all the tables we need
+        logging.info("database: %s", filename)
         engine = create_engine('sqlite:///{}'.format(filename), echo=False)
         model.base.metadata.bind = engine
         model.base.metadata.create_all(engine)
@@ -239,20 +250,39 @@ class Main(QtCore.QObject):
         """
         pass
 
-    def onprint(self):
-        """Print Preview"""
-        self.editor = QtWidgets.QTextEdit()
-        printer = QPrinter(QPrinter.HighResolution)
-        previewDialog = QPrintPreviewDialog(printer, self.ui)
-
+    def userRangRefresh(self):
         users = self.session.query(model.User).order_by(model.User.bow_id).order_by(
             model.User.age_id).order_by(model.User.score.desc()).order_by(
             model.User.killpt.desc()).order_by(
             model.User.rate.desc()).all()
-        names = []
         saveBowAge = ['', '']
         rank = 1
         namesSamePoints = []
+        samePoints = [-1, -1, -1]
+        for userdata in users:
+            if (saveBowAge != [userdata.bowname, userdata.agename]):
+                saveBowAge = [userdata.bowname, userdata.agename]
+                rank = 1
+                samePoints = [-1, -1, -1]
+            if samePoints == [userdata.score, userdata.killpt, userdata.rate]:
+                namesSamePoints.append(userdata.id)
+                rank -= 1
+            userdata.rank = rank
+            rank += 1
+            samePoints = [userdata.score, userdata.killpt, userdata.rate]
+            #logging.DEBUG('User Age sorting %s', self.session.query(model.Age).filter_by(userdata.age_id).first())
+            #print(self.session.query(model.Age).filter_by(userdata.age_id).first())
+           
+        self.session.commit()
+        users = self.session.query(model.User).order_by(model.User.bow_id).order_by(
+            model.User.age_id).order_by(model.User.rank).all()
+        return namesSamePoints, users
+
+    def onPrint(self):
+        """Print Preview"""
+        same_rank, users= self.userRangRefresh()
+        names = []
+        saveBowAge = ['', '']
         samePoints = [0, 0, 0]
         for userdata in users:
             if (saveBowAge != [userdata.bowname, userdata.agename]):
@@ -260,64 +290,72 @@ class Main(QtCore.QObject):
                     userdata.bowname,
                     userdata.agename))
                 saveBowAge = [userdata.bowname, userdata.agename]
-                rank = 1
-                samePoints = [0, 0, 0]
-            if samePoints == [userdata.score, userdata.killpt, userdata.rate]:
-                namesSamePoints.append('{} {}'.format(userdata.name, userdata.lastname))
-                rank -= 1
             names.append('{} {}, {}, {}, {}, {}, {}<br>'.format(
-                rank,
+                userdata.rank,
                 userdata.name,
                 userdata.lastname,
                 userdata.score,
                 userdata.killpt,
                 userdata.rate,
                 userdata.clubname))
-            rank += 1
-            samePoints = [userdata.score, userdata.killpt, userdata.rate]
-        if namesSamePoints:
-            infobox = QtWidgets.QMessageBox()
-            infobox.setWindowTitle(self.tr('Info'))
-            infobox.setText(self.tr(
-                'With same Points.<br>{}'.format("<br>".join(namesSamePoints))))
-            infobox.exec_()
-
-        self.editor.setHtml(self.tr(
+            if userdata.id in same_rank:
+                names.append(self.tr('Same rank<br>'))
+        printdlg = Window()
+        printdlg.editor.setHtml(self.tr(
             '<h1>Overview</h1>Rang Name Score Kill Rate Club<br>{}'.format("".join(names))))
-        previewDialog.paintRequested.connect(self.editor.print_)
-        previewDialog.exec_()
+        printdlg.exec_()
 
-    def onoverview(self):
+    def onOverView(self):
         """Set the text for the info message box in html format
 
         :returns: none
         """
-        users = self.session.query(model.User).order_by(model.User.bow_id).order_by(
-            model.User.age_id).order_by(model.User.score.desc()).order_by(
-            model.User.killpt.desc()).all()
+        users = self.session.query(model.User).order_by(model.User.club_id).all()
         names = []
         for userdata in users:
-            names.append('{}, {}, {}, {} {} {}<br>'.format(
+            names.append('{}: {}, {}, {}, {} {} {}<br>'.format(
+                userdata.clubname,
                 userdata.name,
                 userdata.lastname,
-                userdata.score,
-                userdata.killpt,
+                userdata.clubs.payment,
+                userdata.clubs.advertising,
                 userdata.bowname,
                 userdata.agename))
+        text_user = self.tr('Sorting User by Club<br>{}'.format("".join(names)))
+        clubs = self.session.query(model.Club).all()
+        names = []
+        for userdata in clubs:
+            names.append('{}: {}, {}, {}, {} {} {}<br>'.format(
+                userdata.name,
+                userdata.short,
+                userdata.email,
+                userdata.payment,
+                userdata.advertising,
+                [user.name for user in userdata.members],
+                userdata.id))
+        text = self.tr('Sorting Club<br>{}'.format("".join(names)))
         infobox = QtWidgets.QMessageBox()
         infobox.setWindowTitle(self.tr('Info'))
-
-        infobox.setText(self.tr(
-            'Overview.<br>{}'.format("".join(names))))
+        
+        infobox.setText(text_user + text)
         infobox.exec_()
 
-    def oninfo(self):
+    def oninfo(self, test=None):
         """Set the text for the info message box in html format
 
         :returns: none
         """
         infobox = QtWidgets.QMessageBox()
         infobox.setWindowTitle(self.tr('Info'))
+        try:
+            infobox.setWindowIcon(
+                QtGui.QIcon(os.path.join(
+                    "misc", "archerrank2.svg")))
+        except FileNotFoundError:
+            infobox.setWindowIcon(
+                QtGui.QIcon(os.path.abspath(os.path.join(
+                    os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+
         infobox.setText(self.tr(
             'Archerrank2. A tool for the evaluation of archery tournaments.<br>'
             'Archerrank2 is free software and use GNU General Public License '
@@ -326,6 +364,10 @@ class Main(QtCore.QObject):
             'More Information about the program at '
             '<a href="https://github.com/MarkusHackspacher/Archerrank2">'
             'github.com/MarkusHackspacher/Archerrank2</a>'))
+        if test:
+            infobox.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            button = infobox.button(QtWidgets.QMessageBox.Ok)
+            QtCore.QTimer.singleShot(0, button.clicked)
         infobox.exec_()
 
     def oncreate(self):
@@ -353,9 +395,14 @@ class Main(QtCore.QObject):
 def file_dlg(text):
     msgBox = QMessageBox()
     msgBox.setIcon(QMessageBox.Question)
-    msgBox.setWindowIcon(
-        QtGui.QIcon(os.path.abspath(os.path.join(
-            os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+    try:
+        msgBox.setWindowIcon(
+            QtGui.QIcon(os.path.join(
+                "misc", "archerrank2.svg")))
+    except FileNotFoundError:
+        msgBox.setWindowIcon(
+            QtGui.QIcon(os.path.abspath(os.path.join(
+                os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
     msgBox.setText("Question")
     msgBox.setInformativeText(text)
     msgBox.addButton('Load', QMessageBox.AcceptRole)
