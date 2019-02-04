@@ -32,4 +32,4 @@ if __name__ == "__main__":
     parser.add_argument('-log', type=int, help='logging level', choices=[1, 2, 3, 4, 5], default=3)
     args = parser.parse_args()
     app = main.Main(args)
-    app.mainLoop()
+    app.main_loop()

@@ -92,31 +92,31 @@ class Main(QtCore.QObject):
         self.ui.tableView_age.setColumnHidden(0, True)
         self.ui.tableView_bow.setColumnHidden(0, True)
         self.ui.tableView_user.pressed.connect(self.user_selected)
-        self.ui.actionPrintPreview.triggered.connect(self.onPrint)
-        self.ui.actionOverview.triggered.connect(self.onOverView)
-        self.ui.actionInfo.triggered.connect(self.onInfo)
-        self.ui.actionExit.triggered.connect(self.onExit)
-        self.ui.actionCreate_certificates.triggered.connect(self.onCreate)
-        user_new = functools.partial(self.entryNew, model.User, self.model_user)
-        club_new = functools.partial(self.entryNew, model.Club, self.model_club)
-        age_new = functools.partial(self.entryNew, model.Age, self.model_age)
-        bow_new = functools.partial(self.entryNew, model.Bow, self.model_bow)
+        self.ui.actionPrintPreview.triggered.connect(self.onprint)
+        self.ui.actionOverview.triggered.connect(self.on_overview)
+        self.ui.actionInfo.triggered.connect(self.oninfo)
+        self.ui.actionExit.triggered.connect(self.on_exit)
+        self.ui.actionCreate_certificates.triggered.connect(self.on_create)
+        user_new = functools.partial(self.entry_new, model.User, self.model_user)
+        club_new = functools.partial(self.entry_new, model.Club, self.model_club)
+        age_new = functools.partial(self.entry_new, model.Age, self.model_age)
+        bow_new = functools.partial(self.entry_new, model.Bow, self.model_bow)
         self.ui.pushButton_user.clicked.connect(user_new)
         self.ui.pushButton_club.clicked.connect(club_new)
         self.ui.pushButton_age.clicked.connect(age_new)
         self.ui.pushButton_bow.clicked.connect(bow_new)
-        user_edit = functools.partial(self.entryEdit, model.User, self.model_user)
-        club_edit = functools.partial(self.entryEdit, model.Club, self.model_club)
-        age_edit = functools.partial(self.entryEdit, model.Age, self.model_age)
-        bow_edit = functools.partial(self.entryEdit, model.Bow, self.model_bow)
+        user_edit = functools.partial(self.entry_edit, model.User, self.model_user)
+        club_edit = functools.partial(self.entry_edit, model.Club, self.model_club)
+        age_edit = functools.partial(self.entry_edit, model.Age, self.model_age)
+        bow_edit = functools.partial(self.entry_edit, model.Bow, self.model_bow)
         self.ui.pushButton_edituser.clicked.connect(user_edit)
         self.ui.pushButton_editclub.clicked.connect(club_edit)
         self.ui.pushButton_editage.clicked.connect(age_edit)
         self.ui.pushButton_editbow.clicked.connect(bow_edit)
-        user_del = functools.partial(self.entryDelete, model.User, self.model_user)
-        club_del = functools.partial(self.entryDelete, model.Club, self.model_club)
-        age_del = functools.partial(self.entryDelete, model.Age, self.model_age)
-        bow_del = functools.partial(self.entryDelete, model.Bow, self.model_bow)
+        user_del = functools.partial(self.entry_delete, model.User, self.model_user)
+        club_del = functools.partial(self.entry_delete, model.Club, self.model_club)
+        age_del = functools.partial(self.entry_delete, model.Age, self.model_age)
+        bow_del = functools.partial(self.entry_delete, model.Bow, self.model_bow)
         self.ui.pushButton_deleteuser.clicked.connect(user_del)
         self.ui.pushButton_deleteclub.clicked.connect(club_del)
         self.ui.pushButton_deleteage.clicked.connect(age_del)
@@ -126,7 +126,7 @@ class Main(QtCore.QObject):
 
     def initDataBase(self, filename=None):
         while not filename:
-            filename = fileDlg('You want load a file or create a new file')
+            filename = file_dlg('You want load a file or create a new file')
         if 'exit' == filename:
             sys.exit(1)
         # Create an engine and create all the tables we need
@@ -168,7 +168,7 @@ class Main(QtCore.QObject):
             ('Name', model.Bow.name, "name", {"editable": True}),
             ('Short', model.Bow.short, "short", {"editable": True}), ])
 
-    def entryNew(self, datatable, tablemodel):
+    def entry_new(self, datatable, tablemodel):
         """open dialog for new entry
 
         datatable could be model.User
@@ -180,7 +180,7 @@ class Main(QtCore.QObject):
             self.session.commit()
         tablemodel.refresh()
 
-    def selectIndex(self, tablemodel):
+    def select_index(self, tablemodel):
         if tablemodel == self.model_user:
             index = self.ui.tableView_user.currentIndex()
         elif tablemodel == self.model_club:
@@ -191,13 +191,13 @@ class Main(QtCore.QObject):
             index = self.ui.tableView_bow.currentIndex()
         return index
 
-    def entryEdit(self, datatable, tablemodel):
+    def entry_edit(self, datatable, tablemodel):
         """open dialog for edit entry
 
         datatable is model.User
         tablemodel is self.model_user
         """
-        index = self.selectIndex(tablemodel)
+        index = self.select_index(tablemodel)
         if index.row() < 0:
             QtWidgets.QMessageBox.information(self.ui, self.tr('Info'), self.tr('No line select'))
             return
@@ -211,14 +211,14 @@ class Main(QtCore.QObject):
             self.session.commit()
         tablemodel.refresh()
 
-    def entryDelete(self, datatable, tablemodel):
+    def entry_delete(self, datatable, tablemodel):
         """open dialog for delete entry
 
         datatable is model.User
         tablemodel is self.model_user
         table_id is club_id
         """
-        index = self.selectIndex(tablemodel)
+        index = self.select_index(tablemodel)
         if index.row() < 0:
             QtWidgets.QMessageBox.information(self.ui, self.tr('Info'), self.tr('No line select'))
             return
@@ -250,7 +250,7 @@ class Main(QtCore.QObject):
         """
         pass
 
-    def userRangRefresh(self):
+    def user_rang_refresh(self):
         users = self.session.query(model.User).order_by(model.User.bow_id).order_by(
             model.User.age_id).order_by(model.User.score.desc()).order_by(
             model.User.killpt.desc()).order_by(
@@ -276,13 +276,13 @@ class Main(QtCore.QObject):
             model.User.age_id).order_by(model.User.rank).all()
         return names_same_points, users
 
-    def onPrint(self):
+    def onprint(self):
         """Print Preview"""
-        same_rank, users= self.userRangRefresh()
+        same_rank, users = self.user_rang_refresh()
         names = []
         save_bow_age = ['', '']
         for userdata in users:
-            if (save_bow_age != [userdata.bowname, userdata.agename]):
+            if save_bow_age != [userdata.bowname, userdata.agename]:
                 names.append('<h2>{}, {}</h2>'.format(
                     userdata.bowname,
                     userdata.agename))
@@ -302,7 +302,7 @@ class Main(QtCore.QObject):
             '<h1>Overview</h1>Rang Name Score Kill Rate Club<br>{}'.format("".join(names))))
         printdlg.exec_()
 
-    def onOverView(self):
+    def on_overview(self):
         """Set the text for the info message box in html format
 
         :returns: none
@@ -336,7 +336,7 @@ class Main(QtCore.QObject):
         infobox.setText(text_user + text)
         infobox.exec_()
 
-    def onInfo(self, test=None):
+    def oninfo(self, test=None):
         """Set the text for the info message box in html format
 
         :returns: none
@@ -366,21 +366,21 @@ class Main(QtCore.QObject):
             QtCore.QTimer.singleShot(0, button.clicked)
         infobox.exec_()
 
-    def onCreate(self):
+    def on_create(self):
         with MailMerge('input.docx') as document:
             print(document.get_merge_fields())
             document.merge(Editor='docx Mail Merge',
                            Note='Can be used for merging docx documents')
             document.write('output.docx')
 
-    def onExit(self):
+    def on_exit(self):
         """exit and close
 
         :return:
         """
         self.ui.close()
 
-    def mainLoop(self):
+    def main_loop(self):
         """application start
 
         :return:
@@ -388,7 +388,7 @@ class Main(QtCore.QObject):
         self.app.exec_()
 
 
-def fileDlg(text):
+def file_dlg(text):
     msg_box = QMessageBox()
     msg_box.setIcon(QMessageBox.Question)
     try:
