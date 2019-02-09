@@ -42,12 +42,15 @@ class ShowMainTestCase(TestCase):
 
     def tearDown(self):
         """Deletes the reference owned by self"""
+        self.app.ui.close()
         del self.app
         super(ShowMainTestCase, self).tearDown()
 
-    def test_showinfo(self):
-        self.app.oninfo(True)
+    def test_onprint(self):
+        self.app.onprint(test=True)
 
-    def test_entry_new(self):
-        # self.app.entry_new(model.Age, self.app.model_age)
-        pass
+    def test_on_overview(self):
+        self.app.on_overview(test=True)
+
+    def test_showinfo(self):
+        self.app.oninfo(test=True)

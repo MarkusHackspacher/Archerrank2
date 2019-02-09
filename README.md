@@ -51,7 +51,8 @@ python archerrank2.py
 
 Usage
 -----
-```
+
+```bash
 usage: archerrank2.py [-h] [-db DATABASE] [-l LANGUAGE] [-log {1,2,3,4,5}]
 
 optional arguments:

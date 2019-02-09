@@ -68,20 +68,20 @@ class Main(QtCore.QObject):
 
         # Set up the user interface from Designer.
         try:
-            self.ui = uic.loadUi(os.path.join(
-                "modules", "gui", "main.ui"))
-        except FileNotFoundError:
             self.ui = uic.loadUi(os.path.abspath(os.path.join(
                 os.path.dirname(sys.argv[0]),
                 "modules", "gui", "main.ui")))
-        try:
-            self.ui.setWindowIcon(
-                QtGui.QIcon(os.path.join(
-                    "misc", "archerrank2.svg")))
         except FileNotFoundError:
+            self.ui = uic.loadUi(os.path.join(
+                "modules", "gui", "main.ui"))
+        try:
             self.ui.setWindowIcon(
                 QtGui.QIcon(os.path.abspath(os.path.join(
                     os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+        except FileNotFoundError:
+            self.ui.setWindowIcon(
+                QtGui.QIcon(os.path.join(
+                    "misc", "archerrank2.svg")))
         self.initDataBase(arguments.database)
         self.ui.tableView_user.setModel(self.model_user)
         self.ui.tableView_club.setModel(self.model_club)
@@ -276,7 +276,7 @@ class Main(QtCore.QObject):
             model.User.age_id).order_by(model.User.rank).all()
         return names_same_points, users
 
-    def onprint(self):
+    def onprint(self, test=None):
         """Print Preview"""
         same_rank, users = self.user_rang_refresh()
         names = []
@@ -300,9 +300,11 @@ class Main(QtCore.QObject):
         printdlg = Window()
         printdlg.editor.setHtml(self.tr(
             '<h1>Overview</h1>Rang Name Score Kill Rate Club<br>{}'.format("".join(names))))
+        if test:
+            QtCore.QTimer.singleShot(500, printdlg.reject)
         printdlg.exec_()
 
-    def on_overview(self):
+    def on_overview(self, test=None):
         """Set the text for the info message box in html format
 
         :returns: none
@@ -334,6 +336,8 @@ class Main(QtCore.QObject):
         infobox = QtWidgets.QMessageBox()
         infobox.setWindowTitle(self.tr('Info'))
         infobox.setText(text_user + text)
+        if test:
+            QtCore.QTimer.singleShot(500, infobox.reject)
         infobox.exec_()
 
     def oninfo(self, test=None):
@@ -361,9 +365,7 @@ class Main(QtCore.QObject):
             '<a href="https://github.com/MarkusHackspacher/Archerrank2">'
             'github.com/MarkusHackspacher/Archerrank2</a>'))
         if test:
-            infobox.setStandardButtons(QtWidgets.QMessageBox.Ok)
-            button = infobox.button(QtWidgets.QMessageBox.Ok)
-            QtCore.QTimer.singleShot(0, button.clicked)
+            QtCore.QTimer.singleShot(500, infobox.reject)
         infobox.exec_()
 
     def on_create(self):
