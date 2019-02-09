@@ -24,28 +24,28 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 from PyQt5 import QtPrintSupport, QtWidgets
 
 
-class Window(QtWidgets.QDialog):
+class DlgPrint(QtWidgets.QDialog):
     def __init__(self):
-        super(Window, self).__init__()
+        super(DlgPrint, self).__init__()
         self.setWindowTitle(self.tr('Document Printer'))
         self.editor = QtWidgets.QTextEdit(self)
         self.editor.textChanged.connect(self.handleTextChanged)
         self.buttonPrint = QtWidgets.QPushButton(self.tr('Print'), self)
-        self.buttonPrint.clicked.connect(self.handlePrint)
+        self.buttonPrint.clicked.connect(self.handle_print)
         self.buttonPreview = QtWidgets.QPushButton(self.tr('Preview'), self)
-        self.buttonPreview.clicked.connect(self.handlePreview)
+        self.buttonPreview.clicked.connect(self.handle_preview)
         layout = QtWidgets.QGridLayout(self)
         layout.addWidget(self.editor, 0, 0, 1, 3)
         layout.addWidget(self.buttonPrint, 1, 1)
         layout.addWidget(self.buttonPreview, 1, 2)
         self.handleTextChanged()
 
-    def handlePrint(self):
+    def handle_print(self):
         dialog = QtPrintSupport.QPrintDialog()
         if dialog.exec_() == QtWidgets.QDialog.Accepted:
             self.editor.document().print_(dialog.printer())
 
-    def handlePreview(self):
+    def handle_preview(self):
         dialog = QtPrintSupport.QPrintPreviewDialog()
         dialog.paintRequested.connect(self.editor.print_)
         dialog.exec_()

@@ -35,7 +35,7 @@ from sqlalchemy import create_engine, orm
 from modules import model
 from modules.ext.alchemical_model import SqlAlchemyTableModel
 from modules.gui.dialogsqltable import DlgSqlTable
-from modules.gui.printdialog import Window
+from modules.gui.printdialog import DlgPrint
 
 import_mailmerge = True
 try:
@@ -297,7 +297,7 @@ class Main(QtCore.QObject):
                 userdata.clubname))
             if userdata.id in same_rank:
                 names.append(self.tr('Same rank<br>'))
-        printdlg = Window()
+        printdlg = DlgPrint()
         printdlg.editor.setHtml(self.tr(
             '<h1>Overview</h1>Rang Name Score Kill Rate Club<br>{}'.format("".join(names))))
         if test:
