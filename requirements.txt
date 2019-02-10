@@ -1,8 +1,6 @@
-pyqt5
-sqlalchemy==1.2.12
+pyqt5==2.10
+sqlalchemy==1.2
 docx-mailmerge
 # unit test requirements
 pycodestyle
 isort
-
-
