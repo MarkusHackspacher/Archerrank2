@@ -74,14 +74,9 @@ class Main(QtCore.QObject):
         except FileNotFoundError:
             self.ui = uic.loadUi(os.path.join(
                 "modules", "gui", "main.ui"))
-        try:
-            self.ui.setWindowIcon(
-                QtGui.QIcon(os.path.abspath(os.path.join(
-                    os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
-        except FileNotFoundError:
-            self.ui.setWindowIcon(
-                QtGui.QIcon(os.path.join(
-                    "misc", "archerrank2.svg")))
+        self.ui.setWindowIcon(
+            QtGui.QIcon(os.path.abspath(os.path.join(
+                os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
         self.initDataBase(arguments.database)
         self.ui.tableView_user.setModel(self.model_user)
         self.ui.tableView_club.setModel(self.model_club)
@@ -393,14 +388,9 @@ class Main(QtCore.QObject):
 def file_dlg(text):
     msg_box = QMessageBox()
     msg_box.setIcon(QMessageBox.Question)
-    try:
-        msg_box.setWindowIcon(
-            QtGui.QIcon(os.path.join(
-                "misc", "archerrank2.svg")))
-    except FileNotFoundError:
-        msg_box.setWindowIcon(
-            QtGui.QIcon(os.path.abspath(os.path.join(
-                os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+    msg_box.setWindowIcon(
+        QtGui.QIcon(os.path.abspath(os.path.join(
+            os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
     msg_box.setText("Question")
     msg_box.setInformativeText(text)
     msg_box.addButton('Load', QMessageBox.AcceptRole)
