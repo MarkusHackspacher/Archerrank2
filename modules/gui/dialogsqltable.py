@@ -20,19 +20,20 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
+import logging
+import os
+import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.Qt import Qt
-from sqlalchemy import Column
-from sqlalchemy.orm.attributes import InstrumentedAttribute
 
 from modules.ext.alchemical_model import SqlAlchemyTableModel
 
 
 class DlgSqlTable(QtWidgets.QDialog):
     STRING = ('name', 'short', 'lastname', 'other', 'email', 'address')
-    INT = ('killpt', 'sorting', 'score', 'part', 'rate', 'sep', 'adult', 'payment', 'advertising')
-
+    INT = ('killpt', 'sorting', 'score', 'rate', 'sep', 'adult', 'payment')
+    ADVER = ('advertising')
     """
     Dialog generate from sql table
     """
@@ -51,7 +52,10 @@ class DlgSqlTable(QtWidgets.QDialog):
         self.boxLayout = QtWidgets.QBoxLayout(
             QtWidgets.QBoxLayout.TopToBottom, self)
         self.gridLayout = QtWidgets.QGridLayout()
-        self.setWindowTitle(self.tr("Show Drawing"))
+        self.setWindowTitle(self.tr("Item"))
+        self.setWindowIcon(
+            QtGui.QIcon(os.path.abspath(os.path.join(
+                os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
 
         methods = [m.key for m in table.__table__.columns if not len(m.key) == 2]
 
@@ -60,23 +64,38 @@ class DlgSqlTable(QtWidgets.QDialog):
         for buttonnumber, name in enumerate(methods):
             if name in self.STRING:
                 self.field[name] = QtWidgets.QLineEdit(self)
+                self.field[name].setToolTip(self.tr('Edit {}'.format(name)))
             elif name in self.INT:
                 self.field[name] = QtWidgets.QSpinBox(self)
+                self.field[name].setToolTip(self.tr('Edit {}'.format(name)))
             elif name in 'club_id':
                 self.field[name] = QtWidgets.QComboBox(self)
                 self.model_club = self.my_table_model(model.Club, session)
                 self.field[name].setModel(self.model_club)
+                self.field[name].setToolTip(self.tr('Select a club'))
             elif name in 'bow_id':
                 self.field[name] = QtWidgets.QComboBox(self)
                 self.model_bow = self.my_table_model(model.Bow, session)
                 self.field[name].setModel(self.model_bow)
+                self.field[name].setToolTip(self.tr('Select a bow'))
             elif name in 'age_id':
                 self.field[name] = QtWidgets.QComboBox(self)
                 self.model_age = self.my_table_model(model.Age, session)
                 self.field[name].setModel(self.model_age)
-            else:
+                self.field[name].setToolTip(self.tr('Select a age'))
+            elif name in self.ADVER:
                 self.field[name] = QtWidgets.QComboBox(self)
-
+                self.field[name].addItem(self.tr('Not Set'))
+                self.field[name].addItem(self.tr('no advertising, no save address for further use'))
+                self.field[name].addItem(self.tr('can save address'))
+                self.field[name].addItem(self.tr('by email'))
+                self.field[name].addItem(self.tr('by letter'))
+                self.field[name].addItem(self.tr('by email and letter'))
+                self.field[name].setToolTip(self.tr('Select advertising level'))
+                # self.field[name].setItemData(0, self.tr('Tooltip for [0]'), Qt.ToolTipRole)
+            else:
+                self.field[name] = QtWidgets.QLabel(self)
+                logging.debug("for %s no box def", name)
             self.gridLayout.addWidget(
                 self.field[name], buttonnumber, 2, 1, 1)
 
@@ -104,17 +123,21 @@ class DlgSqlTable(QtWidgets.QDialog):
             elif name in self.INT:
                 self.field[name].setValue(dataset.__dict__[name])
             elif name in ('age_id'):
-                matches = self.my_match(self.model_age, dataset)
+                logging.debug("Show age_id index %s from user %s",
+                              dataset.__dict__[name], dataset.__dict__['name'])
+                matches = self.matchIndex(self.model_age, dataset.__dict__[name])
                 if matches:
                     self.field[name].setCurrentIndex(matches[0].row())
             elif name in ('bow_id'):
-                matches = self.my_match(self.model_bow, dataset)
+                matches = self.matchIndex(self.model_bow, dataset.__dict__[name])
                 if matches:
                     self.field[name].setCurrentIndex(matches[0].row())
             elif name in ('club_id'):
-                matches = self.my_match(self.model_club, dataset)
+                matches = self.matchIndex(self.model_club, dataset.__dict__[name])
                 if matches:
                     self.field[name].setCurrentIndex(matches[0].row())
+            elif name in self.ADVER:
+                self.field[name].setCurrentIndex(dataset.__dict__[name])
 
     def values(self):
         """Values
@@ -136,7 +159,9 @@ class DlgSqlTable(QtWidgets.QDialog):
             elif name in 'club_id':
                 ind = self.model_club.index(self.field[name].currentIndex(), 1)
                 valve[name] = self.model_club.data(ind, Qt.DisplayRole)
-        return (valve)
+            elif name in self.ADVER:
+                valve[name] = self.field[name].currentIndex()
+        return valve
 
     @staticmethod
     def get_values(session, table, model):
@@ -154,7 +179,7 @@ class DlgSqlTable(QtWidgets.QDialog):
         """
         dialog = DlgSqlTable(session, table, model)
         result = dialog.exec_()
-        return (dialog.values(), result == QtWidgets.QDialog.Accepted)
+        return dialog.values(), result == QtWidgets.QDialog.Accepted
 
     @staticmethod
     def edit_values(session, table, model, idEdit):
@@ -175,7 +200,7 @@ class DlgSqlTable(QtWidgets.QDialog):
         dialog = DlgSqlTable(session, table, model)
         dialog.load_values(idEdit, session, table)
         result = dialog.exec_()
-        return (dialog.values(), result == QtWidgets.QDialog.Accepted)
+        return dialog.values(), result == QtWidgets.QDialog.Accepted
 
     @classmethod
     def my_table_model(cls, model, session):
@@ -184,7 +209,7 @@ class DlgSqlTable(QtWidgets.QDialog):
             ('Id', model.id, "id", {"editable": False})])
 
     @classmethod
-    def my_match(cls, model, dataset):
+    def matchIndex(cls, model, index):
         return model.match(
             model.index(0, 1), QtCore.Qt.DisplayRole,
-            dataset.__dict__[name], 1, QtCore.Qt.MatchExactly)
+            index, 1, QtCore.Qt.MatchExactly)

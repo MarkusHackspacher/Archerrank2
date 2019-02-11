@@ -4,7 +4,7 @@
 """
 Archerank2
 
-Copyright (C) <2018> Markus Hackspacher
+Copyright (C) <2018-2019> Markus Hackspacher
 
 This file is part of Archerank2.
 
@@ -21,31 +21,15 @@ GNU Lesser General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
-import sys
+import argparse
 
 from modules import main
 
-
-def onopen(self):
-    """open file
-
-    :return:
-    """
-    fname = QtWidgets.QFileDialog.getOpenFileName(self.ui, 'Open file',
-                                                  '.', "SQLite files (*.sqlite)")
-    print(fname)
-
-
-def onnew(self):
-    """save as file
-
-    :return:
-    """
-    fname = QtWidgets.QFileDialog.getSaveFileName(self.ui, 'New file',
-                                                  '.', "SQLite files (*.sqlite)")
-    print(fname)
-
-
 if __name__ == "__main__":
-    app = main.Main(sys.argv)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-db', '--database', help='file of the database')
+    parser.add_argument('-l', '--language', help='ISO code of language, de for Germany')
+    parser.add_argument('-log', type=int, help='logging level', choices=[1, 2, 3, 4, 5], default=3)
+    args = parser.parse_args()
+    app = main.Main(args)
     app.main_loop()
