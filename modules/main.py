@@ -32,7 +32,7 @@ from PyQt5.Qt import PYQT_VERSION_STR, Qt
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from sqlalchemy import create_engine, orm
 
-from modules import model
+from modules import VERSION_STR, model
 from modules.ext.alchemical_model import SqlAlchemyTableModel
 from modules.gui.dialogsqltable import DlgSqlTable
 from modules.gui.printdialog import DlgPrint
@@ -57,8 +57,9 @@ class Main(QtCore.QObject):
         super(Main, self).__init__()
         self.app = QtWidgets.QApplication([])
         logging.basicConfig(format='%(levelname)s:%(message)s', level=arguments.log * 10)
-        logging.info('Python Version %s.%s', sys.version_info.major, sys.version_info.minor)
-        logging.info('PyQt5 Version %s', PYQT_VERSION_STR)
+        logging.info('Python Version: %s.%s', sys.version_info.major, sys.version_info.minor)
+        logging.info('PyQt5 Version: %s', PYQT_VERSION_STR)
+        logging.info('Archerrank2 Version: %s', VERSION_STR)
         if arguments.language:
             locale = arguments.language
         else:
@@ -330,12 +331,11 @@ class Main(QtCore.QObject):
                 [user.name for user in userdata.members],
                 userdata.id))
         text = self.tr('Sorting Club<br>{}'.format("".join(names)))
-        infobox = QtWidgets.QMessageBox()
-        infobox.setWindowTitle(self.tr('Info'))
-        infobox.setText(text_user + text)
+        printdlg = DlgPrint()
+        printdlg.editor.setHtml(text_user + text)
         if test:
-            QtCore.QTimer.singleShot(500, infobox.reject)
-        infobox.exec_()
+            QtCore.QTimer.singleShot(500, printdlg.reject)
+        printdlg.exec_()
 
     def oninfo(self, test=None):
         """Set the text for the info message box in html format
@@ -343,7 +343,7 @@ class Main(QtCore.QObject):
         :returns: none
         """
         infobox = QtWidgets.QMessageBox()
-        infobox.setWindowTitle(self.tr('Info'))
+        infobox.setWindowTitle(self.tr('Archerrank2'))
         try:
             infobox.setWindowIcon(
                 QtGui.QIcon(os.path.join(
@@ -354,9 +354,11 @@ class Main(QtCore.QObject):
                     os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
 
         infobox.setText(self.tr(
-            'Archerrank2. A tool for the evaluation of archery tournaments.<br>'
+            'A tool for the evaluation of archery tournaments.<br>'
+            'Version {}<br>'
             'Archerrank2 is free software and use GNU General Public License '
-            '<a href="http://www.gnu.org/licenses/">www.gnu.org/licenses</a>'))
+            '<a href="http://www.gnu.org/licenses/">www.gnu.org/licenses</a>')
+            .format(VERSION_STR))
         infobox.setInformativeText(self.tr(
             'More Information about the program at '
             '<a href="https://github.com/MarkusHackspacher/Archerrank2">'
