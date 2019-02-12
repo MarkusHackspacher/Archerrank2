@@ -28,7 +28,7 @@ import sys
 from os.path import join
 
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
-from PyQt5.Qt import Qt
+from PyQt5.Qt import PYQT_VERSION_STR, Qt
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from sqlalchemy import create_engine, orm
 
@@ -57,6 +57,8 @@ class Main(QtCore.QObject):
         super(Main, self).__init__()
         self.app = QtWidgets.QApplication([])
         logging.basicConfig(format='%(levelname)s:%(message)s', level=arguments.log * 10)
+        logging.info('Python Version %s.%s', sys.version_info.major, sys.version_info.minor)
+        logging.info('PyQt5 Version %s', PYQT_VERSION_STR)
         if arguments.language:
             locale = arguments.language
         else:
