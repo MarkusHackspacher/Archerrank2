@@ -23,7 +23,7 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 
 from unittest import TestCase
 
-from modules import main
+from modules import main, model
 
 
 class arguments():
@@ -54,3 +54,12 @@ class ShowMainTestCase(TestCase):
 
     def test_showinfo(self):
         self.app.oninfo(test=True)
+
+    def test_entry(self):
+        self.app.entry_new(model.Bow, self.app.model_bow, test=True)
+        self.assertEqual(self.app.model_bow.rowCount(self.app.model_bow), 1)
+        index = self.app.model_bow.createIndex(0, 1)
+        self.app.ui.tableView_bow.setCurrentIndex(index)
+        self.app.entry_edit(model.Bow, self.app.model_bow, test=True)
+        self.app.entry_delete(model.Bow, self.app.model_bow)
+        self.assertEqual(self.app.model_bow.rowCount(self.app.model_bow), 0)

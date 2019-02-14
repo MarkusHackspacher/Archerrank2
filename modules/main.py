@@ -166,13 +166,13 @@ class Main(QtCore.QObject):
             ('Name', model.Bow.name, "name", {"editable": True}),
             ('Short', model.Bow.short, "short", {"editable": True}), ])
 
-    def entry_new(self, datatable, tablemodel):
+    def entry_new(self, datatable, tablemodel, test=None):
         """open dialog for new entry
 
         datatable could be model.User
         tablemodel could be self.model_user
         """
-        newdata = DlgSqlTable.get_values(self.session, datatable, model)
+        newdata = DlgSqlTable.get_values(self.session, datatable, model, test)
         if newdata[1]:
             self.session.add(datatable(**newdata[0]))
             self.session.commit()
@@ -189,7 +189,7 @@ class Main(QtCore.QObject):
             index = self.ui.tableView_bow.currentIndex()
         return index
 
-    def entry_edit(self, datatable, tablemodel):
+    def entry_edit(self, datatable, tablemodel, test=None):
         """open dialog for edit entry
 
         datatable is model.User
@@ -201,7 +201,7 @@ class Main(QtCore.QObject):
             return
         ind = tablemodel.index(index.row(), 0)
         newdata = DlgSqlTable.edit_values(self.session, datatable, model,
-                                          tablemodel.data(ind, Qt.DisplayRole))
+                                          tablemodel.data(ind, Qt.DisplayRole), test)
         data = self.session.query(datatable).get(tablemodel.data(ind, Qt.DisplayRole))
         if newdata[1]:
             for key, value in newdata[0].items():
