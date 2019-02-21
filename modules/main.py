@@ -66,7 +66,7 @@ class Main(QtCore.QObject):
             locale = str(QtCore.QLocale.system().name())
         logging.info("locale: %s", locale)
         translator = QtCore.QTranslator(self.app)
-        translator.load(join("modules", "pyfbm_" + locale))
+        translator.load(join("po", "archerrank_" + locale))
         self.app.installTranslator(translator)
 
         # Set up the user interface from Designer.
@@ -124,7 +124,7 @@ class Main(QtCore.QObject):
 
     def initDataBase(self, filename=None):
         while not filename:
-            filename = file_dlg('You want load a file or create a new file')
+            filename = self.file_dlg(self.tr('You want load a file or create a new file'))
         if 'exit' == filename:
             sys.exit(1)
         # Create an engine and create all the tables we need
@@ -388,32 +388,31 @@ class Main(QtCore.QObject):
         """
         self.app.exec_()
 
-
-def file_dlg(text):
-    msg_box = QMessageBox()
-    msg_box.setIcon(QMessageBox.Question)
-    msg_box.setWindowIcon(
-        QtGui.QIcon(os.path.abspath(os.path.join(
-            os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
-    msg_box.setText("Question")
-    msg_box.setInformativeText(text)
-    msg_box.addButton('Load', QMessageBox.AcceptRole)
-    msg_box.addButton('New', QMessageBox.AcceptRole)
-    msg_box.addButton('Exit', QMessageBox.NoRole)
-    reply = msg_box.exec_()
-    if reply == 0:
-        fileName, _ = QFileDialog.getOpenFileName(
-            None, "QFileDialog.getOpenFileName()", "",
-            "Acherrang2 Files (*.sqlite)")
-        return fileName
-    elif reply == 1:
-        filedialog = QFileDialog()
-        filedialog.setFilter(filedialog.filter() | QtCore.QDir.Hidden)
-        filedialog.setDefaultSuffix('sqlite')
-        filedialog.setAcceptMode(QFileDialog.AcceptSave)
-        filedialog.setNameFilters(["Acherrang2 Files (*.sqlite)"])
-        if filedialog.exec_() == QFileDialog.Accepted:
-            return filedialog.selectedFiles()[0]
-        return
-    else:
-        return "exit"
+    def file_dlg(self, text):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Question)
+        msg_box.setWindowIcon(
+            QtGui.QIcon(os.path.abspath(os.path.join(
+                os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+        msg_box.setText(self.tr("Question"))
+        msg_box.setInformativeText(text)
+        msg_box.addButton(self.tr('Load'), QMessageBox.AcceptRole)
+        msg_box.addButton(self.tr('New'), QMessageBox.AcceptRole)
+        msg_box.addButton(self.tr('Exit'), QMessageBox.NoRole)
+        reply = msg_box.exec_()
+        if reply == 0:
+            fileName, _ = QFileDialog.getOpenFileName(
+                None, "QFileDialog.getOpenFileName()", "",
+                "Acherrang2 Files (*.sqlite)")
+            return fileName
+        elif reply == 1:
+            filedialog = QFileDialog()
+            filedialog.setFilter(filedialog.filter() | QtCore.QDir.Hidden)
+            filedialog.setDefaultSuffix('sqlite')
+            filedialog.setAcceptMode(QFileDialog.AcceptSave)
+            filedialog.setNameFilters(["Acherrang2 Files (*.sqlite)"])
+            if filedialog.exec_() == QFileDialog.Accepted:
+                return filedialog.selectedFiles()[0]
+            return
+        else:
+            return "exit"
