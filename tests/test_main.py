@@ -63,3 +63,20 @@ class ShowMainTestCase(TestCase):
         self.app.entry_edit(model.Bow, self.app.model_bow, test=True)
         self.app.entry_delete(model.Bow, self.app.model_bow)
         self.assertEqual(self.app.model_bow.rowCount(self.app.model_bow), 0)
+
+    def test_entry_user(self):
+        self.app.entry_new(model.Age, self.app.model_age, test=True)
+        self.app.entry_new(model.Bow, self.app.model_bow, test=True)
+        self.app.entry_new(model.Club, self.app.model_club, test=True)
+        self.app.entry_new(model.User, self.app.model_user, test=True)
+        self.assertEqual(self.app.model_user.rowCount(self.app.model_bow), 1)
+        index = self.app.model_user.createIndex(0, 1)
+        self.app.ui.tableView_user.setCurrentIndex(index)
+        self.app.entry_edit(model.User, self.app.model_user, test=True)
+
+    def test_entry_club(self):
+        self.app.entry_new(model.Club, self.app.model_club, test=True)
+        self.assertEqual(self.app.model_club.rowCount(self.app.model_club), 1)
+        index = self.app.model_club.createIndex(0, 1)
+        self.app.ui.tableView_club.setCurrentIndex(index)
+        self.app.entry_edit(model.Club, self.app.model_club, test=True)
