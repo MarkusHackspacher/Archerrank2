@@ -6,17 +6,17 @@
     <message>
       <location filename="../modules/gui/printdialog.py" line="33"/>
       <source>Document Printer</source>
-      <translation type="unfinished">Document Printer</translation>
+      <translation>Dokumentdrucker</translation>
     </message>
     <message>
       <location filename="../modules/gui/printdialog.py" line="39"/>
       <source>Print</source>
-      <translation type="unfinished">Print</translation>
+      <translation>Drucken</translation>
     </message>
     <message>
       <location filename="../modules/gui/printdialog.py" line="41"/>
       <source>Preview</source>
-      <translation type="unfinished">Preview</translation>
+      <translation>Vorschau</translation>
     </message>
   </context>
   <context>
@@ -29,27 +29,27 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="73"/>
       <source>Name</source>
-      <translation type="unfinished">Name</translation>
+      <translation>Name</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="66"/>
       <source>Short</source>
-      <translation type="unfinished">Short</translation>
+      <translation>Kurz</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="67"/>
       <source>Lastname</source>
-      <translation type="unfinished">Lastname</translation>
+      <translation>Nachname</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="68"/>
       <source>Email</source>
-      <translation type="unfinished">Email</translation>
+      <translation>E-Mail-Adresse</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="69"/>
       <source>Address</source>
-      <translation type="unfinished">Address</translation>
+      <translation>Adresse</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="70"/>
@@ -59,12 +59,12 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="71"/>
       <source>Sorting</source>
-      <translation type="unfinished">Sorting</translation>
+      <translation>Sortieren</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="72"/>
       <source>Score</source>
-      <translation type="unfinished">Score</translation>
+      <translation>Ergebnis</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="74"/>
@@ -74,7 +74,7 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="75"/>
       <source>Adult</source>
-      <translation type="unfinished">Adult</translation>
+      <translation>Erwachsene</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="76"/>
@@ -84,12 +84,12 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="77"/>
       <source>Advertising</source>
-      <translation type="unfinished">Advertising</translation>
+      <translation>Werbung</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="78"/>
       <source>Other</source>
-      <translation type="unfinished">Other</translation>
+      <translation>Sonstiges</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="79"/>
@@ -99,12 +99,12 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="80"/>
       <source>Bow</source>
-      <translation type="unfinished">Bow</translation>
+      <translation>Bogen</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="81"/>
       <source>Age</source>
-      <translation type="unfinished">Age</translation>
+      <translation>Alter</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="94"/>
