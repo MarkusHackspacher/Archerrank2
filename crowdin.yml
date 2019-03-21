@@ -1,0 +1,3 @@
+files:
+  - source: /po/archerrank.ts
+    translation: /po/archerrank_%two_letters_code%.de
