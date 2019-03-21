@@ -28,11 +28,11 @@ import sys
 from os.path import join
 
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
-from PyQt5.Qt import Qt
+from PyQt5.Qt import PYQT_VERSION_STR, Qt
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from sqlalchemy import create_engine, orm
 
-from modules import model
+from modules import VERSION_STR, model
 from modules.ext.alchemical_model import SqlAlchemyTableModel
 from modules.gui.dialogsqltable import DlgSqlTable
 from modules.gui.printdialog import DlgPrint
@@ -57,13 +57,16 @@ class Main(QtCore.QObject):
         super(Main, self).__init__()
         self.app = QtWidgets.QApplication([])
         logging.basicConfig(format='%(levelname)s:%(message)s', level=arguments.log * 10)
+        logging.info('Python Version: %s.%s', sys.version_info.major, sys.version_info.minor)
+        logging.info('PyQt5 Version: %s', PYQT_VERSION_STR)
+        logging.info('Archerrank2 Version: %s', VERSION_STR)
         if arguments.language:
             locale = arguments.language
         else:
             locale = str(QtCore.QLocale.system().name())
         logging.info("locale: %s", locale)
         translator = QtCore.QTranslator(self.app)
-        translator.load(join("modules", "pyfbm_" + locale))
+        translator.load(join("po", "archerrank_" + locale))
         self.app.installTranslator(translator)
 
         # Set up the user interface from Designer.
@@ -121,7 +124,7 @@ class Main(QtCore.QObject):
 
     def initDataBase(self, filename=None):
         while not filename:
-            filename = file_dlg('You want load a file or create a new file')
+            filename = self.file_dlg(self.tr('You want load a file or create a new file'))
         if 'exit' == filename:
             sys.exit(1)
         # Create an engine and create all the tables we need
@@ -163,13 +166,13 @@ class Main(QtCore.QObject):
             ('Name', model.Bow.name, "name", {"editable": True}),
             ('Short', model.Bow.short, "short", {"editable": True}), ])
 
-    def entry_new(self, datatable, tablemodel):
+    def entry_new(self, datatable, tablemodel, test=None):
         """open dialog for new entry
 
         datatable could be model.User
         tablemodel could be self.model_user
         """
-        newdata = DlgSqlTable.get_values(self.session, datatable, model)
+        newdata = DlgSqlTable.get_values(self.session, datatable, model, test)
         if newdata[1]:
             self.session.add(datatable(**newdata[0]))
             self.session.commit()
@@ -186,7 +189,7 @@ class Main(QtCore.QObject):
             index = self.ui.tableView_bow.currentIndex()
         return index
 
-    def entry_edit(self, datatable, tablemodel):
+    def entry_edit(self, datatable, tablemodel, test=None):
         """open dialog for edit entry
 
         datatable is model.User
@@ -198,7 +201,7 @@ class Main(QtCore.QObject):
             return
         ind = tablemodel.index(index.row(), 0)
         newdata = DlgSqlTable.edit_values(self.session, datatable, model,
-                                          tablemodel.data(ind, Qt.DisplayRole))
+                                          tablemodel.data(ind, Qt.DisplayRole), test)
         data = self.session.query(datatable).get(tablemodel.data(ind, Qt.DisplayRole))
         if newdata[1]:
             for key, value in newdata[0].items():
@@ -328,12 +331,11 @@ class Main(QtCore.QObject):
                 [user.name for user in userdata.members],
                 userdata.id))
         text = self.tr('Sorting Club<br>{}'.format("".join(names)))
-        infobox = QtWidgets.QMessageBox()
-        infobox.setWindowTitle(self.tr('Info'))
-        infobox.setText(text_user + text)
+        printdlg = DlgPrint()
+        printdlg.editor.setHtml(text_user + text)
         if test:
-            QtCore.QTimer.singleShot(500, infobox.reject)
-        infobox.exec_()
+            QtCore.QTimer.singleShot(500, printdlg.reject)
+        printdlg.exec_()
 
     def oninfo(self, test=None):
         """Set the text for the info message box in html format
@@ -341,7 +343,7 @@ class Main(QtCore.QObject):
         :returns: none
         """
         infobox = QtWidgets.QMessageBox()
-        infobox.setWindowTitle(self.tr('Info'))
+        infobox.setWindowTitle(self.tr('Archerrank2'))
         try:
             infobox.setWindowIcon(
                 QtGui.QIcon(os.path.join(
@@ -352,9 +354,11 @@ class Main(QtCore.QObject):
                     os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
 
         infobox.setText(self.tr(
-            'Archerrank2. A tool for the evaluation of archery tournaments.<br>'
+            'A tool for the evaluation of archery tournaments.<br>'
+            'Version {}<br>'
             'Archerrank2 is free software and use GNU General Public License '
-            '<a href="http://www.gnu.org/licenses/">www.gnu.org/licenses</a>'))
+            '<a href="http://www.gnu.org/licenses/">www.gnu.org/licenses</a>')
+            .format(VERSION_STR))
         infobox.setInformativeText(self.tr(
             'More Information about the program at '
             '<a href="https://github.com/MarkusHackspacher/Archerrank2">'
@@ -384,32 +388,31 @@ class Main(QtCore.QObject):
         """
         self.app.exec_()
 
-
-def file_dlg(text):
-    msg_box = QMessageBox()
-    msg_box.setIcon(QMessageBox.Question)
-    msg_box.setWindowIcon(
-        QtGui.QIcon(os.path.abspath(os.path.join(
-            os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
-    msg_box.setText("Question")
-    msg_box.setInformativeText(text)
-    msg_box.addButton('Load', QMessageBox.AcceptRole)
-    msg_box.addButton('New', QMessageBox.AcceptRole)
-    msg_box.addButton('Exit', QMessageBox.NoRole)
-    reply = msg_box.exec_()
-    if reply == 0:
-        fileName, _ = QFileDialog.getOpenFileName(
-            None, "QFileDialog.getOpenFileName()", "",
-            "Acherrang2 Files (*.sqlite)")
-        return fileName
-    elif reply == 1:
-        filedialog = QFileDialog()
-        filedialog.setFilter(filedialog.filter() | QtCore.QDir.Hidden)
-        filedialog.setDefaultSuffix('sqlite')
-        filedialog.setAcceptMode(QFileDialog.AcceptSave)
-        filedialog.setNameFilters(["Acherrang2 Files (*.sqlite)"])
-        if filedialog.exec_() == QFileDialog.Accepted:
-            return filedialog.selectedFiles()[0]
-        return
-    else:
-        return "exit"
+    def file_dlg(self, text):
+        msg_box = QMessageBox()
+        msg_box.setIcon(QMessageBox.Question)
+        msg_box.setWindowIcon(
+            QtGui.QIcon(os.path.abspath(os.path.join(
+                os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+        msg_box.setText(self.tr("Question"))
+        msg_box.setInformativeText(text)
+        msg_box.addButton(self.tr('Load'), QMessageBox.AcceptRole)
+        msg_box.addButton(self.tr('New'), QMessageBox.AcceptRole)
+        msg_box.addButton(self.tr('Exit'), QMessageBox.NoRole)
+        reply = msg_box.exec_()
+        if reply == 0:
+            fileName, _ = QFileDialog.getOpenFileName(
+                None, "QFileDialog.getOpenFileName()", "",
+                "Acherrang2 Files (*.sqlite)")
+            return fileName
+        elif reply == 1:
+            filedialog = QFileDialog()
+            filedialog.setFilter(filedialog.filter() | QtCore.QDir.Hidden)
+            filedialog.setDefaultSuffix('sqlite')
+            filedialog.setAcceptMode(QFileDialog.AcceptSave)
+            filedialog.setNameFilters(["Acherrang2 Files (*.sqlite)"])
+            if filedialog.exec_() == QFileDialog.Accepted:
+                return filedialog.selectedFiles()[0]
+            return
+        else:
+            return "exit"

@@ -31,9 +31,10 @@ from modules.ext.alchemical_model import SqlAlchemyTableModel
 
 
 class DlgSqlTable(QtWidgets.QDialog):
-    STRING = ('name', 'short', 'lastname', 'other', 'email', 'address')
+    STRING = ('name', 'short', 'lastname', 'email', 'address')
     INT = ('killpt', 'sorting', 'score', 'rate', 'sep', 'adult', 'payment')
     ADVER = ('advertising')
+    TEXT = ('other')
     """
     Dialog generate from sql table
     """
@@ -58,12 +59,35 @@ class DlgSqlTable(QtWidgets.QDialog):
                 os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
 
         methods = [m.key for m in table.__table__.columns if not len(m.key) == 2]
-
+        if 'rank' in methods:
+            methods.remove('rank')
+        methodsname = {
+            'name': self.tr('Name'),
+            'short': self.tr('Short'),
+            'lastname': self.tr('Lastname'),
+            'email': self.tr('Email'),
+            'address': self.tr('Address'),
+            'killpt': self.tr('Kill Hits'),
+            'sorting': self.tr('Sorting'),
+            'score': self.tr('Score'),
+            'rate': self.tr('Name'),
+            'sep': self.tr('Sep'),
+            'adult': self.tr('Adult'),
+            'payment': self.tr('Pay for'),
+            'advertising': self.tr('Advertising'),
+            'other': self.tr('Other'),
+            'club_id': self.tr('Club'),
+            'bow_id': self.tr('Bow'),
+            'age_id': self.tr('Age'),
+            }
         self.labels = [QtWidgets.QLabel(self) for _ in methods]
         self.field = {}
         for buttonnumber, name in enumerate(methods):
             if name in self.STRING:
                 self.field[name] = QtWidgets.QLineEdit(self)
+                self.field[name].setToolTip(self.tr('Edit {}'.format(name)))
+            elif name in self.TEXT:
+                self.field[name] = QtWidgets.QTextEdit(self)
                 self.field[name].setToolTip(self.tr('Edit {}'.format(name)))
             elif name in self.INT:
                 self.field[name] = QtWidgets.QSpinBox(self)
@@ -103,7 +127,7 @@ class DlgSqlTable(QtWidgets.QDialog):
             label.setAutoFillBackground(True)
             self.gridLayout.addWidget(
                 label, buttonnumber, 1, 1, 1)
-            label.setText(self.tr("{} {}".format(buttonnumber, methods[buttonnumber])))
+            label.setText(self.tr("{} {}".format(buttonnumber, methodsname[methods[buttonnumber]])))
 
         self.boxLayout.addLayout(self.gridLayout)
         self.boxLayout.addWidget(self.buttonBox)
@@ -119,6 +143,8 @@ class DlgSqlTable(QtWidgets.QDialog):
         dataset = session.query(table).get(index)
         for name in self.field:
             if name in self.STRING:
+                self.field[name].setText(dataset.__dict__[name])
+            elif name in self.TEXT:
                 self.field[name].setText(dataset.__dict__[name])
             elif name in self.INT:
                 self.field[name].setValue(dataset.__dict__[name])
@@ -148,6 +174,8 @@ class DlgSqlTable(QtWidgets.QDialog):
         for name in self.field:
             if name in self.STRING:
                 valve[name] = self.field[name].text()
+            elif name in self.TEXT:
+                valve[name] = self.field[name].toPlainText()
             elif name in self.INT:
                 valve[name] = self.field[name].text()
             elif name in 'age_id':
@@ -164,7 +192,7 @@ class DlgSqlTable(QtWidgets.QDialog):
         return valve
 
     @staticmethod
-    def get_values(session, table, model):
+    def get_values(session, table, model, test=None):
         """static method to create the dialog and return
         (dialog.values, accepted)
 
@@ -178,11 +206,13 @@ class DlgSqlTable(QtWidgets.QDialog):
         :rtype: dict, bool
         """
         dialog = DlgSqlTable(session, table, model)
+        if test:
+            QtCore.QTimer.singleShot(500, dialog.accept)
         result = dialog.exec_()
         return dialog.values(), result == QtWidgets.QDialog.Accepted
 
     @staticmethod
-    def edit_values(session, table, model, idEdit):
+    def edit_values(session, table, model, idEdit, test=None):
         """static method to create the dialog and return
         (dialog.values, accepted)
 
@@ -199,6 +229,8 @@ class DlgSqlTable(QtWidgets.QDialog):
         """
         dialog = DlgSqlTable(session, table, model)
         dialog.load_values(idEdit, session, table)
+        if test:
+            QtCore.QTimer.singleShot(500, dialog.accept)
         result = dialog.exec_()
         return dialog.values(), result == QtWidgets.QDialog.Accepted
 
