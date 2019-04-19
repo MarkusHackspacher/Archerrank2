@@ -1,6 +1,10 @@
 language: python
 sudo: required
 dist: xenial
+addons:
+  apt:
+    packages:
+    - libxkbcommon-x11-0
 python:
   - "3.7"
 before_install:
