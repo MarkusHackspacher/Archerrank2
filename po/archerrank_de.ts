@@ -350,7 +350,7 @@
     <message>
       <location filename="../modules/gui/main.ui" line="266"/>
       <source>&amp;Exit</source>
-      <translation>&amp;Beenden</translation>
+      <translation>B&amp;eenden</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="271"/>
@@ -370,27 +370,27 @@
     <message>
       <location filename="../modules/gui/main.ui" line="286"/>
       <source>&amp;Info</source>
-      <translation type="unfinished">&amp;Info</translation>
+      <translation>&amp;Info</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="291"/>
       <source>&amp;Overview</source>
-      <translation type="unfinished">&amp;Overview</translation>
+      <translation>Übersicht</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="296"/>
       <source>&amp;Print Preview</source>
-      <translation type="unfinished">&amp;Print Preview</translation>
+      <translation>Druckvorschau</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="301"/>
       <source>&amp;Load file</source>
-      <translation type="unfinished">&amp;Load file</translation>
+      <translation>Datei &amp;laden</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="306"/>
       <source>&amp;Save file as</source>
-      <translation type="unfinished">&amp;Save file as</translation>
+      <translation>Datei &amp;speichern als</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="311"/>
