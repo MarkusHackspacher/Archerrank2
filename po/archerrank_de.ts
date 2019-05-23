@@ -24,7 +24,7 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="56"/>
       <source>Item</source>
-      <translation type="unfinished">Item</translation>
+      <translation>Artikel</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="73"/>
@@ -54,7 +54,7 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="70"/>
       <source>Kill Hits</source>
-      <translation type="unfinished">Kill Hits</translation>
+      <translation>Kill Hits</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="71"/>
@@ -94,7 +94,7 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="79"/>
       <source>Club</source>
-      <translation type="unfinished">Club</translation>
+      <translation>Klub</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="80"/>
@@ -109,7 +109,7 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="94"/>
       <source>Edit {}</source>
-      <translation type="unfinished">Edit {}</translation>
+      <translation>Bearbeiten {}</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="99"/>
@@ -124,7 +124,7 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="109"/>
       <source>Select a age</source>
-      <translation type="unfinished">Select a age</translation>
+      <translation>Wählen Sie eine Altersgruppe</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="112"/>
@@ -159,12 +159,12 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="118"/>
       <source>Select advertising level</source>
-      <translation type="unfinished">Select advertising level</translation>
+      <translation>Werbelevel auswählen</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="130"/>
       <source>{} {}</source>
-      <translation type="unfinished">{} {}</translation>
+      <translation>{} {}</translation>
     </message>
   </context>
   <context>
@@ -182,27 +182,27 @@
     <message>
       <location filename="../modules/main.py" line="234"/>
       <source>Cannot delete, reference by {},{}</source>
-      <translation type="unfinished">Cannot delete, reference by {},{}</translation>
+      <translation>Kann Eintrag nicht löschen, referenziert von {},{}</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="297"/>
       <source>Same rank&lt;br&gt;</source>
-      <translation type="unfinished">Same rank&lt;br&gt;</translation>
+      <translation>Gleicher Rang&lt;br&gt;</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="299"/>
       <source>&lt;h1&gt;Overview&lt;/h1&gt;Rang Name Score Kill Rate Club&lt;br&gt;{}</source>
-      <translation type="unfinished">&lt;h1&gt;Overview&lt;/h1&gt;Rang Name Score Kill Rate Club&lt;br&gt;{}</translation>
+      <translation>&lt;h1&gt;Übersicht&lt;/h1&gt;Rang Name Punktewert Kill Rate Klub&lt;br&gt;{}</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="321"/>
       <source>Sorting User by Club&lt;br&gt;{}</source>
-      <translation type="unfinished">Sorting User by Club&lt;br&gt;{}</translation>
+      <translation>Benutzer nach Klub&lt;br&gt;{}</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="333"/>
       <source>Sorting Club&lt;br&gt;{}</source>
-      <translation type="unfinished">Sorting Club&lt;br&gt;{}</translation>
+      <translation>Sortiere Klub&lt;br&gt;{}</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="346"/>
@@ -212,22 +212,22 @@
     <message>
       <location filename="../modules/main.py" line="356"/>
       <source>A tool for the evaluation of archery tournaments.&lt;br&gt;Version {}&lt;br&gt;Archerrank2 is free software and use GNU General Public License &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;www.gnu.org/licenses&lt;/a&gt;</source>
-      <translation type="unfinished">A tool for the evaluation of archery tournaments.&lt;br&gt;Version {}&lt;br&gt;Archerrank2 is free software and use GNU General Public License &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;www.gnu.org/licenses&lt;/a&gt;</translation>
+      <translation>Ein Werkzeug zur Bewertung von Bogenschießen-Turnieren.&lt;br&gt;Version {}&lt;br&gt;Archerrank2 ist freie Software und benutzt GNU General Public License &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;www.gnu.org/licenses&lt;/a&gt;</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="362"/>
       <source>More Information about the program at &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</source>
-      <translation type="unfinished">More Information about the program at &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</translation>
+      <translation>Weitere Informationen gibt es auf &lt;a href=&quot;http://github.com/MarkusHackspacher/Archerrank2/de/latest/&quot;&gt;pylottosimu.readthedocs.io&lt;/a&gt;</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="127"/>
       <source>You want load a file or create a new file</source>
-      <translation type="unfinished">You want load a file or create a new file</translation>
+      <translation>Sie möchten eine Datei laden oder eine neue Datei erstellen</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="397"/>
       <source>Question</source>
-      <translation type="unfinished">Question</translation>
+      <translation>Frage</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="399"/>
@@ -260,22 +260,22 @@
     <message>
       <location filename="../modules/gui/main.ui" line="84"/>
       <source>add new user</source>
-      <translation type="unfinished">add new user</translation>
+      <translation>Neuen Nutzer hinzufügen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="91"/>
       <source>edit user</source>
-      <translation type="unfinished">edit user</translation>
+      <translation>Person bearbeiten</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="98"/>
       <source>delete user</source>
-      <translation type="unfinished">delete user</translation>
+      <translation>Nutzer löschen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="112"/>
       <source>bow grade table</source>
-      <translation type="unfinished">bow grade table</translation>
+      <translation>Bogen-Bewertungstabelle</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="125"/>
