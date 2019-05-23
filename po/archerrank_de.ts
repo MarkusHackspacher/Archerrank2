@@ -295,7 +295,7 @@
     <message>
       <location filename="../modules/gui/main.ui" line="153"/>
       <source>club</source>
-      <translation type="unfinished">club</translation>
+      <translation>klub</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="166"/>
@@ -340,7 +340,7 @@
     <message>
       <location filename="../modules/gui/main.ui" line="248"/>
       <source>I&amp;nfo</source>
-      <translation type="unfinished">I&amp;nfo</translation>
+      <translation>I&amp;nfo</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="254"/>
@@ -350,7 +350,7 @@
     <message>
       <location filename="../modules/gui/main.ui" line="266"/>
       <source>&amp;Exit</source>
-      <translation type="unfinished">&amp;Exit</translation>
+      <translation>&amp;Beenden</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="271"/>
