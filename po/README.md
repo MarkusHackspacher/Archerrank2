@@ -3,7 +3,7 @@ GUI Translate
 
 To translate the program or make a translation in your language, insert in the complete.pro your language code.
 
-pylupdate5 i18n.pro
+pylupdate5 for_crowdin.pro
 
 translate your language file: acherrank.xx.ts, and produce the .ts translation files with:
 
