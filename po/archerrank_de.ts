@@ -6,7 +6,7 @@
     <message>
       <location filename="../modules/gui/printdialog.py" line="33"/>
       <source>Document Printer</source>
-      <translation>Dokumentdrucker</translation>
+      <translation>Dokument erstellen</translation>
     </message>
     <message>
       <location filename="../modules/gui/printdialog.py" line="39"/>
@@ -69,7 +69,7 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="74"/>
       <source>Sep</source>
-      <translation type="unfinished">Sep</translation>
+      <translation>Sep</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="75"/>
