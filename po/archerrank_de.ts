@@ -220,24 +220,69 @@
       <translation>Sie möchten eine Datei laden oder eine neue Datei erstellen</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="397"/>
+      <location filename="../modules/main.py" line="398"/>
       <source>Question</source>
       <translation>Frage</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="399"/>
+      <location filename="../modules/main.py" line="400"/>
       <source>Load</source>
       <translation>Laden</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="400"/>
+      <location filename="../modules/main.py" line="401"/>
       <source>New</source>
       <translation>Neu</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="401"/>
+      <location filename="../modules/main.py" line="402"/>
       <source>Exit</source>
       <translation>Beenden</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="143"/>
+      <source>Lastname</source>
+      <translation type="unfinished">Lastname</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="164"/>
+      <source>Name</source>
+      <translation type="unfinished">Name</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="143"/>
+      <source>Score</source>
+      <translation type="unfinished">Score</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="143"/>
+      <source>Kill Points</source>
+      <translation type="unfinished">Kill Points</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="143"/>
+      <source>Club</source>
+      <translation type="unfinished">Club</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="143"/>
+      <source>Age</source>
+      <translation type="unfinished">Age</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="143"/>
+      <source>Bow</source>
+      <translation type="unfinished">Bow</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="164"/>
+      <source>Short</source>
+      <translation type="unfinished">Short</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="153"/>
+      <source>payment</source>
+      <translation type="unfinished">payment</translation>
     </message>
   </context>
   <context>
