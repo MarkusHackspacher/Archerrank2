@@ -142,29 +142,29 @@ class Main(QtCore.QObject):
 
         self.model_user = SqlAlchemyTableModel(self.session, model.User, [
             ('Id', model.User.id, "id", {"editable": False}),
-            ('Lastname', model.User.lastname, "lastname", {"editable": True}),
-            ('Name', model.User.name, "name", {"editable": True}),
-            ('Score', model.User.score, "score", {"editable": True}),
-            ('Kill Points', model.User.killpt, "killpt", {"editable": True}),
-            ('Club', model.User.club_id, "clubname", {"editable": False}),
-            ('Age', model.User.age_id, "agename", {"editable": False}),
-            ('Bow', model.User.bow_id, "bowname", {"editable": False})])
+            (self.tr('Lastname'), model.User.lastname, "lastname", {"editable": True}),
+            (self.tr('Name'), model.User.name, "name", {"editable": True}),
+            (self.tr('Score'), model.User.score, "score", {"editable": True}),
+            (self.tr('Kill Points'), model.User.killpt, "killpt", {"editable": True}),
+            (self.tr('Club'), model.User.club_id, "clubname", {"editable": False}),
+            (self.tr('Age'), model.User.age_id, "agename", {"editable": False}),
+            (self.tr('Bow'), model.User.bow_id, "bowname", {"editable": False})])
 
         self.model_club = SqlAlchemyTableModel(self.session, model.Club, [
             ('Id', model.Club.id, "id", {"editable": False}),
-            ('Name', model.Club.name, "name", {"editable": True, "dnd": True}),
-            ('Short', model.Club.short, "short", {"editable": True}),
-            ('payment', model.Club.payment, "payment", {"editable": True})])
+            (self.tr('Name'), model.Club.name, "name", {"editable": True, "dnd": True}),
+            (self.tr('Short'), model.Club.short, "short", {"editable": True}),
+            (self.tr('payment'), model.Club.payment, "payment", {"editable": True})])
 
         self.model_age = SqlAlchemyTableModel(self.session, model.Age, [
             ('Id', model.Age.id, "id", {"editable": False}),
-            ('Name', model.Age.name, "name", {"editable": True}),
-            ('Short', model.Age.short, "short", {"editable": True}), ])
+            (self.tr('Name'), model.Age.name, "name", {"editable": True}),
+            (self.tr('Short'), model.Age.short, "short", {"editable": True}), ])
 
         self.model_bow = SqlAlchemyTableModel(self.session, model.Bow, [
             ('Id', model.Bow.id, "id", {"editable": False}),
-            ('Name', model.Bow.name, "name", {"editable": True}),
-            ('Short', model.Bow.short, "short", {"editable": True}), ])
+            (self.tr('Name'), model.Bow.name, "name", {"editable": True}),
+            (self.tr('Short'), model.Bow.short, "short", {"editable": True}), ])
 
     def entry_new(self, datatable, tablemodel, test=None):
         """open dialog for new entry
@@ -380,6 +380,7 @@ class Main(QtCore.QObject):
         :return:
         """
         self.ui.close()
+        self.app.quit()
 
     def main_loop(self):
         """application start

@@ -219,23 +219,68 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="397"/>
+        <location filename="../modules/main.py" line="398"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="399"/>
+        <location filename="../modules/main.py" line="400"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="400"/>
+        <location filename="../modules/main.py" line="401"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="401"/>
+        <location filename="../modules/main.py" line="402"/>
         <source>Exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../modules/main.py" line="143"/>
+        <source>Lastname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../modules/main.py" line="164"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../modules/main.py" line="143"/>
+        <source>Score</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../modules/main.py" line="143"/>
+        <source>Kill Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../modules/main.py" line="143"/>
+        <source>Club</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../modules/main.py" line="143"/>
+        <source>Age</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../modules/main.py" line="143"/>
+        <source>Bow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../modules/main.py" line="164"/>
+        <source>Short</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../modules/main.py" line="153"/>
+        <source>payment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
