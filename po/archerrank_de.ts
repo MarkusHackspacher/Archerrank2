@@ -217,7 +217,7 @@
     <message>
       <location filename="../modules/main.py" line="362"/>
       <source>More Information about the program at &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</source>
-      <translation>Weitere Informationen gibt es auf &lt;a href=&quot;http://github.com/MarkusHackspacher/Archerrank2/de/latest/&quot;&gt;pylottosimu.readthedocs.io&lt;/a&gt;</translation>
+      <translation>Weitere Informationen gibt es auf &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="127"/>
@@ -325,17 +325,17 @@
     <message>
       <location filename="../modules/gui/main.ui" line="214"/>
       <source>edit age</source>
-      <translation type="unfinished">edit age</translation>
+      <translation>bearbeite Altersklassen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="221"/>
       <source>delete age</source>
-      <translation type="unfinished">delete age</translation>
+      <translation>lösche Altersklassen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="242"/>
       <source>Fi&amp;le</source>
-      <translation type="unfinished">Fi&amp;le</translation>
+      <translation>Datei</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="248"/>
@@ -345,7 +345,7 @@
     <message>
       <location filename="../modules/gui/main.ui" line="254"/>
       <source>E&amp;valuation</source>
-      <translation type="unfinished">E&amp;valuation</translation>
+      <translation>Wertung</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="266"/>
@@ -355,17 +355,17 @@
     <message>
       <location filename="../modules/gui/main.ui" line="271"/>
       <source>&amp;Open</source>
-      <translation type="unfinished">&amp;Open</translation>
+      <translation>Ö&amp;ffnen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="276"/>
       <source>&amp;Save</source>
-      <translation type="unfinished">&amp;Save</translation>
+      <translation>&amp;Speichern</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="281"/>
       <source>&amp;New</source>
-      <translation type="unfinished">&amp;New</translation>
+      <translation>&amp;Neu</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="286"/>
@@ -395,7 +395,7 @@
     <message>
       <location filename="../modules/gui/main.ui" line="311"/>
       <source>&amp;Create certificates</source>
-      <translation type="unfinished">&amp;Create certificates</translation>
+      <translation>Urkunde erstellen</translation>
     </message>
   </context>
 </TS>
