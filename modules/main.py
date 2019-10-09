@@ -55,7 +55,7 @@ class Main(QtCore.QObject):
         :returns: none
         """
         super(Main, self).__init__()
-        self.app = QtWidgets.QApplication([])
+        self.app = QtWidgets.QApplication(['a'])
         logging.basicConfig(format='%(levelname)s:%(message)s', level=arguments.log * 10)
         logging.info('Python Version: %s.%s', sys.version_info.major, sys.version_info.minor)
         logging.info('PyQt5 Version: %s', PYQT_VERSION_STR)
