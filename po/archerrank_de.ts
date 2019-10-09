@@ -114,7 +114,7 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="99"/>
       <source>Select a club</source>
-      <translation>Club auswählen</translation>
+      <translation>Klub auswählen</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="104"/>
@@ -255,12 +255,12 @@
     <message>
       <location filename="../modules/gui/main.ui" line="84"/>
       <source>add new user</source>
-      <translation>Neuen Nutzer hinzufügen</translation>
+      <translation>neuen Teilnehmer hinzufügen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="91"/>
       <source>edit user</source>
-      <translation>Person bearbeiten</translation>
+      <translation>Teilnehmer bearbeiten</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="98"/>
@@ -290,12 +290,12 @@
     <message>
       <location filename="../modules/gui/main.ui" line="153"/>
       <source>club</source>
-      <translation>klub</translation>
+      <translation>Klub</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="166"/>
       <source>add new club</source>
-      <translation>neuen Club hinzufügen</translation>
+      <translation>neuen Klub hinzufügen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="173"/>
@@ -310,12 +310,12 @@
     <message>
       <location filename="../modules/gui/main.ui" line="194"/>
       <source>age grade table</source>
-      <translation>Bogen-Bewertungstabelle</translation>
+      <translation>Alterklassen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="207"/>
       <source>add new age</source>
-      <translation>neue Alterklasse hinzufügen</translation>
+      <translation>neue Altersklasse hinzufügen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="214"/>
