@@ -6,7 +6,7 @@
     <message>
       <location filename="../modules/gui/printdialog.py" line="33"/>
       <source>Document Printer</source>
-      <translation>Dokumentdrucker</translation>
+      <translation>Dokument erstellen</translation>
     </message>
     <message>
       <location filename="../modules/gui/printdialog.py" line="39"/>
@@ -69,7 +69,7 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="74"/>
       <source>Sep</source>
-      <translation type="unfinished">Sep</translation>
+      <translation>Sep</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="75"/>
@@ -114,7 +114,7 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="99"/>
       <source>Select a club</source>
-      <translation>Club auswählen</translation>
+      <translation>Klub auswählen</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="104"/>
@@ -170,7 +170,7 @@
   <context>
     <name>Main</name>
     <message>
-      <location filename="../modules/main.py" line="234"/>
+      <location filename="../modules/main.py" line="346"/>
       <source>Info</source>
       <translation>Info</translation>
     </message>
@@ -203,11 +203,6 @@
       <location filename="../modules/main.py" line="333"/>
       <source>Sorting Club&lt;br&gt;{}</source>
       <translation>Sortiere Klub&lt;br&gt;{}</translation>
-    </message>
-    <message>
-      <location filename="../modules/main.py" line="346"/>
-      <source>Archerrank2</source>
-      <translation>Archerrank2</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="356"/>
@@ -260,12 +255,12 @@
     <message>
       <location filename="../modules/gui/main.ui" line="84"/>
       <source>add new user</source>
-      <translation>Neuen Nutzer hinzufügen</translation>
+      <translation>neuen Teilnehmer hinzufügen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="91"/>
       <source>edit user</source>
-      <translation>Person bearbeiten</translation>
+      <translation>Teilnehmer bearbeiten</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="98"/>
@@ -295,12 +290,12 @@
     <message>
       <location filename="../modules/gui/main.ui" line="153"/>
       <source>club</source>
-      <translation>klub</translation>
+      <translation>Klub</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="166"/>
       <source>add new club</source>
-      <translation>neuen Club hinzufügen</translation>
+      <translation>neuen Klub hinzufügen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="173"/>
@@ -315,12 +310,12 @@
     <message>
       <location filename="../modules/gui/main.ui" line="194"/>
       <source>age grade table</source>
-      <translation>Bogen-Bewertungstabelle</translation>
+      <translation>Alterklassen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="207"/>
       <source>add new age</source>
-      <translation>neue Alterklasse hinzufügen</translation>
+      <translation>neue Altersklasse hinzufügen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="214"/>
