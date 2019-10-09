@@ -79,7 +79,7 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="76"/>
       <source>Pay for</source>
-      <translation type="unfinished">Pay for</translation>
+      <translation>Bezahlen für</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="77"/>
@@ -280,17 +280,17 @@
     <message>
       <location filename="../modules/gui/main.ui" line="125"/>
       <source>add new bow</source>
-      <translation type="unfinished">add new bow</translation>
+      <translation>neue Bogenklasse hinzufügen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="132"/>
       <source>edit bow</source>
-      <translation type="unfinished">edit bow</translation>
+      <translation>bearbeite Bogenklasse</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="139"/>
       <source>delete bow</source>
-      <translation type="unfinished">delete bow</translation>
+      <translation>lösche Bogenklasse</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="153"/>
@@ -305,22 +305,22 @@
     <message>
       <location filename="../modules/gui/main.ui" line="173"/>
       <source>edit club</source>
-      <translation type="unfinished">edit club</translation>
+      <translation>bearbeite Klub</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="180"/>
       <source>delete club</source>
-      <translation type="unfinished">delete club</translation>
+      <translation>Klub löschen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="194"/>
       <source>age grade table</source>
-      <translation type="unfinished">age grade table</translation>
+      <translation>Bogen-Bewertungstabelle</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="207"/>
       <source>add new age</source>
-      <translation type="unfinished">add new age</translation>
+      <translation>neue Alterklasse hinzufügen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="214"/>
