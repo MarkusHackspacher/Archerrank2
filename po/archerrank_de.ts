@@ -79,7 +79,7 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="76"/>
       <source>Pay for</source>
-      <translation type="unfinished">Pay for</translation>
+      <translation>Bezahlen für</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="77"/>
@@ -217,7 +217,7 @@
     <message>
       <location filename="../modules/main.py" line="362"/>
       <source>More Information about the program at &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</source>
-      <translation>Weitere Informationen gibt es auf &lt;a href=&quot;http://github.com/MarkusHackspacher/Archerrank2/de/latest/&quot;&gt;pylottosimu.readthedocs.io&lt;/a&gt;</translation>
+      <translation>Weitere Informationen gibt es auf &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="127"/>
@@ -280,17 +280,17 @@
     <message>
       <location filename="../modules/gui/main.ui" line="125"/>
       <source>add new bow</source>
-      <translation type="unfinished">add new bow</translation>
+      <translation>neue Bogenklasse hinzufügen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="132"/>
       <source>edit bow</source>
-      <translation type="unfinished">edit bow</translation>
+      <translation>bearbeite Bogenklasse</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="139"/>
       <source>delete bow</source>
-      <translation type="unfinished">delete bow</translation>
+      <translation>lösche Bogenklasse</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="153"/>
@@ -305,37 +305,37 @@
     <message>
       <location filename="../modules/gui/main.ui" line="173"/>
       <source>edit club</source>
-      <translation type="unfinished">edit club</translation>
+      <translation>bearbeite Klub</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="180"/>
       <source>delete club</source>
-      <translation type="unfinished">delete club</translation>
+      <translation>Klub löschen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="194"/>
       <source>age grade table</source>
-      <translation type="unfinished">age grade table</translation>
+      <translation>Bogen-Bewertungstabelle</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="207"/>
       <source>add new age</source>
-      <translation type="unfinished">add new age</translation>
+      <translation>neue Alterklasse hinzufügen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="214"/>
       <source>edit age</source>
-      <translation type="unfinished">edit age</translation>
+      <translation>bearbeite Altersklassen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="221"/>
       <source>delete age</source>
-      <translation type="unfinished">delete age</translation>
+      <translation>lösche Altersklassen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="242"/>
       <source>Fi&amp;le</source>
-      <translation type="unfinished">Fi&amp;le</translation>
+      <translation>Datei</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="248"/>
@@ -345,7 +345,7 @@
     <message>
       <location filename="../modules/gui/main.ui" line="254"/>
       <source>E&amp;valuation</source>
-      <translation type="unfinished">E&amp;valuation</translation>
+      <translation>Wertung</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="266"/>
@@ -355,17 +355,17 @@
     <message>
       <location filename="../modules/gui/main.ui" line="271"/>
       <source>&amp;Open</source>
-      <translation type="unfinished">&amp;Open</translation>
+      <translation>Ö&amp;ffnen</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="276"/>
       <source>&amp;Save</source>
-      <translation type="unfinished">&amp;Save</translation>
+      <translation>&amp;Speichern</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="281"/>
       <source>&amp;New</source>
-      <translation type="unfinished">&amp;New</translation>
+      <translation>&amp;Neu</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="286"/>
@@ -395,7 +395,7 @@
     <message>
       <location filename="../modules/gui/main.ui" line="311"/>
       <source>&amp;Create certificates</source>
-      <translation type="unfinished">&amp;Create certificates</translation>
+      <translation>Urkunde erstellen</translation>
     </message>
   </context>
 </TS>
