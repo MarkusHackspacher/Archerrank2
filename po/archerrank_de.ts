@@ -170,7 +170,7 @@
   <context>
     <name>Main</name>
     <message>
-      <location filename="../modules/main.py" line="234"/>
+      <location filename="../modules/main.py" line="346"/>
       <source>Info</source>
       <translation>Info</translation>
     </message>
@@ -203,11 +203,6 @@
       <location filename="../modules/main.py" line="333"/>
       <source>Sorting Club&lt;br&gt;{}</source>
       <translation>Sortiere Klub&lt;br&gt;{}</translation>
-    </message>
-    <message>
-      <location filename="../modules/main.py" line="346"/>
-      <source>Archerrank2</source>
-      <translation>Archerrank2</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="356"/>
