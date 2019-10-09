@@ -15,5 +15,6 @@ lrelease complete.pro
 
 At Linux should you install the pyqt5-dev-tools to use the pylupdate5 command and qttools5-dev-tools for the lrelease:
 
+```
 apt-get install pyqt5-dev-tools qttools5-dev-tools
-
+```

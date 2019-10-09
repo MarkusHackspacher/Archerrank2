@@ -55,7 +55,7 @@ class Main(QtCore.QObject):
         :returns: none
         """
         super(Main, self).__init__()
-        self.app = QtWidgets.QApplication(['a'])
+        self.app = QtWidgets.QApplication(['Archerank2'])
         logging.basicConfig(format='%(levelname)s:%(message)s', level=arguments.log * 10)
         logging.info('Python Version: %s.%s', sys.version_info.major, sys.version_info.minor)
         logging.info('PyQt5 Version: %s', PYQT_VERSION_STR)
@@ -343,7 +343,7 @@ class Main(QtCore.QObject):
         :returns: none
         """
         infobox = QtWidgets.QMessageBox()
-        infobox.setWindowTitle(self.tr('Archerrank2'))
+        infobox.setWindowTitle(self.tr('Info'))
         try:
             infobox.setWindowIcon(
                 QtGui.QIcon(os.path.join(
