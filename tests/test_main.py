@@ -29,7 +29,7 @@ from modules import main, model
 class arguments():
     log = 40
     database = ':memory:'
-    language = 'de'
+    language = 'en'
 
 
 class ShowMainTestCase(TestCase):
@@ -43,10 +43,10 @@ class ShowMainTestCase(TestCase):
     def tearDown(self):
         """Deletes the reference owned by self"""
         self.app.ui.close()
-        del self.app
         super(ShowMainTestCase, self).tearDown()
 
     def test_onprint(self):
+        """Test onprint"""
         self.app.onprint(test=True)
 
     def test_on_overview(self):

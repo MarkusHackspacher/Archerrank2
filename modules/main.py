@@ -77,9 +77,14 @@ class Main(QtCore.QObject):
         except FileNotFoundError:
             self.ui = uic.loadUi(os.path.join(
                 "modules", "gui", "main.ui"))
-        self.ui.setWindowIcon(
-            QtGui.QIcon(os.path.abspath(os.path.join(
-                os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+        try:
+            self.ui.setWindowIcon(
+                QtGui.QIcon(os.path.abspath(os.path.join(
+                    "misc", "archerrank2.svg"))))
+        except FileNotFoundError:
+            self.ui.setWindowIcon(
+                QtGui.QIcon(os.path.abspath(os.path.join(
+                    os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
         self.initDataBase(arguments.database)
         self.ui.tableView_user.setModel(self.model_user)
         self.ui.tableView_club.setModel(self.model_club)
@@ -352,7 +357,6 @@ class Main(QtCore.QObject):
             infobox.setWindowIcon(
                 QtGui.QIcon(os.path.abspath(os.path.join(
                     os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
-
         infobox.setText(self.tr(
             'A tool for the evaluation of archery tournaments.<br>'
             'Version {}<br>'
@@ -392,9 +396,14 @@ class Main(QtCore.QObject):
     def file_dlg(self, text):
         msg_box = QMessageBox()
         msg_box.setIcon(QMessageBox.Question)
-        msg_box.setWindowIcon(
-            QtGui.QIcon(os.path.abspath(os.path.join(
-                os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+        try:
+            msg_box.setWindowIcon(
+                QtGui.QIcon(os.path.join(
+                    "misc", "archerrank2.svg")))
+        except FileNotFoundError:
+            msg_box.setWindowIcon(
+                QtGui.QIcon(os.path.abspath(os.path.join(
+                    os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
         msg_box.setText(self.tr("Question"))
         msg_box.setInformativeText(text)
         msg_box.addButton(self.tr('Load'), QMessageBox.AcceptRole)

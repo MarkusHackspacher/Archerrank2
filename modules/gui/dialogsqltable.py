@@ -54,10 +54,14 @@ class DlgSqlTable(QtWidgets.QDialog):
             QtWidgets.QBoxLayout.TopToBottom, self)
         self.gridLayout = QtWidgets.QGridLayout()
         self.setWindowTitle(self.tr("Item"))
-        self.setWindowIcon(
-            QtGui.QIcon(os.path.abspath(os.path.join(
-                os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
-
+        try:
+            self.setWindowIcon(
+                QtGui.QIcon(os.path.abspath(os.path.join(
+                    os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+        except FileNotFoundError:
+            self.setWindowIcon(
+                    QtGui.QIcon(os.path.abspath(os.path.join(
+                        "misc", "archerrank2.svg"))))
         methods = [m.key for m in table.__table__.columns if not len(m.key) == 2]
         if 'rank' in methods:
             methods.remove('rank')

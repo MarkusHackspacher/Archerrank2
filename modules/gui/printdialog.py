@@ -31,9 +31,14 @@ class DlgPrint(QtWidgets.QDialog):
     def __init__(self):
         super(DlgPrint, self).__init__()
         self.setWindowTitle(self.tr('Document Printer'))
-        self.setWindowIcon(
-            QtGui.QIcon(os.path.abspath(os.path.join(
-                os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+        try:
+            self.setWindowIcon(
+                QtGui.QIcon(os.path.abspath(os.path.join(
+                    os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+        except FileNotFoundError:
+            self.setWindowIcon(
+                    QtGui.QIcon(os.path.abspath(os.path.join(
+                        "misc", "archerrank2.svg"))))
         self.editor = QtWidgets.QTextEdit(self)
         self.editor.textChanged.connect(self.handleTextChanged)
         self.buttonPrint = QtWidgets.QPushButton(self.tr('Print'), self)
