@@ -1,6 +1,7 @@
 pyqt5
 sqlalchemy>=1.3.0
 docx-mailmerge
+openpyxl
 # unit test requirements
 pycodestyle
 isort
