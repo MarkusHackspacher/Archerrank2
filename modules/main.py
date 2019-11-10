@@ -32,7 +32,7 @@ from PyQt5.Qt import PYQT_VERSION_STR, Qt
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from sqlalchemy import create_engine, orm
 
-from modules import VERSION_STR, model
+from modules import VERSION_STR, model, writexlsx
 from modules.ext.alchemical_model import SqlAlchemyTableModel
 from modules.gui.dialogsqltable import DlgSqlTable
 from modules.gui.printdialog import DlgPrint

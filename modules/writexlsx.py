@@ -24,19 +24,19 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 from openpyxl import Workbook
 
 class writexlsx:
-    def init():
+    def init(self):
         self.wb = Workbook()
         self.wsWinner = wb.active
         self.wsWinner.title = "winner"
         self.wsAddress = wb.create_sheet("address")
 
-    def save(filename)
+    def save(self, filename):
         self.wb.save(filename)
 
-    def winner(data)
+    def winner(self, data):
         """write winner data in sheet"""
         pass
 
-    def adresse(data)
+    def adresse(self, data):
         """write adresse data in sheet"""
         pass
