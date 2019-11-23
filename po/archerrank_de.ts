@@ -242,17 +242,17 @@
     <message>
       <location filename="../modules/main.py" line="143"/>
       <source>Lastname</source>
-      <translation type="unfinished">Lastname</translation>
+      <translation>Nachname</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="164"/>
       <source>Name</source>
-      <translation type="unfinished">Name</translation>
+      <translation>Name</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="143"/>
       <source>Score</source>
-      <translation type="unfinished">Score</translation>
+      <translation>Ergebnis</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="143"/>
@@ -262,27 +262,27 @@
     <message>
       <location filename="../modules/main.py" line="143"/>
       <source>Club</source>
-      <translation type="unfinished">Club</translation>
+      <translation>Klub</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="143"/>
       <source>Age</source>
-      <translation type="unfinished">Age</translation>
+      <translation>Alter</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="143"/>
       <source>Bow</source>
-      <translation type="unfinished">Bow</translation>
+      <translation>Bogen</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="164"/>
       <source>Short</source>
-      <translation type="unfinished">Short</translation>
+      <translation>Kurzbezeichnung</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="153"/>
       <source>payment</source>
-      <translation type="unfinished">payment</translation>
+      <translation>Zahlung</translation>
     </message>
   </context>
   <context>
