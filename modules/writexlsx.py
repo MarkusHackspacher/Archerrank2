@@ -23,6 +23,7 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 
 from openpyxl import Workbook
 
+
 class writexlsx:
     def init(self):
         self.wb = Workbook()
@@ -35,8 +36,8 @@ class writexlsx:
 
     def winner(self, data):
         """write winner data in sheet"""
-        pass
+        self.wsWinner.append(data)
 
     def adresse(self, data):
         """write adresse data in sheet"""
-        pass
+        self.wsAddress.append(data)
