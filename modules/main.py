@@ -100,6 +100,7 @@ class Main(QtCore.QObject):
         self.ui.actionInfo.triggered.connect(self.oninfo)
         self.ui.actionExit.triggered.connect(self.on_exit)
         self.ui.actionCreate_certificates.triggered.connect(self.on_create)
+        self.ui.actionXLSX_Export.triggered.connect(self.on_xlsx_export)
         user_new = functools.partial(self.entry_new, model.User, self.model_user)
         club_new = functools.partial(self.entry_new, model.Club, self.model_club)
         age_new = functools.partial(self.entry_new, model.Age, self.model_age)
@@ -377,6 +378,12 @@ class Main(QtCore.QObject):
             document.merge(Editor='docx Mail Merge',
                            Note='Can be used for merging docx documents')
             document.write('output.docx')
+
+    def on_xlsx_export(self):
+        xlsxexport = writexlsx.writexlsx()
+        xlsxexport.winner(('a', ' b', 'c'))
+        xlsxexport.adresse(('g', ' h', 'j'))
+        xlsxexport.save('table.xlsx')
 
     def on_exit(self):
         """exit and close

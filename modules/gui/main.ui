@@ -256,6 +256,7 @@
     <addaction name="actionOverview"/>
     <addaction name="actionPrintPreview"/>
     <addaction name="actionCreate_certificates"/>
+    <addaction name="actionXLSX_Export"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEvaluation"/>
@@ -309,6 +310,11 @@
   <action name="actionCreate_certificates">
    <property name="text">
     <string>&amp;Create certificates</string>
+   </property>
+  </action>
+  <action name="actionXLSX_Export">
+   <property name="text">
+    <string>XLSX Export</string>
    </property>
   </action>
  </widget>

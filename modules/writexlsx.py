@@ -25,11 +25,11 @@ from openpyxl import Workbook
 
 
 class writexlsx:
-    def init(self):
+    def __init__(self):
         self.wb = Workbook()
-        self.wsWinner = wb.active
+        self.wsWinner = self.wb.active
         self.wsWinner.title = "winner"
-        self.wsAddress = wb.create_sheet("address")
+        self.wsAddress = self.wb.create_sheet("address")
 
     def save(self, filename):
         self.wb.save(filename)
