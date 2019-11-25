@@ -6,7 +6,7 @@ addons:
     packages:
     - libxkbcommon-x11-0
 python:
-  - "3.7"
+  - "3.8"
 before_install:
   - sudo apt-get update
   - sudo apt-get install -y xvfb herbstluftwm

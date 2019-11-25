@@ -21,7 +21,12 @@ You should have received a copy of the GNU General Public License
 along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from openpyxl import Workbook
+import_openpyxl = True
+try:
+    from openpyxl import Workbook
+except ImportError:
+    print('Not found openpyxl, no export xlsx possible')
+    import_openpyxl = False
 
 
 class writexlsx:

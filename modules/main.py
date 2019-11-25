@@ -126,6 +126,7 @@ class Main(QtCore.QObject):
         self.ui.pushButton_deleteage.clicked.connect(age_del)
         self.ui.pushButton_deletebow.clicked.connect(bow_del)
         self.ui.actionCreate_certificates.setEnabled(import_mailmerge)
+        self.ui.actionXLSX_Export.setEnabled(writexlsx.import_openpyxl)
         self.ui.show()
 
     def initDataBase(self, filename=None):
