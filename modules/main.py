@@ -68,6 +68,7 @@ class Main(QtCore.QObject):
         translator = QtCore.QTranslator(self.app)
         translator.load(join("po", "archerrank_" + locale))
         self.app.installTranslator(translator)
+        self.exportDir = False
 
         # Set up the user interface from Designer.
         try:
@@ -380,10 +381,32 @@ class Main(QtCore.QObject):
                            Note='Can be used for merging docx documents')
             document.write('output.docx')
 
-    def on_xlsx_export(self):
+    def on_xlsx_export(self, test):
+        if (self.exportDir or test):
+            self.exportDir = QFileDialog.getExistingDirectory(
+                None, self.tr("Open Directory"), "")
+
         xlsxexport = writexlsx.writexlsx()
-        xlsxexport.winner(('a', ' b', 'c'))
-        xlsxexport.adresse(('g', ' h', 'j'))
+        xlsxexport.winner(('clubname', 'name', 'lastname', 'bowname', 'agename'))
+        users = self.session.query(model.User).order_by(model.User.club_id).all()
+        for userdata in users:
+             xlsxexport.winner((
+                userdata.clubname,
+                userdata.name,
+                userdata.lastname,
+                userdata.bowname,
+                userdata.agename))
+
+        xlsxexport.adresse(('name', 'short', 'email', 'payment', 'advertising'))
+        clubs = self.session.query(model.Club).all()
+        for userdata in clubs:
+            xlsxexport.adresse((
+                userdata.name,
+                userdata.short,
+                userdata.email,
+                userdata.payment,
+                userdata.advertising))
+
         xlsxexport.save('table.xlsx')
 
     def on_exit(self):
