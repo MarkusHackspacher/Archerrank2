@@ -390,7 +390,7 @@ class Main(QtCore.QObject):
         xlsxexport.winner(('clubname', 'name', 'lastname', 'bowname', 'agename'))
         users = self.session.query(model.User).order_by(model.User.club_id).all()
         for userdata in users:
-             xlsxexport.winner((
+            xlsxexport.winner((
                 userdata.clubname,
                 userdata.name,
                 userdata.lastname,
