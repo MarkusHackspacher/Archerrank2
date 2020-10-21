@@ -234,7 +234,7 @@
      <x>0</x>
      <y>0</y>
      <width>785</width>
-     <height>30</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -255,8 +255,10 @@
     </property>
     <addaction name="actionOverview"/>
     <addaction name="actionPrintPreview"/>
-    <addaction name="actionCreate_certificates"/>
     <addaction name="actionXLSX_Export"/>
+    <addaction name="separator"/>
+    <addaction name="actionCreateAddress"/>
+    <addaction name="actionCreateCertificates"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEvaluation"/>
@@ -307,7 +309,7 @@
     <string>&amp;Save file as</string>
    </property>
   </action>
-  <action name="actionCreate_certificates">
+  <action name="actionCreateCertificates">
    <property name="text">
     <string>&amp;Create certificates</string>
    </property>
@@ -315,6 +317,11 @@
   <action name="actionXLSX_Export">
    <property name="text">
     <string>XLSX Export</string>
+   </property>
+  </action>
+  <action name="actionCreateAddress">
+   <property name="text">
+    <string>Create Address</string>
    </property>
   </action>
  </widget>

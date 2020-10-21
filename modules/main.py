@@ -100,7 +100,8 @@ class Main(QtCore.QObject):
         self.ui.actionOverview.triggered.connect(self.on_overview)
         self.ui.actionInfo.triggered.connect(self.oninfo)
         self.ui.actionExit.triggered.connect(self.on_exit)
-        self.ui.actionCreate_certificates.triggered.connect(self.on_create)
+        self.ui.actionCreateCertificates.triggered.connect(self.on_create)
+        self.ui.actionCreateAddress.triggered.connect(self.on_create)
         self.ui.actionXLSX_Export.triggered.connect(self.on_xlsx_export)
         user_new = functools.partial(self.entry_new, model.User, self.model_user)
         club_new = functools.partial(self.entry_new, model.Club, self.model_club)
@@ -126,7 +127,8 @@ class Main(QtCore.QObject):
         self.ui.pushButton_deleteclub.clicked.connect(club_del)
         self.ui.pushButton_deleteage.clicked.connect(age_del)
         self.ui.pushButton_deletebow.clicked.connect(bow_del)
-        self.ui.actionCreate_certificates.setEnabled(import_mailmerge)
+        self.ui.actionCreateCertificates.setEnabled(import_mailmerge)
+        self.ui.actionCreateAddress.setEnabled(import_mailmerge)
         self.ui.actionXLSX_Export.setEnabled(writexlsx.import_openpyxl)
         self.ui.show()
 
@@ -375,7 +377,7 @@ class Main(QtCore.QObject):
         infobox.exec_()
 
     def on_create(self):
-        with MailMerge('input.docx') as document:
+        with MailMerge('input_winner.docx') as document:
             print(document.get_merge_fields())
             document.merge(Editor='docx Mail Merge',
                            Note='Can be used for merging docx documents')
