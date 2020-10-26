@@ -100,8 +100,8 @@ class Main(QtCore.QObject):
         self.ui.actionOverview.triggered.connect(self.on_overview)
         self.ui.actionInfo.triggered.connect(self.oninfo)
         self.ui.actionExit.triggered.connect(self.on_exit)
-        self.ui.actionCreateCertificates.triggered.connect(self.on_create)
-        self.ui.actionCreateAddress.triggered.connect(self.on_create)
+        self.ui.actionCreateCertificates.triggered.connect(self.on_create_winner)
+        self.ui.actionCreateAddress.triggered.connect(self.on_create_adress)
         self.ui.actionXLSX_Export.triggered.connect(self.on_xlsx_export)
         user_new = functools.partial(self.entry_new, model.User, self.model_user)
         club_new = functools.partial(self.entry_new, model.Club, self.model_club)
@@ -376,12 +376,37 @@ class Main(QtCore.QObject):
             QtCore.QTimer.singleShot(500, infobox.reject)
         infobox.exec_()
 
-    def on_create(self):
+    def on_create_winner(self):
         with MailMerge('input_winner.docx') as document:
-            print(document.get_merge_fields())
-            document.merge(Editor='docx Mail Merge',
-                           Note='Can be used for merging docx documents')
-            document.write('output.docx')
+            logging.info(document.get_merge_fields())
+            users = self.session.query(model.User).order_by(model.User.club_id).all()
+            winner = []
+            for userdata in users:
+                winner.append({'lastname':userdata.lastname,
+                               'name':userdata.name,
+                               'clubname':userdata.clubname,
+                               'agename':userdata.agename,
+                               'bowname':userdata.bowname})
+                              
+            document.merge_pages(winner)
+            document.write('output_winner.docx')
+            logging.info('Save as ...docx')
+
+    def on_create_adress(self):
+        with MailMerge('input_adress.docx') as document:
+            logging.info(document.get_merge_fields())
+            clubs = self.session.query(model.Club).order_by(model.Club.name).all()
+            adress = []
+            for userdata in clubs:
+                adress.append({'short':userdata.short,
+                               'name':userdata.name,
+                               'email':userdata.email,
+                               'payment':str(userdata.payment),
+                               'advertising':str(userdata.advertising)})
+                              
+            document.merge_pages(adress)
+            document.write('output_adress.docx')
+            logging.info('Save as ...docx')
 
     def on_xlsx_export(self, test):
         if (self.exportDir or test):
@@ -392,20 +417,23 @@ class Main(QtCore.QObject):
         xlsxexport.winner(('clubname', 'name', 'lastname', 'bowname', 'agename'))
         users = self.session.query(model.User).order_by(model.User.club_id).all()
         for userdata in users:
-            xlsxexport.winner((
+             logging.info(userdata)
+             xlsxexport.winner((
                 userdata.clubname,
                 userdata.name,
                 userdata.lastname,
                 userdata.bowname,
                 userdata.agename))
 
-        xlsxexport.adresse(('name', 'short', 'email', 'payment', 'advertising'))
+        xlsxexport.adresse(('name', 'short', 'email', 'address', 'payment', 'advertising'))
         clubs = self.session.query(model.Club).all()
         for userdata in clubs:
+            logging.info(userdata)
             xlsxexport.adresse((
                 userdata.name,
                 userdata.short,
                 userdata.email,
+                userdata.address,
                 userdata.payment,
                 userdata.advertising))
 
