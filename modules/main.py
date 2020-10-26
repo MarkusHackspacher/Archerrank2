@@ -382,12 +382,11 @@ class Main(QtCore.QObject):
             users = self.session.query(model.User).order_by(model.User.club_id).all()
             winner = []
             for userdata in users:
-                winner.append({'lastname':userdata.lastname,
-                               'name':userdata.name,
-                               'clubname':userdata.clubname,
-                               'agename':userdata.agename,
-                               'bowname':userdata.bowname})
-                              
+                winner.append({'lastname': userdata.lastname,
+                               'name': userdata.name,
+                               'clubname': userdata.clubname,
+                               'agename': userdata.agename,
+                               'bowname': userdata.bowname})
             document.merge_pages(winner)
             document.write('output_winner.docx')
             logging.info('Save as ...docx')
@@ -398,12 +397,11 @@ class Main(QtCore.QObject):
             clubs = self.session.query(model.Club).order_by(model.Club.name).all()
             adress = []
             for userdata in clubs:
-                adress.append({'short':userdata.short,
-                               'name':userdata.name,
-                               'email':userdata.email,
-                               'payment':str(userdata.payment),
-                               'advertising':str(userdata.advertising)})
-                              
+                adress.append({'short': userdata.short,
+                               'name': userdata.name,
+                               'email': userdata.email,
+                               'payment': str(userdata.payment),
+                               'advertising': str(userdata.advertising)})
             document.merge_pages(adress)
             document.write('output_adress.docx')
             logging.info('Save as ...docx')
@@ -417,8 +415,8 @@ class Main(QtCore.QObject):
         xlsxexport.winner(('clubname', 'name', 'lastname', 'bowname', 'agename'))
         users = self.session.query(model.User).order_by(model.User.club_id).all()
         for userdata in users:
-             logging.info(userdata)
-             xlsxexport.winner((
+            logging.info(userdata)
+            xlsxexport.winner((
                 userdata.clubname,
                 userdata.name,
                 userdata.lastname,

@@ -135,5 +135,6 @@ class Club(base):
     members = relationship("User", order_by="User.id", backref="clubs")
 
     def __repr__(self):
-        return ("<Club(id={0}', short='{1}', name='{2}', email='{3}', address='{4}', payment='{5}')>".
+        return ("<Club(id={0}', short='{1}', name='{2}', email='{3}', address='{4}', "
+                "payment='{5}')>".
                 format(self.id, self.short, self.name, self.email, self.address, self.payment))

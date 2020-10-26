@@ -20,7 +20,7 @@ before_script:
   - "herbstluftwm &"
   - sleep 1
 script:
- - isort -c -rc
+ - isort . --diff
  - pycodestyle modules/ tests/ *.py*
  - nosetests --with-coverage --cover-erase --cover-package=modules --cover-html
 after_success:

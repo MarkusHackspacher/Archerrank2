@@ -24,10 +24,10 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import sys
 
+from alchemical_model import SqlAlchemyTableModel
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from sqlalchemy import create_engine, literal, orm
 
-from alchemical_model import SqlAlchemyTableModel
 from modules import model
 
 sys.path.append('..')
