@@ -9,7 +9,7 @@ python:
   - "3.8"
 before_install:
   - sudo apt-get update
-  - sudo apt-get install -y xvfb herbstluftwm
+  - sudo apt-get install -y xvfb herbstluftwm libxcb-xinerama0
 install:
   - pip install -r requirements.txt
   - pip install coverage codacy-coverage
