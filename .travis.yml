@@ -1,28 +1,18 @@
 language: python
-sudo: required
-dist: xenial
-addons:
-  apt:
-    packages:
-    - libxkbcommon-x11-0
+os: linux
+dist: bionic
+services:
+  - xvfb
 python:
   - "3.8"
-before_install:
-  - sudo apt-get update
-  - sudo apt-get install -y xvfb herbstluftwm libxcb-xinerama0
+  - "3.9"
 install:
   - pip install -r requirements.txt
   - pip install coverage codacy-coverage
-  - "export DISPLAY=:99.0"
-  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 1920x1200x24 -ac +extension GLX +render -noreset"
-  - sleep 3
-before_script:
-  - "herbstluftwm &"
-  - sleep 1
 script:
- - isort . --diff
- - pycodestyle modules/ tests/ *.py*
- - nosetests --with-coverage --cover-erase --cover-package=modules --cover-html
+  - isort . --diff
+  - pycodestyle modules/ tests/ *.py*
+  - QT_QPA_PLATFORM=offscreen xvfb-run -a --server-args="-screen 0 1024x768x24" nosetests --with-coverage --cover-erase --cover-package=modules --cover-html
 after_success:
   - coverage report -m
   - coverage xml
