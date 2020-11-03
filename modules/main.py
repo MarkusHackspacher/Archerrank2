@@ -46,7 +46,7 @@ except ImportError:
 
 
 class Main(QtCore.QObject):
-    """The GUI and program of the pyLottoSimu.
+    """The GUI and program of the Archerank2.
     """
 
     def __init__(self, arguments):
@@ -130,6 +130,7 @@ class Main(QtCore.QObject):
         self.ui.actionCreateCertificates.setEnabled(import_mailmerge)
         self.ui.actionCreateAddress.setEnabled(import_mailmerge)
         self.ui.actionXLSX_Export.setEnabled(writexlsx.import_openpyxl)
+        self.Qtimer = QtCore.QTimer
         self.ui.show()
 
     def initDataBase(self, filename=None):
@@ -309,7 +310,7 @@ class Main(QtCore.QObject):
         printdlg.editor.setHtml(self.tr(
             '<h1>Overview</h1>Rang Name Score Kill Rate Club<br>{}'.format("".join(names))))
         if test:
-            QtCore.QTimer.singleShot(500, printdlg.reject)
+            self.Qtimer.singleShot(500, printdlg.reject)
         printdlg.exec_()
 
     def on_overview(self, test=None):
@@ -344,7 +345,7 @@ class Main(QtCore.QObject):
         printdlg = DlgPrint()
         printdlg.editor.setHtml(text_user + text)
         if test:
-            QtCore.QTimer.singleShot(500, printdlg.reject)
+            self.Qtimer.singleShot(500, printdlg.reject)
         printdlg.exec_()
 
     def oninfo(self, test=None):
@@ -373,10 +374,20 @@ class Main(QtCore.QObject):
             '<a href="https://github.com/MarkusHackspacher/Archerrank2">'
             'github.com/MarkusHackspacher/Archerrank2</a>'))
         if test:
-            QtCore.QTimer.singleShot(500, infobox.reject)
+            self.Qtimer.singleShot(500, infobox.reject)
         infobox.exec_()
 
     def on_create_winner(self):
+        savedfilename = self.session.query(model.Setting).filter_by(name='last_winner_file').first()
+        if not savedfilename:
+             lastdir = ''
+        else:
+            lastdir = savedfilename.value
+        fileName, _ = QFileDialog.getSaveFileName(
+                None, "QFileDialog.getSaveFileName()", lastdir,
+                "Word Files (*.docx)")
+        if fileName == '':
+            return
         with MailMerge('input_winner.docx') as document:
             logging.info(document.get_merge_fields())
             users = self.session.query(model.User).order_by(model.User.club_id).all()
@@ -388,8 +399,13 @@ class Main(QtCore.QObject):
                                'agename': userdata.agename,
                                'bowname': userdata.bowname})
             document.merge_pages(winner)
-            document.write('output_winner.docx')
-            logging.info('Save as ...docx')
+            document.write(fileName)
+            logging.info('Save as {fileName}'.format(fileName=fileName))
+            if not savedfilename:
+                self.session.add(model.Setting(name='last_winner_file', value=fileName))
+            else:
+                savedfilename.value = fileName
+            self.session.commit()
 
     def on_create_adress(self):
         with MailMerge('input_adress.docx') as document:
