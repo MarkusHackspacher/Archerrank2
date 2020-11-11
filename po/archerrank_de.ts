@@ -287,7 +287,7 @@
     <message>
       <location filename="../modules/main.py" line="428"/>
       <source>Open Directory</source>
-      <translation type="unfinished">Open Directory</translation>
+      <translation>Verzeichnis öffnen</translation>
     </message>
   </context>
   <context>
@@ -445,7 +445,7 @@
     <message>
       <location filename="../modules/gui/main.ui" line="319"/>
       <source>XLSX Export</source>
-      <translation type="unfinished">XLSX Export</translation>
+      <translation>XLSX-Export</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="324"/>
