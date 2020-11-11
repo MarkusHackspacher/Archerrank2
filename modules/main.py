@@ -130,7 +130,7 @@ class Main(QtCore.QObject):
         self.ui.actionCreateCertificates.setEnabled(import_mailmerge)
         self.ui.actionCreateAddress.setEnabled(import_mailmerge)
         self.ui.actionXLSX_Export.setEnabled(writexlsx.import_openpyxl)
-        self.Qtimer = QtCore.QTimer
+        self.Qtimer = QtCore.QTimer()
         self.ui.show()
 
     def initDataBase(self, filename=None):
@@ -380,7 +380,7 @@ class Main(QtCore.QObject):
     def on_create_winner(self):
         savedfilename = self.session.query(model.Setting).filter_by(name='last_winner_file').first()
         if not savedfilename:
-             lastdir = ''
+            lastdir = ''
         else:
             lastdir = savedfilename.value
         fileName, _ = QFileDialog.getSaveFileName(
