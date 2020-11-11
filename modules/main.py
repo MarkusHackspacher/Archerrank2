@@ -130,7 +130,6 @@ class Main(QtCore.QObject):
         self.ui.actionCreateCertificates.setEnabled(import_mailmerge)
         self.ui.actionCreateAddress.setEnabled(import_mailmerge)
         self.ui.actionXLSX_Export.setEnabled(writexlsx.import_openpyxl)
-        self.Qtimer = QtCore.QTimer()
         self.ui.show()
 
     def initDataBase(self, filename=None):
@@ -310,7 +309,7 @@ class Main(QtCore.QObject):
         printdlg.editor.setHtml(self.tr(
             '<h1>Overview</h1>Rang Name Score Kill Rate Club<br>{}'.format("".join(names))))
         if test:
-            self.Qtimer.singleShot(500, printdlg.reject)
+            QtCore.QTimer.singleShot(50, printdlg.reject)
         printdlg.exec_()
 
     def on_overview(self, test=None):
@@ -345,7 +344,7 @@ class Main(QtCore.QObject):
         printdlg = DlgPrint()
         printdlg.editor.setHtml(text_user + text)
         if test:
-            self.Qtimer.singleShot(500, printdlg.reject)
+            QtCore.QTimer.singleShot(100, printdlg.reject)
         printdlg.exec_()
 
     def oninfo(self, test=None):
@@ -374,7 +373,7 @@ class Main(QtCore.QObject):
             '<a href="https://github.com/MarkusHackspacher/Archerrank2">'
             'github.com/MarkusHackspacher/Archerrank2</a>'))
         if test:
-            self.Qtimer.singleShot(500, infobox.reject)
+            QtCore.QTimer.singleShot(500, infobox.reject)
         infobox.exec_()
 
     def on_create_winner(self):
