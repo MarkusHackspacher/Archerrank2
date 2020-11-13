@@ -6,12 +6,12 @@
     <message>
       <location filename="../modules/gui/printdialog.py" line="33"/>
       <source>Document Printer</source>
-      <translation>Dokument erstellen</translation>
+      <translation>Dokument drucken</translation>
     </message>
     <message>
       <location filename="../modules/gui/printdialog.py" line="44"/>
       <source>Print</source>
-      <translation>Drucken</translation>
+      <translation>Ausdrucken</translation>
     </message>
     <message>
       <location filename="../modules/gui/printdialog.py" line="46"/>
@@ -257,7 +257,7 @@
     <message>
       <location filename="../modules/main.py" line="154"/>
       <source>Kill Points</source>
-      <translation type="unfinished">Kill Points</translation>
+      <translation>Kill Punkte</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="154"/>
@@ -450,7 +450,7 @@
     <message>
       <location filename="../modules/gui/main.ui" line="324"/>
       <source>Create Address</source>
-      <translation type="unfinished">Create Address</translation>
+      <translation>Neue Adresse erstellen</translation>
     </message>
   </context>
 </TS>
