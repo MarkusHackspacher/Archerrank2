@@ -21,6 +21,7 @@ You should have received a copy of the GNU General Public License
 along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import time
 from unittest import TestCase
 
 from modules import main, model
@@ -44,6 +45,7 @@ class ShowMainTestCase(TestCase):
         """Deletes the reference owned by self"""
         self.app.ui.close()
         super(ShowMainTestCase, self).tearDown()
+        time.sleep(2)
 
     def test_onprint(self):
         """Test onprint"""
