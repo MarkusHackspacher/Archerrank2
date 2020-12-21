@@ -45,7 +45,7 @@ class ShowMainTestCase(TestCase):
         """Deletes the reference owned by self"""
         self.app.ui.close()
         super(ShowMainTestCase, self).tearDown()
-        time.sleep(2)
+        time.sleep(.2)
 
     def test_onprint(self):
         """Test onprint"""
@@ -58,27 +58,36 @@ class ShowMainTestCase(TestCase):
         self.app.oninfo(test=True)
 
     def test_entry(self):
+        time.sleep(.1)
         self.app.entry_new(model.Bow, self.app.model_bow, test=True)
         self.assertEqual(self.app.model_bow.rowCount(self.app.model_bow), 1)
         index = self.app.model_bow.createIndex(0, 1)
         self.app.ui.tableView_bow.setCurrentIndex(index)
+        time.sleep(.1)
         self.app.entry_edit(model.Bow, self.app.model_bow, test=True)
         self.app.entry_delete(model.Bow, self.app.model_bow)
         self.assertEqual(self.app.model_bow.rowCount(self.app.model_bow), 0)
 
     def test_entry_user(self):
+        time.sleep(.1)
         self.app.entry_new(model.Age, self.app.model_age, test=True)
+        time.sleep(.1)
         self.app.entry_new(model.Bow, self.app.model_bow, test=True)
+        time.sleep(.1)
         self.app.entry_new(model.Club, self.app.model_club, test=True)
+        time.sleep(.1)
         self.app.entry_new(model.User, self.app.model_user, test=True)
         self.assertEqual(self.app.model_user.rowCount(self.app.model_bow), 1)
         index = self.app.model_user.createIndex(0, 1)
         self.app.ui.tableView_user.setCurrentIndex(index)
+        time.sleep(.1)
         self.app.entry_edit(model.User, self.app.model_user, test=True)
 
     def test_entry_club(self):
+        time.sleep(.1)
         self.app.entry_new(model.Club, self.app.model_club, test=True)
         self.assertEqual(self.app.model_club.rowCount(self.app.model_club), 1)
         index = self.app.model_club.createIndex(0, 1)
         self.app.ui.tableView_club.setCurrentIndex(index)
+        time.sleep(.1)
         self.app.entry_edit(model.Club, self.app.model_club, test=True)
