@@ -10,7 +10,7 @@ python:
 install:
   - pip install -r requirements.txt
   - pip install coverage codacy-coverage
-  - sudo apt-get -yp install strace
+  - sudo apt-get install strace
 script:
   - isort . --diff
   - pycodestyle modules/ tests/ *.py*
