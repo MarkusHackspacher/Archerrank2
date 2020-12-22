@@ -7,14 +7,16 @@ services:
 python:
   - "3.8"
   - "3.9"
+env:
+  # This variable is required for Qt to work on CI.
+  - QT_QPA_PLATFORM="offscreen"
 install:
   - pip install -r requirements.txt
   - pip install coverage codacy-coverage
-  - sudo apt-get install strace
 script:
   - isort . --diff
   - pycodestyle modules/ tests/ *.py*
-  - QT_QPA_PLATFORM=offscreen strace -f xvfb-run -a --server-args="-screen 0 1024x768x24" nosetests --with-coverage --cover-erase --cover-package=modules --cover-html
+  - xvfb-run -a --server-args="-screen 0 1024x768x24" nosetests --with-coverage --cover-erase --cover-package=modules --cover-html
 after_success:
   - coverage report -m
   - coverage xml

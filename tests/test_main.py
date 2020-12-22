@@ -43,14 +43,8 @@ class ShowMainTestCase(TestCase):
 
     def tearDown(self):
         """Deletes the reference owned by self"""
-        time.sleep(1)
         self.app.ui.close()
         super(ShowMainTestCase, self).tearDown()
-        time.sleep(1)
-
-    @classmethod
-    def tearDownClass(cls):
-        time.sleep(1)
 
     def test_onprint(self):
         """Test onprint"""
@@ -67,12 +61,9 @@ class ShowMainTestCase(TestCase):
         self.assertEqual(self.app.model_bow.rowCount(self.app.model_bow), 1)
         index = self.app.model_bow.createIndex(0, 1)
         self.app.ui.tableView_bow.setCurrentIndex(index)
-        time.sleep(.1)
         self.app.entry_edit(model.Bow, self.app.model_bow, test=True)
-        time.sleep(.1)
         self.app.entry_delete(model.Bow, self.app.model_bow)
         self.assertEqual(self.app.model_bow.rowCount(self.app.model_bow), 0)
-        time.sleep(.1)
 
     def test_entry_user(self):
         self.app.entry_new(model.Age, self.app.model_age, test=True)
@@ -83,7 +74,6 @@ class ShowMainTestCase(TestCase):
         index = self.app.model_user.createIndex(0, 1)
         self.app.ui.tableView_user.setCurrentIndex(index)
         self.app.entry_edit(model.User, self.app.model_user, test=True)
-        time.sleep(.1)
 
     def test_entry_club(self):
         self.app.entry_new(model.Club, self.app.model_club, test=True)
@@ -91,4 +81,3 @@ class ShowMainTestCase(TestCase):
         index = self.app.model_club.createIndex(0, 1)
         self.app.ui.tableView_club.setCurrentIndex(index)
         self.app.entry_edit(model.Club, self.app.model_club, test=True)
-        time.sleep(.1)
