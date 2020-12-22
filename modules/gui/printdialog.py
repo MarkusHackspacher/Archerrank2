@@ -28,17 +28,17 @@ from PyQt5 import QtGui, QtPrintSupport, QtWidgets
 
 
 class DlgPrint(QtWidgets.QDialog):
-    def __init__(self):
-        super(DlgPrint, self).__init__()
+    def __init__(self, parent=None):
+        super(DlgPrint, self).__init__(parent)
         self.setWindowTitle(self.tr('Document Printer'))
         try:
             self.setWindowIcon(
                 QtGui.QIcon(os.path.abspath(os.path.join(
-                    os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+                    "misc", "archerrank2.svg"))))
         except FileNotFoundError:
             self.setWindowIcon(
-                    QtGui.QIcon(os.path.abspath(os.path.join(
-                        "misc", "archerrank2.svg"))))
+                QtGui.QIcon(os.path.abspath(os.path.join(
+                    os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
         self.editor = QtWidgets.QTextEdit(self)
         self.editor.textChanged.connect(self.handleTextChanged)
         self.buttonPrint = QtWidgets.QPushButton(self.tr('Print'), self)
@@ -52,12 +52,12 @@ class DlgPrint(QtWidgets.QDialog):
         self.handleTextChanged()
 
     def handle_print(self):
-        dialog = QtPrintSupport.QPrintDialog()
+        dialog = QtPrintSupport.QPrintDialog(self)
         if dialog.exec_() == QtWidgets.QDialog.Accepted:
             self.editor.document().print_(dialog.printer())
 
     def handle_preview(self):
-        dialog = QtPrintSupport.QPrintPreviewDialog()
+        dialog = QtPrintSupport.QPrintPreviewDialog(self)
         dialog.paintRequested.connect(self.editor.print_)
         dialog.exec_()
 

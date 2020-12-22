@@ -24,8 +24,8 @@ import logging
 import os
 import sys
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.Qt import Qt
+from PyQt5 import QtGui, QtWidgets
+from PyQt5.QtCore import QTimer, Qt
 
 from modules.ext.alchemical_model import SqlAlchemyTableModel
 
@@ -38,16 +38,16 @@ class DlgSqlTable(QtWidgets.QDialog):
     """
     Dialog generate from sql table
     """
-    def __init__(self, session, table, model):
+    def __init__(self, session, table, model, parent=None):
         """Initial user interface and slots
 
         :returns: none
         """
-        super(DlgSqlTable, self).__init__()
+        super(DlgSqlTable, self).__init__(parent)
 
         self.setModal(True)
-        self.buttonBox = QtWidgets.QDialogButtonBox(self)
-        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
+        self.buttonBox = QtWidgets.QDialogButtonBox()
+        self.buttonBox.setOrientation(Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Ok |
                                           QtWidgets.QDialogButtonBox.Cancel)
         self.boxLayout = QtWidgets.QBoxLayout(
@@ -57,11 +57,11 @@ class DlgSqlTable(QtWidgets.QDialog):
         try:
             self.setWindowIcon(
                 QtGui.QIcon(os.path.abspath(os.path.join(
-                    os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+                    "misc", "archerrank2.svg"))))
         except FileNotFoundError:
             self.setWindowIcon(
-                    QtGui.QIcon(os.path.abspath(os.path.join(
-                        "misc", "archerrank2.svg"))))
+                QtGui.QIcon(os.path.abspath(os.path.join(
+                    os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
         methods = [m.key for m in table.__table__.columns if not len(m.key) == 2]
         if 'rank' in methods:
             methods.remove('rank')
@@ -211,7 +211,7 @@ class DlgSqlTable(QtWidgets.QDialog):
         """
         dialog = DlgSqlTable(session, table, model)
         if test:
-            QtCore.QTimer().singleShot(500, dialog.accept)
+            QTimer(dialog).singleShot(500, dialog.accept)
         result = dialog.exec_()
         return dialog.values(), result == QtWidgets.QDialog.Accepted
 
@@ -234,7 +234,7 @@ class DlgSqlTable(QtWidgets.QDialog):
         dialog = DlgSqlTable(session, table, model)
         dialog.load_values(idEdit, session, table)
         if test:
-            QtCore.QTimer().singleShot(500, dialog.accept)
+            QTimer(dialog).singleShot(500, dialog.accept)
         result = dialog.exec_()
         return dialog.values(), result == QtWidgets.QDialog.Accepted
 
@@ -247,5 +247,5 @@ class DlgSqlTable(QtWidgets.QDialog):
     @classmethod
     def matchIndex(cls, model, index):
         return model.match(
-            model.index(0, 1), QtCore.Qt.DisplayRole,
-            index, 1, QtCore.Qt.MatchExactly)
+            model.index(0, 1), Qt.DisplayRole,
+            index, 1, Qt.MatchExactly)
