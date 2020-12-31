@@ -46,7 +46,6 @@ class ShowMainTestCase(TestCase):
 
         self.app = _instance
 
-
     def tearDown(self):
         """Deletes the reference owned by self"""
         self.app.dialog.ui.close()
@@ -81,6 +80,7 @@ class ShowMainTestCase(TestCase):
         index = self.app.model_user.createIndex(0, 1)
         self.app.dialog.ui.tableView_user.setCurrentIndex(index)
         self.app.dialog.entry_edit(model.User, self.app.model_user, test=True)
+        self.app.dialog.on_xlsx_export(test=True)
 
     def test_entryClub(self):
         self.app.dialog.entry_new(model.Club, self.app.model_club, test=True)
@@ -90,4 +90,3 @@ class ShowMainTestCase(TestCase):
         self.app.dialog.entry_edit(model.Club, self.app.model_club, test=True)
         self.app.dialog.entry_delete(model.Club, self.app.model_club)
         self.assertEqual(self.app.model_club.rowCount(), 0)
-

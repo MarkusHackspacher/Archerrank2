@@ -25,7 +25,7 @@ import os
 import sys
 
 from PyQt5 import QtGui, QtWidgets
-from PyQt5.QtCore import QTimer, Qt
+from PyQt5.QtCore import Qt, QTimer
 
 from modules.ext.alchemical_model import SqlAlchemyTableModel
 
@@ -210,11 +210,9 @@ class DlgSqlTable(QtWidgets.QDialog):
         :rtype: dict, bool
         """
         dialog = DlgSqlTable(session, table, model, parent)
-        timer = QTimer(dialog)
         if test:
-             timer.singleShot(500, dialog.accept)
+            QTimer.singleShot(500, dialog.accept)
         result = dialog.exec_()
-        del(timer)
         return dialog.values(), result == QtWidgets.QDialog.Accepted
 
     @staticmethod
@@ -235,11 +233,9 @@ class DlgSqlTable(QtWidgets.QDialog):
         """
         dialog = DlgSqlTable(session, table, model, parent)
         dialog.load_values(idEdit, session, table)
-        timer = QTimer(dialog)
         if test:
-            timer.singleShot(500, dialog.accept)
+            QTimer.singleShot(500, dialog.accept)
         result = dialog.exec_()
-        del(timer)
         return dialog.values(), result == QtWidgets.QDialog.Accepted
 
     @classmethod

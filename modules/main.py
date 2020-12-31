@@ -29,7 +29,7 @@ from os.path import join
 
 from PyQt5 import QtGui, QtWidgets, uic
 from PyQt5.Qt import PYQT_VERSION_STR
-from PyQt5.QtCore import QLocale, QTimer, QTranslator, Qt
+from PyQt5.QtCore import QLocale, Qt, QTimer, QTranslator
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from sqlalchemy import create_engine, orm
 
@@ -229,7 +229,6 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
         self.ui.actionXLSX_Export.setEnabled(writexlsx.import_openpyxl)
         self.ui.show()
 
-
     def entry_new(self, datatable, tablemodel, test=None):
         """open dialog for new entry
 
@@ -262,12 +261,13 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
         """
         index = self.select_index(tablemodel)
         if index.row() < 0:
-            QtWidgets.QMessageBox(self.ui).information(self.ui, self.tr('Info'), self.tr('No line select'))
+            QtWidgets.QMessageBox(self.ui).information(
+                self.ui, self.tr('Info'), self.tr('No line select'))
             return
         ind = tablemodel.index(index.row(), 0)
-        # data = DlgSqlTable(self.main.session, datatable, model, parent=self.ui)
         newdata = DlgSqlTable.edit_values(self.main.session, datatable, model,
-                                          tablemodel.data(ind, Qt.DisplayRole), test, parent=self.ui)
+                                          tablemodel.data(ind, Qt.DisplayRole),
+                                          test, parent=self.ui)
         data = self.main.session.query(datatable).get(tablemodel.data(ind, Qt.DisplayRole))
         if newdata[1]:
             for key, value in newdata[0].items():
@@ -477,8 +477,8 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
             document.write('output_adress.docx')
             logging.info('Save as ...docx')
 
-    def on_xlsx_export(self, test):
-        if (self.exportDir or test):
+    def on_xlsx_export(self, test=None):
+        if (self.exportDir or not test):
             self.exportDir = QFileDialog.getExistingDirectory(
                 None, self.tr("Open Directory"), "")
 
@@ -514,4 +514,3 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
         :return:
         """
         self.ui.close()
-
