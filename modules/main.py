@@ -27,8 +27,9 @@ import os
 import sys
 from os.path import join
 
-from PyQt5 import QtCore, QtGui, QtWidgets, uic
-from PyQt5.Qt import PYQT_VERSION_STR, Qt
+from PyQt5 import QtGui, QtWidgets, uic
+from PyQt5.Qt import PYQT_VERSION_STR
+from PyQt5.QtCore import QLocale, QTimer, QTranslator, Qt
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from sqlalchemy import create_engine, orm
 
@@ -62,13 +63,13 @@ class Main(QtWidgets.QApplication):
         if arguments.language:
             locale = arguments.language
         else:
-            locale = str(QtCore.QLocale.system().name())
+            locale = str(QLocale.system().name())
         logging.info("locale: %s", locale)
-        translator = QtCore.QTranslator(self)
+        translator = QTranslator(self)
         translator.load(join("po", "archerrank_" + locale))
         self.installTranslator(translator)
         self.initDataBase(arguments.database)
-        dialog = ArcherrankDialog(self)
+        self.dialog = ArcherrankDialog(self)
 
     def initDataBase(self, filename=None):
         while not filename:
@@ -96,30 +97,23 @@ class Main(QtWidgets.QApplication):
             (self.tr('Kill Points'), model.User.killpt, "killpt", {"editable": True}),
             (self.tr('Club'), model.User.club_id, "clubname", {"editable": False}),
             (self.tr('Age'), model.User.age_id, "agename", {"editable": False}),
-            (self.tr('Bow'), model.User.bow_id, "bowname", {"editable": False})])
+            (self.tr('Bow'), model.User.bow_id, "bowname", {"editable": False})], self)
 
         self.model_club = SqlAlchemyTableModel(self.session, model.Club, [
             ('Id', model.Club.id, "id", {"editable": False}),
             (self.tr('Name'), model.Club.name, "name", {"editable": True, "dnd": True}),
             (self.tr('Short'), model.Club.short, "short", {"editable": True}),
-            (self.tr('payment'), model.Club.payment, "payment", {"editable": True})])
+            (self.tr('payment'), model.Club.payment, "payment", {"editable": True})], self)
 
         self.model_age = SqlAlchemyTableModel(self.session, model.Age, [
             ('Id', model.Age.id, "id", {"editable": False}),
             (self.tr('Name'), model.Age.name, "name", {"editable": True}),
-            (self.tr('Short'), model.Age.short, "short", {"editable": True}), ])
+            (self.tr('Short'), model.Age.short, "short", {"editable": True}), ], self)
 
         self.model_bow = SqlAlchemyTableModel(self.session, model.Bow, [
             ('Id', model.Bow.id, "id", {"editable": False}),
             (self.tr('Name'), model.Bow.name, "name", {"editable": True}),
-            (self.tr('Short'), model.Bow.short, "short", {"editable": True}), ])
-
-    def main_loop(self):
-        """application start
-
-        :return:
-        """
-        self.app.exec_()
+            (self.tr('Short'), model.Bow.short, "short", {"editable": True}), ], self)
 
     def file_dlg(self, text):
         msg_box = QMessageBox()
@@ -154,6 +148,14 @@ class Main(QtWidgets.QApplication):
             return
         else:
             return "exit"
+
+    def main_loop(self):
+        """application start
+
+        :return:
+        """
+        self.exec_()
+
 
 class ArcherrankDialog(QtWidgets.QMainWindow):
     """The GUI of the Archerrank.
@@ -234,7 +236,8 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
         datatable could be model.User
         tablemodel could be self.model_user
         """
-        newdata = DlgSqlTable(self.main.session, datatable, model, self.ui).get_values(self.main.session, datatable, model, test)
+        # data = DlgSqlTable(self.main.session, datatable, model, parent=self.ui)
+        newdata = DlgSqlTable.get_values(self.main.session, datatable, model, test, parent=self.ui)
         if newdata[1]:
             self.main.session.add(datatable(**newdata[0]))
             self.main.session.commit()
@@ -259,11 +262,12 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
         """
         index = self.select_index(tablemodel)
         if index.row() < 0:
-            QtWidgets.QMessageBox().information(self.ui, self.tr('Info'), self.tr('No line select'))
+            QtWidgets.QMessageBox(self.ui).information(self.ui, self.tr('Info'), self.tr('No line select'))
             return
         ind = tablemodel.index(index.row(), 0)
-        newdata = DlgSqlTable(self.main.session, datatable, model, self.ui).edit_values(self.main.session, datatable, model,
-                                          tablemodel.data(ind, Qt.DisplayRole), test)
+        # data = DlgSqlTable(self.main.session, datatable, model, parent=self.ui)
+        newdata = DlgSqlTable.edit_values(self.main.session, datatable, model,
+                                          tablemodel.data(ind, Qt.DisplayRole), test, parent=self.ui)
         data = self.main.session.query(datatable).get(tablemodel.data(ind, Qt.DisplayRole))
         if newdata[1]:
             for key, value in newdata[0].items():
@@ -361,7 +365,7 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
         printdlg.editor.setHtml(self.tr(
             '<h1>Overview</h1>Rang Name Score Kill Rate Club<br>{}'.format("".join(names))))
         if test:
-            QtCore.QTimer(printdlg).singleShot(500, printdlg.reject)
+            QTimer.singleShot(500, printdlg.reject)
         printdlg.exec_()
 
     def on_overview(self, test=None):
@@ -396,7 +400,7 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
         printdlg = DlgPrint(self.ui)
         printdlg.editor.setHtml(text_user + text)
         if test:
-            QtCore.QTimer(printdlg).singleShot(500, printdlg.reject)
+            QTimer.singleShot(500, printdlg.reject)
         printdlg.exec_()
 
     def oninfo(self, test=None):
@@ -425,7 +429,7 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
             '<a href="https://github.com/MarkusHackspacher/Archerrank2">'
             'github.com/MarkusHackspacher/Archerrank2</a>'))
         if test:
-            QtCore.QTimer(infobox).singleShot(500, infobox.reject)
+            QTimer(infobox).singleShot(500, infobox.reject)
         infobox.exec_()
 
     def on_create_winner(self):
@@ -510,5 +514,4 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
         :return:
         """
         self.ui.close()
-
 

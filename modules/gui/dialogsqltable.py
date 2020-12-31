@@ -196,7 +196,7 @@ class DlgSqlTable(QtWidgets.QDialog):
         return valve
 
     @staticmethod
-    def get_values(session, table, model, test=None):
+    def get_values(session, table, model, test=None, parent=None):
         """static method to create the dialog and return
         (dialog.values, accepted)
 
@@ -209,14 +209,16 @@ class DlgSqlTable(QtWidgets.QDialog):
         :returns: dialog.values, accepted
         :rtype: dict, bool
         """
-        dialog = DlgSqlTable(session, table, model)
+        dialog = DlgSqlTable(session, table, model, parent)
+        timer = QTimer(dialog)
         if test:
-            QTimer(dialog).singleShot(500, dialog.accept)
+             timer.singleShot(500, dialog.accept)
         result = dialog.exec_()
+        del(timer)
         return dialog.values(), result == QtWidgets.QDialog.Accepted
 
     @staticmethod
-    def edit_values(session, table, model, idEdit, test=None):
+    def edit_values(session, table, model, idEdit, test=None, parent=None):
         """static method to create the dialog and return
         (dialog.values, accepted)
 
@@ -231,11 +233,13 @@ class DlgSqlTable(QtWidgets.QDialog):
         :returns: dialog.values, accepted
         :rtype: dict, bool
         """
-        dialog = DlgSqlTable(session, table, model)
+        dialog = DlgSqlTable(session, table, model, parent)
         dialog.load_values(idEdit, session, table)
+        timer = QTimer(dialog)
         if test:
-            QTimer(dialog).singleShot(500, dialog.accept)
+            timer.singleShot(500, dialog.accept)
         result = dialog.exec_()
+        del(timer)
         return dialog.values(), result == QtWidgets.QDialog.Accepted
 
     @classmethod

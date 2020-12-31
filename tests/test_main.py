@@ -21,10 +21,11 @@ You should have received a copy of the GNU General Public License
 along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import time
-from unittest import skip, TestCase
+from unittest import TestCase
 
 from modules import main, model
+
+_instance = None
 
 
 class arguments():
@@ -39,56 +40,54 @@ class ShowMainTestCase(TestCase):
 
         # Simple way of making instance a singleton
         super(ShowMainTestCase, self).setUp()
-        self.app = main.Main(arguments())
-        self.dialog = main.ArcherrankDialog(self.app)
+        global _instance
+        if _instance is None:
+            _instance = main.Main(arguments())
+
+        self.app = _instance
+
 
     def tearDown(self):
         """Deletes the reference owned by self"""
-        # self.app.quit()
-        del self.app
+        self.app.dialog.ui.close()
         super(ShowMainTestCase, self).tearDown()
 
-    # @skip("Test onprint")
     def test_onprint(self):
         """Test onprint"""
-        self.dialog.onprint(test=True)
+        self.app.dialog.onprint(test=True)
 
-    # @skip("Test overview")
     def test_on_overview(self):
-        self.dialog.on_overview(test=True)
+        self.app.dialog.on_overview(test=True)
 
-    # @skip("Test showinfo")
     def test_showinfo(self):
-        self.dialog.oninfo(test=True)
+        self.app.dialog.oninfo(test=True)
 
-    #@skip("entry_Bow")
     def test_entryBow(self):
-        self.dialog.entry_new(model.Bow, self.app.model_bow, test=True)
-        self.assertEqual(self.app.model_bow.rowCount(self.app.model_bow), 1)
+        self.app.dialog.entry_new(model.Bow, self.app.model_bow, test=True)
+        self.assertEqual(self.app.model_bow.rowCount(), 1)
         index = self.app.model_bow.createIndex(0, 1)
-        self.dialog.ui.tableView_bow.setCurrentIndex(index)
-        self.dialog.entry_edit(model.Bow, self.app.model_bow, test=True)
-        self.dialog.entry_delete(model.Bow, self.app.model_bow)
-        self.assertEqual(self.app.model_bow.rowCount(self.app.model_bow), 0)
+        self.app.dialog.ui.tableView_bow.setCurrentIndex(index)
+        self.app.dialog.entry_edit(model.Bow, self.app.model_bow, test=True)
+        self.app.dialog.entry_delete(model.Bow, self.app.model_bow)
+        self.assertEqual(self.app.model_bow.rowCount(), 0)
 
-    #@skip("entry_user")
     def test_entryUser(self):
-        self.dialog.entry_new(model.Age, self.app.model_age, test=True)
-        self.dialog.entry_new(model.Bow, self.app.model_bow, test=True)
-        self.dialog.entry_new(model.Club, self.app.model_club, test=True)
-        self.dialog.entry_new(model.User, self.app.model_user, test=True)
-        self.assertEqual(self.app.model_user.rowCount(self.app.model_bow), 1)
+        self.app.dialog.entry_new(model.Age, self.app.model_age, test=True)
+        self.app.dialog.entry_new(model.Bow, self.app.model_bow, test=True)
+        self.app.dialog.entry_new(model.Club, self.app.model_club, test=True)
+        self.app.dialog.entry_new(model.User, self.app.model_user, test=True)
+        self.assertEqual(self.app.model_age.rowCount(), 1)
+        self.assertEqual(self.app.model_user.rowCount(), 1)
         index = self.app.model_user.createIndex(0, 1)
-        self.dialog.ui.tableView_user.setCurrentIndex(index)
-        self.dialog.entry_edit(model.User, self.app.model_user, test=True)
+        self.app.dialog.ui.tableView_user.setCurrentIndex(index)
+        self.app.dialog.entry_edit(model.User, self.app.model_user, test=True)
 
-    #@skip("entry_Club")
     def test_entryClub(self):
-        self.dialog.entry_new(model.Club, self.app.model_club, test=True)
-        self.assertEqual(self.app.model_club.rowCount(self.app.model_club), 1)
+        self.app.dialog.entry_new(model.Club, self.app.model_club, test=True)
+        self.assertEqual(self.app.model_club.rowCount(), 1)
         index = self.app.model_club.createIndex(0, 1)
-        self.dialog.ui.tableView_club.setCurrentIndex(index)
-        self.dialog.entry_edit(model.Club, self.app.model_club, test=True)
-        self.dialog.entry_delete(model.Club, self.app.model_club)
-        self.assertEqual(self.app.model_club.rowCount(self.app.model_club), 0)
+        self.app.dialog.ui.tableView_club.setCurrentIndex(index)
+        self.app.dialog.entry_edit(model.Club, self.app.model_club, test=True)
+        self.app.dialog.entry_delete(model.Club, self.app.model_club)
+        self.assertEqual(self.app.model_club.rowCount(), 0)
 

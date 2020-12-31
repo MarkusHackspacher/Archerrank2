@@ -20,7 +20,7 @@ class SqlAlchemyTableModel(QSqlTableModel):
     >>> table.setModel(model)
     """
 
-    def __init__(self, session, entity, columns):
+    def __init__(self, session, entity, columns,  parent=None):
         """Constructor for the model.
 
         @param session: The SQLAlchemy session object.
@@ -32,8 +32,7 @@ class SqlAlchemyTableModel(QSqlTableModel):
           'Entity.name' is what will be used when setting data and sorting,
           'name' will be used to retrieve the data.
         """
-
-        super().__init__()
+        super(SqlAlchemyTableModel, self).__init__(parent)
         # TODO self.sort_data = None
         self.session = session
         self.fields = columns
@@ -108,10 +107,10 @@ class SqlAlchemyTableModel(QSqlTableModel):
 
         return False
 
-    def rowCount(self, parent):
+    def rowCount(self, parent=None):
         return self.count or 0
 
-    def columnCount(self, parent):
+    def columnCount(self, parent=None):
         return len(self.fields)
 
     def data(self, index, role):

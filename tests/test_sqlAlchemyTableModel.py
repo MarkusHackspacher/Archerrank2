@@ -88,10 +88,13 @@ class TestSqlAlchemyTableModel(TestCase):
         self.assertEqual(self.model_user.data(index, Qt.DisplayRole), 'John')
 
     def test_rowCount(self):
-        self.assertEqual(self.model_user.rowCount(1), 0)
+        self.assertEqual(self.model_user.rowCount(), 0)
+        self.session.add(model.User(name='John', lastname='Dow'))
+        self.model_user.refresh()
+        self.assertEqual(self.model_user.rowCount(), 1)
 
     def test_columnCount(self):
-        self.assertEqual(self.model_user.columnCount(0), 8)
+        self.assertEqual(self.model_user.columnCount(), 8)
 
     def test_data(self):
         """test data and setData"""
