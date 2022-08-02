@@ -1,8 +1,7 @@
 Archerank2
 ==========
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/28c624d32d36476ab7d0e9c831318127)](https://app.codacy.com/app/Malta/Archerrank2?utm_source=github.com&utm_medium=referral&utm_content=MarkusHackspacher/Archerrank2&utm_campaign=Badge_Grade_Dashboard)
-[![Build Status](https://travis-ci.org/MarkusHackspacher/Archerrank2.svg?branch=master)](https://travis-ci.org/MarkusHackspacher/Archerrank2)
+[![Build Status](https://app.travis-ci.com/MarkusHackspacher/Archerrank2.svg?branch=master)](https://travis-ci.org/MarkusHackspacher/Archerrank2)
 [![Crowdin](https://d322cqt584bo4o.cloudfront.net/archerrank2/localized.svg)](https://crowdin.com/project/archerrank2)
 
 For the evaluation of archery tournaments.
