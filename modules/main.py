@@ -29,7 +29,7 @@ from os.path import join
 
 from PyQt5 import QtGui, QtWidgets, uic
 from PyQt5.Qt import PYQT_VERSION_STR
-from PyQt5.QtCore import QLocale, Qt, QTimer, QTranslator
+from PyQt5.QtCore import QDir, QLocale, Qt, QTimer, QTranslator
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from sqlalchemy import create_engine, orm
 
@@ -139,7 +139,7 @@ class Main(QtWidgets.QApplication):
             return fileName
         elif reply == 1:
             filedialog = QFileDialog(msg_box)
-            filedialog.setFilter(filedialog.filter() | QtCore.QDir.Hidden)
+            filedialog.setFilter(filedialog.filter() | QDir.Hidden)
             filedialog.setDefaultSuffix('sqlite')
             filedialog.setAcceptMode(QFileDialog.AcceptSave)
             filedialog.setNameFilters(["Acherrang2 Files (*.sqlite)"])
