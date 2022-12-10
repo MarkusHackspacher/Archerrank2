@@ -235,7 +235,7 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
         datatable could be model.User
         tablemodel could be self.model_user
         """
-        if datatable==model.User:
+        if datatable == model.User:
             if not self.main.session.query(model.Club).first():
                 QtWidgets.QMessageBox.information(self.ui, self.tr('Info'), self.tr(
                     'Add first Club'))
