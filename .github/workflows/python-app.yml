@@ -35,8 +35,6 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Set output
-      run: |
-      echo "QT_QPA_PLATFORM='offscreen'" >> $GITHUB_OUTPUT
-      echo "::set-output name={QT_QPA_PLATFORM}::{offscreen}"
+      run: export QT_QPA_PLATFORM=offscreen
     - name: Test with pytest
       run: pytest
