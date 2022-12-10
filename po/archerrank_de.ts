@@ -2,11 +2,79 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="de" sourcelanguage="en">
   <context>
+    <name>ArcherrankDialog</name>
+    <message>
+      <location filename="../modules/main.py" line="425"/>
+      <source>Info</source>
+      <translation>Info</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="240"/>
+      <source>Add first Club</source>
+      <translation type="unfinished">Add first Club</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="244"/>
+      <source>Add first Age</source>
+      <translation type="unfinished">Add first Age</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="248"/>
+      <source>Add first Bow</source>
+      <translation type="unfinished">Add first Bow</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="300"/>
+      <source>No line select</source>
+      <translation>Keine Zeile ausgewählt</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="313"/>
+      <source>Cannot delete, reference by {},{}</source>
+      <translation>Kann Eintrag nicht löschen, referenziert von {},{}</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="376"/>
+      <source>Same rank&lt;br&gt;</source>
+      <translation>Gleicher Rang&lt;br&gt;</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="378"/>
+      <source>&lt;h1&gt;Overview&lt;/h1&gt;Rang Name Score Kill Rate Club&lt;br&gt;{}</source>
+      <translation>&lt;h1&gt;Übersicht&lt;/h1&gt;Rang Name Punkte Kill Rate Klub&lt;br&gt;{}</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="400"/>
+      <source>Sorting User by Club&lt;br&gt;{}</source>
+      <translation type="unfinished">Sorting User by Club&lt;br&gt;{}</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="412"/>
+      <source>Sorting Club&lt;br&gt;{}</source>
+      <translation type="unfinished">Sorting Club&lt;br&gt;{}</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="434"/>
+      <source>A tool for the evaluation of archery tournaments.&lt;br&gt;Version {}&lt;br&gt;Archerrank2 is free software and use GNU General Public License &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;www.gnu.org/licenses&lt;/a&gt;</source>
+      <translation>Ein Werkzeug zur Bewertung von Bogenschießen-Turnieren.&lt;br&gt;Version {}&lt;br&gt;Archerrank2 ist freie Software und benutzt GNU General Public License &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;www.gnu.org/licenses&lt;/a&gt;</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="440"/>
+      <source>More Information about the program at &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</source>
+      <translation>Weitere Informationen gibt es auf &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="495"/>
+      <source>Open Directory</source>
+      <translation>Verzeichnis öffnen</translation>
+    </message>
+  </context>
+  <context>
     <name>DlgPrint</name>
     <message>
       <location filename="../modules/gui/printdialog.py" line="33"/>
       <source>Document Printer</source>
-      <translation>Dokument drucken</translation>
+      <translation>Dokumentendrucker</translation>
     </message>
     <message>
       <location filename="../modules/gui/printdialog.py" line="44"/>
@@ -170,124 +238,74 @@
   <context>
     <name>Main</name>
     <message>
-      <location filename="../modules/main.py" line="357"/>
-      <source>Info</source>
-      <translation>Info</translation>
-    </message>
-    <message>
-      <location filename="../modules/main.py" line="232"/>
-      <source>No line select</source>
-      <translation>Keine Zeile ausgewählt</translation>
-    </message>
-    <message>
-      <location filename="../modules/main.py" line="245"/>
-      <source>Cannot delete, reference by {},{}</source>
-      <translation>Kann Eintrag nicht löschen, referenziert von {},{}</translation>
-    </message>
-    <message>
-      <location filename="../modules/main.py" line="308"/>
-      <source>Same rank&lt;br&gt;</source>
-      <translation>Gleicher Rang&lt;br&gt;</translation>
-    </message>
-    <message>
-      <location filename="../modules/main.py" line="310"/>
-      <source>&lt;h1&gt;Overview&lt;/h1&gt;Rang Name Score Kill Rate Club&lt;br&gt;{}</source>
-      <translation>&lt;h1&gt;Übersicht&lt;/h1&gt;Rang Name Punktewert Kill Rate Klub&lt;br&gt;{}</translation>
-    </message>
-    <message>
-      <location filename="../modules/main.py" line="332"/>
-      <source>Sorting User by Club&lt;br&gt;{}</source>
-      <translation>Benutzer nach Klub&lt;br&gt;{}</translation>
-    </message>
-    <message>
-      <location filename="../modules/main.py" line="344"/>
-      <source>Sorting Club&lt;br&gt;{}</source>
-      <translation>Sortiere Klub&lt;br&gt;{}</translation>
-    </message>
-    <message>
-      <location filename="../modules/main.py" line="366"/>
-      <source>A tool for the evaluation of archery tournaments.&lt;br&gt;Version {}&lt;br&gt;Archerrank2 is free software and use GNU General Public License &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;www.gnu.org/licenses&lt;/a&gt;</source>
-      <translation>Ein Werkzeug zur Bewertung von Bogenschießen-Turnieren.&lt;br&gt;Version {}&lt;br&gt;Archerrank2 ist freie Software und benutzt GNU General Public License &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;www.gnu.org/licenses&lt;/a&gt;</translation>
-    </message>
-    <message>
-      <location filename="../modules/main.py" line="372"/>
-      <source>More Information about the program at &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</source>
-      <translation>Weitere Informationen gibt es auf &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</translation>
-    </message>
-    <message>
-      <location filename="../modules/main.py" line="138"/>
+      <location filename="../modules/main.py" line="76"/>
       <source>You want load a file or create a new file</source>
       <translation>Sie möchten eine Datei laden oder eine neue Datei erstellen</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="483"/>
+      <location filename="../modules/main.py" line="129"/>
       <source>Question</source>
       <translation>Frage</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="485"/>
+      <location filename="../modules/main.py" line="131"/>
       <source>Load</source>
       <translation>Laden</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="486"/>
+      <location filename="../modules/main.py" line="132"/>
       <source>New</source>
       <translation>Neu</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="487"/>
+      <location filename="../modules/main.py" line="133"/>
       <source>Exit</source>
       <translation>Beenden</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="154"/>
+      <location filename="../modules/main.py" line="92"/>
       <source>Lastname</source>
       <translation>Nachname</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="175"/>
+      <location filename="../modules/main.py" line="113"/>
       <source>Name</source>
       <translation>Name</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="154"/>
+      <location filename="../modules/main.py" line="92"/>
       <source>Score</source>
       <translation>Ergebnis</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="154"/>
+      <location filename="../modules/main.py" line="92"/>
       <source>Kill Points</source>
       <translation>Kill Punkte</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="154"/>
+      <location filename="../modules/main.py" line="92"/>
       <source>Club</source>
       <translation>Klub</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="154"/>
+      <location filename="../modules/main.py" line="92"/>
       <source>Age</source>
       <translation>Alter</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="154"/>
+      <location filename="../modules/main.py" line="92"/>
       <source>Bow</source>
       <translation>Bogen</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="175"/>
+      <location filename="../modules/main.py" line="113"/>
       <source>Short</source>
       <translation>Kurzbezeichnung</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="164"/>
+      <location filename="../modules/main.py" line="102"/>
       <source>payment</source>
       <translation>Zahlung</translation>
-    </message>
-    <message>
-      <location filename="../modules/main.py" line="428"/>
-      <source>Open Directory</source>
-      <translation>Verzeichnis öffnen</translation>
     </message>
   </context>
   <context>
