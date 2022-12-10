@@ -44,8 +44,8 @@ class User(base):
     rank = Column(Integer, default=1)
     rate = Column(Integer, default=1)
     other = Column(String)
-    age = relationship("Age")
-    bow = relationship("Bow")
+    age = relationship("Age", viewonly=True)
+    bow = relationship("Bow", viewonly=True)
 
     @property
     def clubname(self):

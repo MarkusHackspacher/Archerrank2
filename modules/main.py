@@ -235,6 +235,19 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
         datatable could be model.User
         tablemodel could be self.model_user
         """
+        if datatable==model.User:
+            if not self.main.session.query(model.Club).first():
+                QtWidgets.QMessageBox.information(self.ui, self.tr('Info'), self.tr(
+                    'Add first Club'))
+                return
+            if not self.main.session.query(model.Age).first():
+                QtWidgets.QMessageBox.information(self.ui, self.tr('Info'), self.tr(
+                    'Add first Age'))
+                return
+            if not self.main.session.query(model.Bow).first():
+                QtWidgets.QMessageBox.information(self.ui, self.tr('Info'), self.tr(
+                    'Add first Bow'))
+                return
         # data = DlgSqlTable(self.main.session, datatable, model, parent=self.ui)
         newdata = DlgSqlTable.get_values(self.main.session, datatable, model, test, parent=self.ui)
         if newdata[1]:

@@ -3,7 +3,7 @@
 """
 Archerank2
 
-Copyright (C) <2018-2019> Markus Hackspacher
+Copyright (C) <2018-2022> Markus Hackspacher
 
 This file is part of Archerank2.
 
@@ -146,9 +146,7 @@ class DlgSqlTable(QtWidgets.QDialog):
         """
         dataset = session.query(table).get(index)
         for name in self.field:
-            if name in self.STRING:
-                self.field[name].setText(dataset.__dict__[name])
-            elif name in self.TEXT:
+            if name in self.STRING or name in self.TEXT:
                 self.field[name].setText(dataset.__dict__[name])
             elif name in self.INT:
                 self.field[name].setValue(dataset.__dict__[name])
