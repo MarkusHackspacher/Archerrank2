@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>785</width>
-    <height>574</height>
+    <height>769</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -37,12 +37,12 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout" stretch="5,5">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="5">
       <property name="spacing">
-       <number>5</number>
+       <number>0</number>
       </property>
       <property name="sizeConstraint">
-       <enum>QLayout::SetDefaultConstraint</enum>
+       <enum>QLayout::SetNoConstraint</enum>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -100,145 +100,6 @@
          </widget>
         </item>
        </layout>
-      </item>
-      <item>
-       <widget class="QTabWidget" name="tabWidget">
-        <property name="currentIndex">
-         <number>2</number>
-        </property>
-        <widget class="QWidget" name="Age">
-         <attribute name="title">
-          <string>Age</string>
-         </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetNoConstraint</enum>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_age">
-            <property name="text">
-             <string>age grade table</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTableView" name="tableView_age"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_age">
-            <property name="text">
-             <string>add new age</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_editage">
-            <property name="text">
-             <string>edit age</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_deleteage">
-            <property name="text">
-             <string>delete age</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="Bow">
-         <attribute name="title">
-          <string>Bow</string>
-         </attribute>
-         <layout class="QVBoxLayout" name="Layout_Bow">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetNoConstraint</enum>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_bow">
-            <property name="text">
-             <string>bow grade table</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTableView" name="tableView_bow"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_bow">
-            <property name="text">
-             <string>add new bow</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_editbow">
-            <property name="text">
-             <string>edit bow</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_deletebow">
-            <property name="text">
-             <string>delete bow</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="club">
-         <attribute name="title">
-          <string>Club</string>
-         </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout_5">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetNoConstraint</enum>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_club">
-            <property name="text">
-             <string>club</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTableView" name="tableView_club"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_club">
-            <property name="text">
-             <string>add new club</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_editclub">
-            <property name="text">
-             <string>edit club</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_deleteclub">
-            <property name="text">
-             <string>delete club</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </widget>
       </item>
      </layout>
     </item>

@@ -30,7 +30,8 @@ from os.path import join
 from PyQt5 import QtGui, QtWidgets, uic
 from PyQt5.Qt import PYQT_VERSION_STR
 from PyQt5.QtCore import QDir, QLocale, Qt, QTimer, QTranslator
-from PyQt5.QtWidgets import QFileDialog, QMessageBox
+from PyQt5.QtWidgets import (QDockWidget, QFileDialog, QMessageBox, QVBoxLayout,
+    QPushButton, QTableView, QWidget)
 from sqlalchemy import create_engine, orm
 
 from modules import VERSION_STR, model, writexlsx
@@ -184,6 +185,7 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
             self.ui.setWindowIcon(
                 QtGui.QIcon(os.path.abspath(os.path.join(
                     os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+        self.createDockWindows()
         self.ui.tableView_user.setModel(self.main.model_user)
         self.ui.tableView_club.setModel(self.main.model_club)
         self.ui.tableView_age.setModel(self.main.model_age)
@@ -200,30 +202,6 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
         self.ui.actionCreateCertificates.triggered.connect(self.on_create_winner)
         self.ui.actionCreateAddress.triggered.connect(self.on_create_adress)
         self.ui.actionXLSX_Export.triggered.connect(self.on_xlsx_export)
-        user_new = functools.partial(self.entry_new, model.User, self.main.model_user)
-        club_new = functools.partial(self.entry_new, model.Club, self.main.model_club)
-        age_new = functools.partial(self.entry_new, model.Age, self.main.model_age)
-        bow_new = functools.partial(self.entry_new, model.Bow, self.main.model_bow)
-        self.ui.pushButton_user.clicked.connect(user_new)
-        self.ui.pushButton_club.clicked.connect(club_new)
-        self.ui.pushButton_age.clicked.connect(age_new)
-        self.ui.pushButton_bow.clicked.connect(bow_new)
-        user_edit = functools.partial(self.entry_edit, model.User, self.main.model_user)
-        club_edit = functools.partial(self.entry_edit, model.Club, self.main.model_club)
-        age_edit = functools.partial(self.entry_edit, model.Age, self.main.model_age)
-        bow_edit = functools.partial(self.entry_edit, model.Bow, self.main.model_bow)
-        self.ui.pushButton_edituser.clicked.connect(user_edit)
-        self.ui.pushButton_editclub.clicked.connect(club_edit)
-        self.ui.pushButton_editage.clicked.connect(age_edit)
-        self.ui.pushButton_editbow.clicked.connect(bow_edit)
-        user_del = functools.partial(self.entry_delete, model.User, self.main.model_user)
-        club_del = functools.partial(self.entry_delete, model.Club, self.main.model_club)
-        age_del = functools.partial(self.entry_delete, model.Age, self.main.model_age)
-        bow_del = functools.partial(self.entry_delete, model.Bow, self.main.model_bow)
-        self.ui.pushButton_deleteuser.clicked.connect(user_del)
-        self.ui.pushButton_deleteclub.clicked.connect(club_del)
-        self.ui.pushButton_deleteage.clicked.connect(age_del)
-        self.ui.pushButton_deletebow.clicked.connect(bow_del)
         self.ui.actionCreateCertificates.setEnabled(import_mailmerge)
         self.ui.actionCreateAddress.setEnabled(import_mailmerge)
         self.ui.actionXLSX_Export.setEnabled(writexlsx.import_openpyxl)
@@ -415,6 +393,90 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
         if test:
             QTimer.singleShot(500, printdlg.reject)
         printdlg.exec_()
+
+    def createDockWindows(self):
+        dock = QDockWidget(self.tr("Age"), self)
+        dock.setAllowedAreas(Qt.LeftDockWidgetArea | Qt.RightDockWidgetArea)
+        ageWidget = QWidget(dock)
+        layout = QVBoxLayout()
+
+        self.ui.tableView_age = QTableView(dock)
+        layout.addWidget(self.ui.tableView_age)
+
+        self.ui.pushButton_age = QPushButton(self.tr('add new age'), dock)
+        self.ui.pushButton_editage = QPushButton(self.tr('edit age'), dock)
+        self.ui.pushButton_deleteage = QPushButton(self.tr('delete age'), dock)
+        layout.addWidget(self.ui.pushButton_age)
+        layout.addWidget(self.ui.pushButton_editage)
+        layout.addWidget(self.ui.pushButton_deleteage)
+        ageWidget.setLayout(layout)
+        dock.setWidget(ageWidget)
+        self.ui.addDockWidget(Qt.RightDockWidgetArea, dock)
+        self.ui.viewMenu = self.ui.menuBar().addMenu(self.tr("&View"))
+        self.ui.viewMenu.addAction(dock.toggleViewAction())
+
+        dock = QDockWidget(self.tr("Bow"), self)
+        dock.setAllowedAreas(Qt.LeftDockWidgetArea | Qt.RightDockWidgetArea)
+        ageWidget = QWidget(dock)
+        layout = QVBoxLayout()
+
+        self.ui.tableView_bow = QTableView(dock)
+        layout.addWidget(self.ui.tableView_bow)
+
+        self.ui.pushButton_bow = QPushButton(self.tr('add new bow'), dock)
+        self.ui.pushButton_editbow = QPushButton(self.tr('edit bow'), dock)
+        self.ui.pushButton_deletebow = QPushButton(self.tr('delete bow'), dock)
+        layout.addWidget(self.ui.pushButton_bow)
+        layout.addWidget(self.ui.pushButton_editbow)
+        layout.addWidget(self.ui.pushButton_deletebow)
+        ageWidget.setLayout(layout)
+        dock.setWidget(ageWidget)
+        self.ui.addDockWidget(Qt.LeftDockWidgetArea, dock)
+        self.ui.viewMenu.addAction(dock.toggleViewAction())
+
+        dock = QDockWidget(self.tr("Club"), self)
+        dock.setAllowedAreas(Qt.LeftDockWidgetArea | Qt.RightDockWidgetArea)
+        ageWidget = QWidget(dock)
+        layout = QVBoxLayout()
+
+        self.ui.tableView_club = QTableView(dock)
+        layout.addWidget(self.ui.tableView_club)
+
+        self.ui.pushButton_club = QPushButton(self.tr('add new club'), dock)
+        self.ui.pushButton_editclub = QPushButton(self.tr('edit club'), dock)
+        self.ui.pushButton_deleteclub = QPushButton(self.tr('delete club'), dock)
+        layout.addWidget(self.ui.pushButton_club)
+        layout.addWidget(self.ui.pushButton_editclub)
+        layout.addWidget(self.ui.pushButton_deleteclub)
+        ageWidget.setLayout(layout)
+        dock.setWidget(ageWidget)
+        self.ui.addDockWidget(Qt.RightDockWidgetArea, dock)
+        self.ui.viewMenu.addAction(dock.toggleViewAction())
+
+        user_new = functools.partial(self.entry_new, model.User, self.main.model_user)
+        club_new = functools.partial(self.entry_new, model.Club, self.main.model_club)
+        age_new = functools.partial(self.entry_new, model.Age, self.main.model_age)
+        bow_new = functools.partial(self.entry_new, model.Bow, self.main.model_bow)
+        self.ui.pushButton_user.clicked.connect(user_new)
+        self.ui.pushButton_club.clicked.connect(club_new)
+        self.ui.pushButton_age.clicked.connect(age_new)
+        self.ui.pushButton_bow.clicked.connect(bow_new)
+        user_edit = functools.partial(self.entry_edit, model.User, self.main.model_user)
+        club_edit = functools.partial(self.entry_edit, model.Club, self.main.model_club)
+        age_edit = functools.partial(self.entry_edit, model.Age, self.main.model_age)
+        bow_edit = functools.partial(self.entry_edit, model.Bow, self.main.model_bow)
+        self.ui.pushButton_edituser.clicked.connect(user_edit)
+        self.ui.pushButton_editclub.clicked.connect(club_edit)
+        self.ui.pushButton_editage.clicked.connect(age_edit)
+        self.ui.pushButton_editbow.clicked.connect(bow_edit)
+        user_del = functools.partial(self.entry_delete, model.User, self.main.model_user)
+        club_del = functools.partial(self.entry_delete, model.Club, self.main.model_club)
+        age_del = functools.partial(self.entry_delete, model.Age, self.main.model_age)
+        bow_del = functools.partial(self.entry_delete, model.Bow, self.main.model_bow)
+        self.ui.pushButton_deleteuser.clicked.connect(user_del)
+        self.ui.pushButton_deleteclub.clicked.connect(club_del)
+        self.ui.pushButton_deleteage.clicked.connect(age_del)
+        self.ui.pushButton_deletebow.clicked.connect(bow_del)
 
     def oninfo(self, test=None):
         """Set the text for the info message box in html format
