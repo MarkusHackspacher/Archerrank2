@@ -4,69 +4,134 @@
   <context>
     <name>ArcherrankDialog</name>
     <message>
-      <location filename="../modules/main.py" line="425"/>
+      <location filename="../modules/main.py" line="486"/>
       <source>Info</source>
       <translation>Info</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="240"/>
+      <location filename="../modules/main.py" line="217"/>
       <source>Add first Club</source>
       <translation type="unfinished">Add first Club</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="244"/>
+      <location filename="../modules/main.py" line="221"/>
       <source>Add first Age</source>
       <translation type="unfinished">Add first Age</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="248"/>
+      <location filename="../modules/main.py" line="225"/>
       <source>Add first Bow</source>
       <translation type="unfinished">Add first Bow</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="300"/>
+      <location filename="../modules/main.py" line="277"/>
       <source>No line select</source>
       <translation>Keine Zeile ausgewählt</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="313"/>
+      <location filename="../modules/main.py" line="290"/>
       <source>Cannot delete, reference by {},{}</source>
       <translation>Kann Eintrag nicht löschen, referenziert von {},{}</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="376"/>
+      <location filename="../modules/main.py" line="353"/>
       <source>Same rank&lt;br&gt;</source>
       <translation>Gleicher Rang&lt;br&gt;</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="378"/>
+      <location filename="../modules/main.py" line="355"/>
       <source>&lt;h1&gt;Overview&lt;/h1&gt;Rang Name Score Kill Rate Club&lt;br&gt;{}</source>
       <translation>&lt;h1&gt;Übersicht&lt;/h1&gt;Rang Name Punkte Kill Rate Klub&lt;br&gt;{}</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="400"/>
+      <location filename="../modules/main.py" line="377"/>
       <source>Sorting User by Club&lt;br&gt;{}</source>
       <translation type="unfinished">Sorting User by Club&lt;br&gt;{}</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="412"/>
+      <location filename="../modules/main.py" line="389"/>
       <source>Sorting Club&lt;br&gt;{}</source>
       <translation type="unfinished">Sorting Club&lt;br&gt;{}</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="434"/>
+      <location filename="../modules/main.py" line="495"/>
       <source>A tool for the evaluation of archery tournaments.&lt;br&gt;Version {}&lt;br&gt;Archerrank2 is free software and use GNU General Public License &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;www.gnu.org/licenses&lt;/a&gt;</source>
       <translation>Ein Werkzeug zur Bewertung von Bogenschießen-Turnieren.&lt;br&gt;Version {}&lt;br&gt;Archerrank2 ist freie Software und benutzt GNU General Public License &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;www.gnu.org/licenses&lt;/a&gt;</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="440"/>
+      <location filename="../modules/main.py" line="501"/>
       <source>More Information about the program at &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</source>
       <translation>Weitere Informationen gibt es auf &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="495"/>
+      <location filename="../modules/main.py" line="556"/>
       <source>Open Directory</source>
       <translation>Verzeichnis öffnen</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="397"/>
+      <source>Age</source>
+      <translation type="unfinished">Age</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="405"/>
+      <source>add new age</source>
+      <translation type="unfinished">add new age</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="406"/>
+      <source>edit age</source>
+      <translation type="unfinished">edit age</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="407"/>
+      <source>delete age</source>
+      <translation type="unfinished">delete age</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="414"/>
+      <source>&amp;View</source>
+      <translation type="unfinished">&amp;View</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="417"/>
+      <source>Bow</source>
+      <translation type="unfinished">Bow</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="425"/>
+      <source>add new bow</source>
+      <translation type="unfinished">add new bow</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="426"/>
+      <source>edit bow</source>
+      <translation type="unfinished">edit bow</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="427"/>
+      <source>delete bow</source>
+      <translation type="unfinished">delete bow</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="436"/>
+      <source>Club</source>
+      <translation type="unfinished">Club</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="444"/>
+      <source>add new club</source>
+      <translation type="unfinished">add new club</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="445"/>
+      <source>edit club</source>
+      <translation type="unfinished">edit club</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="446"/>
+      <source>delete club</source>
+      <translation type="unfinished">delete club</translation>
     </message>
   </context>
   <context>
@@ -336,137 +401,77 @@
       <translation>Nutzer löschen</translation>
     </message>
     <message>
-      <location filename="../modules/gui/main.ui" line="112"/>
-      <source>bow grade table</source>
-      <translation>Bogen-Bewertungstabelle</translation>
-    </message>
-    <message>
-      <location filename="../modules/gui/main.ui" line="125"/>
-      <source>add new bow</source>
-      <translation>neue Bogenklasse hinzufügen</translation>
-    </message>
-    <message>
-      <location filename="../modules/gui/main.ui" line="132"/>
-      <source>edit bow</source>
-      <translation>bearbeite Bogenklasse</translation>
-    </message>
-    <message>
-      <location filename="../modules/gui/main.ui" line="139"/>
-      <source>delete bow</source>
-      <translation>lösche Bogenklasse</translation>
-    </message>
-    <message>
-      <location filename="../modules/gui/main.ui" line="153"/>
-      <source>club</source>
-      <translation>Klub</translation>
-    </message>
-    <message>
-      <location filename="../modules/gui/main.ui" line="166"/>
-      <source>add new club</source>
-      <translation>neuen Klub hinzufügen</translation>
-    </message>
-    <message>
-      <location filename="../modules/gui/main.ui" line="173"/>
-      <source>edit club</source>
-      <translation>bearbeite Klub</translation>
-    </message>
-    <message>
-      <location filename="../modules/gui/main.ui" line="180"/>
-      <source>delete club</source>
-      <translation>Klub löschen</translation>
-    </message>
-    <message>
-      <location filename="../modules/gui/main.ui" line="194"/>
-      <source>age grade table</source>
-      <translation>Alterklassen</translation>
-    </message>
-    <message>
-      <location filename="../modules/gui/main.ui" line="207"/>
-      <source>add new age</source>
-      <translation>neue Altersklasse hinzufügen</translation>
-    </message>
-    <message>
-      <location filename="../modules/gui/main.ui" line="214"/>
-      <source>edit age</source>
-      <translation>bearbeite Altersklassen</translation>
-    </message>
-    <message>
-      <location filename="../modules/gui/main.ui" line="221"/>
-      <source>delete age</source>
-      <translation>lösche Altersklassen</translation>
-    </message>
-    <message>
-      <location filename="../modules/gui/main.ui" line="242"/>
+      <location filename="../modules/gui/main.ui" line="119"/>
       <source>Fi&amp;le</source>
       <translation>Datei</translation>
     </message>
     <message>
-      <location filename="../modules/gui/main.ui" line="248"/>
+      <location filename="../modules/gui/main.ui" line="125"/>
       <source>I&amp;nfo</source>
       <translation>I&amp;nfo</translation>
     </message>
     <message>
-      <location filename="../modules/gui/main.ui" line="254"/>
+      <location filename="../modules/gui/main.ui" line="131"/>
       <source>E&amp;valuation</source>
       <translation>Wertung</translation>
     </message>
     <message>
-      <location filename="../modules/gui/main.ui" line="269"/>
+      <location filename="../modules/gui/main.ui" line="146"/>
       <source>&amp;Exit</source>
       <translation>B&amp;eenden</translation>
     </message>
     <message>
-      <location filename="../modules/gui/main.ui" line="274"/>
+      <location filename="../modules/gui/main.ui" line="151"/>
       <source>&amp;Open</source>
       <translation>Ö&amp;ffnen</translation>
     </message>
     <message>
-      <location filename="../modules/gui/main.ui" line="279"/>
+      <location filename="../modules/gui/main.ui" line="156"/>
       <source>&amp;Save</source>
       <translation>&amp;Speichern</translation>
     </message>
     <message>
-      <location filename="../modules/gui/main.ui" line="284"/>
+      <location filename="../modules/gui/main.ui" line="161"/>
       <source>&amp;New</source>
       <translation>&amp;Neu</translation>
     </message>
     <message>
-      <location filename="../modules/gui/main.ui" line="289"/>
+      <location filename="../modules/gui/main.ui" line="166"/>
       <source>&amp;Info</source>
       <translation>&amp;Info</translation>
     </message>
     <message>
-      <location filename="../modules/gui/main.ui" line="294"/>
+      <location filename="../modules/gui/main.ui" line="171"/>
       <source>&amp;Overview</source>
       <translation>Übersicht</translation>
     </message>
     <message>
-      <location filename="../modules/gui/main.ui" line="299"/>
+      <location filename="../modules/gui/main.ui" line="176"/>
       <source>&amp;Print Preview</source>
       <translation>Druckvorschau</translation>
     </message>
     <message>
-      <location filename="../modules/gui/main.ui" line="304"/>
+      <location filename="../modules/gui/main.ui" line="181"/>
       <source>&amp;Load file</source>
       <translation>Datei &amp;laden</translation>
     </message>
     <message>
-      <location filename="../modules/gui/main.ui" line="309"/>
+      <location filename="../modules/gui/main.ui" line="186"/>
       <source>&amp;Save file as</source>
       <translation>Datei &amp;speichern als</translation>
     </message>
     <message>
-      <location filename="../modules/gui/main.ui" line="314"/>
+      <location filename="../modules/gui/main.ui" line="191"/>
       <source>&amp;Create certificates</source>
       <translation>Urkunde erstellen</translation>
     </message>
     <message>
-      <location filename="../modules/gui/main.ui" line="319"/>
+      <location filename="../modules/gui/main.ui" line="196"/>
       <source>XLSX Export</source>
       <translation>XLSX-Export</translation>
     </message>
     <message>
-      <location filename="../modules/gui/main.ui" line="324"/>
+      <location filename="../modules/gui/main.ui" line="201"/>
       <source>Create Address</source>
       <translation>Neue Adresse erstellen</translation>
     </message>
