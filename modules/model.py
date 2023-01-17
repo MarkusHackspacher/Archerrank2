@@ -3,7 +3,7 @@
 """
 Archerank2
 
-Copyright (C) <2018-2022> Markus Hackspacher
+Copyright (C) <2018-2023> Markus Hackspacher
 
 This file is part of Archerank2.
 
@@ -22,14 +22,13 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from sqlalchemy import Column, ForeignKey, Integer, String
-# https://docs.sqlalchemy.org/en/latest/orm/tutorial.html
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import registry, relationship
 
-base = declarative_base()
+mapper_registry = registry()
+Base = mapper_registry.generate_base()
 
 
-class User(base):
+class User(Base):
     """characteristics of the user table"""
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
@@ -73,7 +72,7 @@ class User(base):
                 .format(self.name, self.lastname, self.clubname, self.agename, self.bowname))
 
 
-class Age(base):
+class Age(Base):
     """characteristics of the age grade table"""
     __tablename__ = 'ages'
     id = Column(Integer, primary_key=True)
@@ -89,7 +88,7 @@ class Age(base):
                 format(self.name, self.short, self.adult, self.sep))
 
 
-class Bow(base):
+class Bow(Base):
     """characteristics of the bow grade table"""
     __tablename__ = 'bows'
     id = Column(Integer, primary_key=True)
@@ -103,7 +102,7 @@ class Bow(base):
                 format(self.name, self.short, self.sorting))
 
 
-class Setting(base):
+class Setting(Base):
     """characteristics of the setting table"""
     __tablename__ = 'settings'
     name = Column(String, primary_key=True)
@@ -114,7 +113,7 @@ class Setting(base):
                 format(self.name, self.value))
 
 
-class Club(base):
+class Club(Base):
     """characteristics of the club table
     payment: have pay for x players
     advertising: 0 not set

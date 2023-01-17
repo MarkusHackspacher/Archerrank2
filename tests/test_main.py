@@ -3,7 +3,7 @@
 """
 Archerank2
 
-Copyright (C) <2019> Markus Hackspacher
+Copyright (C) <2019,2023> Markus Hackspacher
 
 This file is part of Archerank2.
 

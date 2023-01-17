@@ -3,7 +3,7 @@
 """
 Archerank2
 
-Copyright (C) <2019> Markus Hackspacher
+Copyright (C) <2019,2023> Markus Hackspacher
 
 This file is part of Archerank2.
 
@@ -37,8 +37,8 @@ class TestSqlAlchemyTableModel(TestCase):
         @return:
         """
         engine = create_engine('sqlite:///:memory:', echo=False)
-        model.base.metadata.bind = engine
-        model.base.metadata.create_all(engine)
+        model.Base.metadata.bind = engine
+        model.Base.metadata.create_all(engine)
 
         # Set up the session
         sm = orm.sessionmaker(bind=engine, autoflush=True, autocommit=False,

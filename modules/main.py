@@ -3,7 +3,7 @@
 """
 Archerank2
 
-Copyright (C) <2018-2022> Markus Hackspacher
+Copyright (C) <2018-2023> Markus Hackspacher
 
 This file is part of Archerank2.
 
@@ -80,8 +80,8 @@ class Main(QtWidgets.QApplication):
         # Create an engine and create all the tables we need
         logging.info("database: %s", filename)
         engine = create_engine('sqlite:///{}'.format(filename), echo=False)
-        model.base.metadata.bind = engine
-        model.base.metadata.create_all(engine)
+        model.Base.metadata.bind = engine
+        model.Base.metadata.create_all(engine)
 
         # Set up the session
         sm = orm.sessionmaker(bind=engine,
