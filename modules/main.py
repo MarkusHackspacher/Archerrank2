@@ -585,7 +585,32 @@ class ArcherrankDialog(QObject):
                 userdata.payment,
                 userdata.advertising))
 
+        xlsxexport.bow(('name', 'short'))
+        bows = self.main.session.query(model.Bow).all()
+        for userdata in bows:
+            logging.info(userdata)
+            xlsxexport.bow((
+                userdata.name,
+                userdata.short))
+
+        xlsxexport.age(('name', 'short'))
+        ages = self.main.session.query(model.Age).all()
+        for userdata in ages:
+            logging.info(userdata)
+            xlsxexport.age((
+                userdata.name,
+                userdata.short))
         xlsxexport.save('table.xlsx')
+        infobox = QtWidgets.QMessageBox(self.ui)
+        infobox.setWindowTitle(self.tr('Info'))
+        infobox.setText(self.tr(
+            'export successful<br>'
+            'Version {}<br>'
+            .format(VERSION_STR)))
+        if test:
+            QTimer(infobox).singleShot(500, infobox.reject)
+        infobox.exec_()
+
 
     def on_exit(self):
         """exit and close
