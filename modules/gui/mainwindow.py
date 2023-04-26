@@ -7,19 +7,21 @@
 # WARNING! All changes made in this file will be lost!
 
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(785, 769)
+class Ui_MainWindow(QtWidgets.QMainWindow):
+    def __init__(self):
+        QtWidgets.QMainWindow.__init__(self)
+        self.setObjectName("MainWindow")
+        self.resize(785, 769)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
-        MainWindow.setSizePolicy(sizePolicy)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
+        self.setSizePolicy(sizePolicy)
+        
+        self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(2)
@@ -63,8 +65,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addLayout(self.verticalLayout)
         self.horizontalLayout.setStretch(0, 5)
         self.verticalLayout_4.addLayout(self.horizontalLayout)
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(self)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 785, 22))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
@@ -73,30 +75,30 @@ class Ui_MainWindow(object):
         self.menuInfo.setObjectName("menuInfo")
         self.menuEvaluation = QtWidgets.QMenu(self.menubar)
         self.menuEvaluation.setObjectName("menuEvaluation")
-        MainWindow.setMenuBar(self.menubar)
-        self.actionExit = QtWidgets.QAction(MainWindow)
+        self.setMenuBar(self.menubar)
+        self.actionExit = QtWidgets.QAction(self)
         self.actionExit.setObjectName("actionExit")
-        self.actionOpen = QtWidgets.QAction(MainWindow)
+        self.actionOpen = QtWidgets.QAction(self)
         self.actionOpen.setObjectName("actionOpen")
-        self.actionSave = QtWidgets.QAction(MainWindow)
+        self.actionSave = QtWidgets.QAction(self)
         self.actionSave.setObjectName("actionSave")
-        self.actionNew = QtWidgets.QAction(MainWindow)
+        self.actionNew = QtWidgets.QAction(self)
         self.actionNew.setObjectName("actionNew")
-        self.actionInfo = QtWidgets.QAction(MainWindow)
+        self.actionInfo = QtWidgets.QAction(self)
         self.actionInfo.setObjectName("actionInfo")
-        self.actionOverview = QtWidgets.QAction(MainWindow)
+        self.actionOverview = QtWidgets.QAction(self)
         self.actionOverview.setObjectName("actionOverview")
-        self.actionPrintPreview = QtWidgets.QAction(MainWindow)
+        self.actionPrintPreview = QtWidgets.QAction(self)
         self.actionPrintPreview.setObjectName("actionPrintPreview")
-        self.actionLoad_file = QtWidgets.QAction(MainWindow)
+        self.actionLoad_file = QtWidgets.QAction(self)
         self.actionLoad_file.setObjectName("actionLoad_file")
-        self.actionSave_file_as = QtWidgets.QAction(MainWindow)
+        self.actionSave_file_as = QtWidgets.QAction(self)
         self.actionSave_file_as.setObjectName("actionSave_file_as")
-        self.actionCreateCertificates = QtWidgets.QAction(MainWindow)
+        self.actionCreateCertificates = QtWidgets.QAction(self)
         self.actionCreateCertificates.setObjectName("actionCreateCertificates")
-        self.actionXLSX_Export = QtWidgets.QAction(MainWindow)
+        self.actionXLSX_Export = QtWidgets.QAction(self)
         self.actionXLSX_Export.setObjectName("actionXLSX_Export")
-        self.actionCreateAddress = QtWidgets.QAction(MainWindow)
+        self.actionCreateAddress = QtWidgets.QAction(self)
         self.actionCreateAddress.setObjectName("actionCreateAddress")
         self.menuFile.addAction(self.actionExit)
         self.menuInfo.addAction(self.actionInfo)
@@ -110,8 +112,8 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuEvaluation.menuAction())
         self.menubar.addAction(self.menuInfo.menuAction())
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(self)
+        QtCore.QMetaObject.connectSlotsByName(self)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -135,13 +137,3 @@ class Ui_MainWindow(object):
         self.actionCreateCertificates.setText(_translate("MainWindow", "&Create certificates"))
         self.actionXLSX_Export.setText(_translate("MainWindow", "XLSX Export"))
         self.actionCreateAddress.setText(_translate("MainWindow", "Create Address"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())

@@ -27,9 +27,9 @@ import os
 import sys
 from os.path import join
 
-from PyQt5 import QtGui, QtWidgets, uic
+from PyQt5 import QtGui, QtWidgets
 from PyQt5.Qt import PYQT_VERSION_STR
-from PyQt5.QtCore import QDir, QLocale, Qt, QTimer, QTranslator
+from PyQt5.QtCore import QDir, QLocale, Qt, QTimer, QTranslator, QObject
 from PyQt5.QtWidgets import (QDockWidget, QFileDialog, QMessageBox, QVBoxLayout,
     QPushButton, QTableView, QWidget)
 from sqlalchemy import create_engine, orm
@@ -38,6 +38,7 @@ from modules import VERSION_STR, model, writexlsx
 from modules.ext.alchemical_model import SqlAlchemyTableModel
 from modules.gui.dialogsqltable import DlgSqlTable
 from modules.gui.printdialog import DlgPrint
+from modules.gui.mainwindow import Ui_MainWindow
 
 import_mailmerge = True
 try:
@@ -158,7 +159,7 @@ class Main(QtWidgets.QApplication):
         self.exec_()
 
 
-class ArcherrankDialog(QtWidgets.QMainWindow):
+class ArcherrankDialog(QObject):
     """The GUI of the Archerrank.
     """
     def __init__(self, main):
@@ -166,10 +167,11 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
 
         :returns: none
         """
-        super(ArcherrankDialog, self).__init__()
+        QObject.__init__(self)
         self.exportDir = False
         self.main = main
         # Set up the user interface from Designer.
+        """
         try:
             self.ui = uic.loadUi(os.path.abspath(os.path.join(
                 os.path.dirname(sys.argv[0]),
@@ -177,6 +179,8 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
         except FileNotFoundError:
             self.ui = uic.loadUi(os.path.join(
                 "modules", "gui", "main.ui"))
+        """
+        self.ui = Ui_MainWindow()
         try:
             self.ui.setWindowIcon(
                 QtGui.QIcon(os.path.abspath(os.path.join(
@@ -395,7 +399,7 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
         printdlg.exec_()
 
     def createDockWindows(self):
-        dock = QDockWidget(self.tr("Age"), self)
+        dock = QDockWidget(self.tr("Age"), self.ui)
         dock.setAllowedAreas(Qt.LeftDockWidgetArea | Qt.RightDockWidgetArea)
         ageWidget = QWidget(dock)
         layout = QVBoxLayout()
@@ -415,7 +419,7 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
         self.ui.viewMenu = self.ui.menuBar().addMenu(self.tr("&View"))
         self.ui.viewMenu.addAction(dock.toggleViewAction())
 
-        dock = QDockWidget(self.tr("Bow"), self)
+        dock = QDockWidget(self.tr("Bow"), self.ui)
         dock.setAllowedAreas(Qt.LeftDockWidgetArea | Qt.RightDockWidgetArea)
         ageWidget = QWidget(dock)
         layout = QVBoxLayout()
@@ -434,7 +438,7 @@ class ArcherrankDialog(QtWidgets.QMainWindow):
         self.ui.addDockWidget(Qt.LeftDockWidgetArea, dock)
         self.ui.viewMenu.addAction(dock.toggleViewAction())
 
-        dock = QDockWidget(self.tr("Club"), self)
+        dock = QDockWidget(self.tr("Club"), self.ui)
         dock.setAllowedAreas(Qt.LeftDockWidgetArea | Qt.RightDockWidgetArea)
         ageWidget = QWidget(dock)
         layout = QVBoxLayout()
