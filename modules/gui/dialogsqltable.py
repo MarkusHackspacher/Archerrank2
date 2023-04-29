@@ -133,6 +133,9 @@ class DlgSqlTable(QtWidgets.QDialog):
                 label, buttonnumber, 1, 1, 1)
             label.setText(self.tr("{} {}".format(buttonnumber, methodsname[methods[buttonnumber]])))
 
+
+        self.members = QtWidgets.QTextEdit(self)
+        self.gridLayout.addWidget(self.members,  buttonnumber+1 , 1, 1, 2)
         self.boxLayout.addLayout(self.gridLayout)
         self.boxLayout.addWidget(self.buttonBox)
 
@@ -145,6 +148,11 @@ class DlgSqlTable(QtWidgets.QDialog):
         :return:
         """
         dataset = session.query(table).get(index)
+        if not table.__tablename__ == "users":
+            self.members.setText(self.tr("{} members:".format(len(dataset.members))))
+            for members in dataset.members:
+                self.members.append(self.tr(
+                    "Name: {} {}".format(members.name, members.lastname)))
         for name in self.field:
             if name in self.STRING or name in self.TEXT:
                 self.field[name].setText(dataset.__dict__[name])

@@ -105,7 +105,9 @@ class Main(QtWidgets.QApplication):
             ('Id', model.Club.id, "id", {"editable": False}),
             (self.tr('Name'), model.Club.name, "name", {"editable": True, "dnd": True}),
             (self.tr('Short'), model.Club.short, "short", {"editable": True}),
-            (self.tr('payment'), model.Club.payment, "payment", {"editable": True})], self)
+            (self.tr('payment'), model.Club.payment, "payment", {"editable": True}),
+            (self.tr('members'), model.Club.members, "members", {"editable": False}),
+            (self.tr('address'), model.Club.address, "address", {"editable": False})], self)
 
         self.model_age = SqlAlchemyTableModel(self.session, model.Age, [
             ('Id', model.Age.id, "id", {"editable": False}),
