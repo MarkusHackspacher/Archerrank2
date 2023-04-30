@@ -87,6 +87,10 @@ class Age(Base):
         return ("<Age(name='{0}', short='{1}', adult='{2}' sep='{3}'".
                 format(self.name, self.short, self.adult, self.sep))
 
+    @property
+    def membersCount(self):
+        return (len(self.members))
+
 
 class Bow(Base):
     """characteristics of the bow grade table"""
@@ -100,6 +104,10 @@ class Bow(Base):
     def __repr__(self):
         return ("<Bow(name='{0}', short='{1}' sorting='{2}'".
                 format(self.name, self.short, self.sorting))
+
+    @property
+    def membersCount(self):
+        return (len(self.members))
 
 
 class Setting(Base):
@@ -139,6 +147,6 @@ class Club(Base):
                 format(self.id, self.short, self.name, self.email, self.address,
                        self.payment, self.members))
 
-    def membersName(self):
-        return ("{0} {1}".
-                format(self.members.name, self.members.lastname))
+    @property
+    def membersCount(self):
+        return (len(self.members))

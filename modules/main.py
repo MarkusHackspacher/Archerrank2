@@ -106,18 +106,20 @@ class Main(QtWidgets.QApplication):
             (self.tr('Name'), model.Club.name, "name", {"editable": True, "dnd": True}),
             (self.tr('Short'), model.Club.short, "short", {"editable": True}),
             (self.tr('payment'), model.Club.payment, "payment", {"editable": True}),
-            (self.tr('members'), model.Club.members, "members", {"editable": False}),
-            (self.tr('address'), model.Club.address, "address", {"editable": False})], self)
+            (self.tr('members'), model.Club.membersCount, "membersCount", {"editable": False}),
+            (self.tr('address'), model.Club.address, "address", {"editable": True})], self)
 
         self.model_age = SqlAlchemyTableModel(self.session, model.Age, [
             ('Id', model.Age.id, "id", {"editable": False}),
             (self.tr('Name'), model.Age.name, "name", {"editable": True}),
-            (self.tr('Short'), model.Age.short, "short", {"editable": True}), ], self)
+            (self.tr('Short'), model.Age.short, "short", {"editable": True}),
+            (self.tr('members'), model.Club.membersCount, "membersCount", {"editable": False}), ], self)
 
         self.model_bow = SqlAlchemyTableModel(self.session, model.Bow, [
             ('Id', model.Bow.id, "id", {"editable": False}),
             (self.tr('Name'), model.Bow.name, "name", {"editable": True}),
-            (self.tr('Short'), model.Bow.short, "short", {"editable": True}), ], self)
+            (self.tr('Short'), model.Bow.short, "short", {"editable": True}),
+            (self.tr('members'), model.Club.membersCount, "membersCount", {"editable": False}), ], self)
 
     def file_dlg(self, text):
         msg_box = QMessageBox()
