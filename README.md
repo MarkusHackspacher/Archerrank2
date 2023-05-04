@@ -21,6 +21,7 @@ Help is very welcome.
 install
 -------
 
+[Download](https://github.com/MarkusHackspacher/Archerrank2) the zip file of the project or
 Clone from Github
 
 ```bash
@@ -63,3 +64,7 @@ optional arguments:
                         ISO code of language, de for Germany
   -log {1,2,3,4,5}      logging level
 ```
+
+Screenshot
+----------
+![Image](misc/Archerrank2.png "Archerrank2 screenshot")
