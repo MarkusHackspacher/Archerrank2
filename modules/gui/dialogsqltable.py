@@ -96,21 +96,20 @@ class DlgSqlTable(QtWidgets.QDialog):
             elif name in self.INT:
                 self.field[name] = QtWidgets.QSpinBox(self)
                 self.field[name].setToolTip(self.tr('Edit {}'.format(name)))
-            elif name in 'club_id':
+            elif name in ('club_id', 'bow_id', 'age_id'):
                 self.field[name] = QtWidgets.QComboBox(self)
-                self.model_club = self.my_table_model(model.Club, session)
-                self.field[name].setModel(self.model_club)
-                self.field[name].setToolTip(self.tr('Select a club'))
-            elif name in 'bow_id':
-                self.field[name] = QtWidgets.QComboBox(self)
-                self.model_bow = self.my_table_model(model.Bow, session)
-                self.field[name].setModel(self.model_bow)
-                self.field[name].setToolTip(self.tr('Select a bow'))
-            elif name in 'age_id':
-                self.field[name] = QtWidgets.QComboBox(self)
-                self.model_age = self.my_table_model(model.Age, session)
-                self.field[name].setModel(self.model_age)
-                self.field[name].setToolTip(self.tr('Select a age'))
+                if name in 'club_id':
+                    self.model_club = self.my_table_model(model.Club, session)
+                    self.field[name].setModel(self.model_club)
+                    self.field[name].setToolTip(self.tr('Select a club'))
+                elif name in 'bow_id':
+                    self.model_bow = self.my_table_model(model.Bow, session)
+                    self.field[name].setModel(self.model_bow)
+                    self.field[name].setToolTip(self.tr('Select a bow'))
+                elif name in 'age_id':
+                    self.model_age = self.my_table_model(model.Age, session)
+                    self.field[name].setModel(self.model_age)
+                    self.field[name].setToolTip(self.tr('Select a age'))
             elif name in self.ADVER:
                 self.field[name] = QtWidgets.QComboBox(self)
                 self.field[name].addItem(self.tr('Not Set'))
@@ -133,9 +132,8 @@ class DlgSqlTable(QtWidgets.QDialog):
                 label, buttonnumber, 1, 1, 1)
             label.setText(self.tr("{} {}".format(buttonnumber, methodsname[methods[buttonnumber]])))
 
-
         self.members = QtWidgets.QTextEdit(self)
-        self.gridLayout.addWidget(self.members,  buttonnumber+1 , 1, 1, 2)
+        self.gridLayout.addWidget(self.members,  buttonnumber+1, 1, 1, 2)
         self.boxLayout.addLayout(self.gridLayout)
         self.boxLayout.addWidget(self.buttonBox)
 
