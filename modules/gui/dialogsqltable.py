@@ -145,7 +145,7 @@ class DlgSqlTable(QtWidgets.QDialog):
 
         :return:
         """
-        dataset = session.query(table).filter_by(index=index).first()  # get(index)
+        dataset = session.query(table).filter_by(id=index).first()
         if not table.__tablename__ == "users":
             self.members.setText(self.tr("{} members:".format(len(dataset.members))))
             for members in dataset.members:
