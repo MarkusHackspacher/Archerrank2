@@ -156,18 +156,11 @@ class DlgSqlTable(QtWidgets.QDialog):
                 self.field[name].setText(dataset.__dict__[name])
             elif name in self.INT:
                 self.field[name].setValue(dataset.__dict__[name])
-            elif name in ('age_id'):
-                logging.debug("Show age_id index %s from user %s",
-                              dataset.__dict__[name], dataset.__dict__['name'])
-                matches = self.matchIndex(self.model_age, dataset.__dict__[name])
-                if matches:
-                    self.field[name].setCurrentIndex(matches[0].row())
-            elif name in ('bow_id'):
-                matches = self.matchIndex(self.model_bow, dataset.__dict__[name])
-                if matches:
-                    self.field[name].setCurrentIndex(matches[0].row())
-            elif name in ('club_id'):
-                matches = self.matchIndex(self.model_club, dataset.__dict__[name])
+            elif name in ('age_id', 'bow_id', 'club_id'):
+                logging.debug("Show %s index %s from user %s",
+                              name, dataset.__dict__[name], dataset.__dict__['name'])
+                matches = self.matchIndex(getattr(
+                    self, 'model_' + name[:-3]), dataset.__dict__[name])
                 if matches:
                     self.field[name].setCurrentIndex(matches[0].row())
             elif name in self.ADVER:
