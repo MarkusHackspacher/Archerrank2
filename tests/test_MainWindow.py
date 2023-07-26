@@ -22,43 +22,44 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import unittest
-from modules.gui.mainwindow import MainWindow
+from modules.gui.mainwindow import Ui_MainWindow
 
 
 class TestMainWindow(unittest.TestCase):
 
     def test_main_window(self):
-        # Create a new MainWindow object
-        window = MainWindow()
+        # Create a new Ui_MainWindow object
+        ui = Ui_MainWindow()
 
-        # Check that the window is created successfully
-        self.assertIsInstance(window, MainWindow)
+        # Check that the window title is correct
+        self.assertEqual(ui.centralwidget.windowTitle(), "Archerrank2")
 
-        # Check that the window has the correct title
-        self.assertEqual(window.windowTitle(), "ArcherRank2")
+        # Check that the label text is correct
+        self.assertEqual(ui.label_user.text(), "participants")
 
-        # Check that the window has the correct layout
-        self.assertEqual(window.layout().count(), 4)
+        # Check that the push button text is correct
+        self.assertEqual(ui.pushButton_user.text(), "add new user")
+        self.assertEqual(ui.pushButton_edituser.text(), "edit user")
+        self.assertEqual(ui.pushButton_deleteuser.text(), "delete user")
 
-        # Check that the first row in the layout contains the correct widgets
-        self.assertEqual(window.layout().itemAt(0).widget(), window.label_title)
-        self.assertEqual(window.layout().itemAt(1).widget(), window.combo_archer)
-        self.assertEqual(window.layout().itemAt(2).widget(), window.button_start)
+        # Check that the menu items are correct
+        self.assertEqual(ui.menuFile.title(), "&File")
+        self.assertEqual(ui.menuInfo.title(), "I&nfo")
+        self.assertEqual(ui.menuEvaluation.title(), "E&valuation")
 
-        # Check that the second row in the layout contains the correct widgets
-        self.assertEqual(window.layout().itemAt(3).widget(), window.table_rank)
-
-        # Check that the window's `show()` method works correctly
-        window.show()
-        self.assertIsTrue(window.isVisible())
-
-        # Check that the window's `hide()` method works correctly
-        window.hide()
-        self.assertIsFalse(window.isVisible())
-
-        # Check that the window's `exec_()` method works correctly
-        window.exec_()
-        self.assertIsFalse(window.isVisible())
+        # Check that the action text is correct
+        self.assertEqual(ui.actionExit.text(), "&Exit")
+        self.assertEqual(ui.actionOpen.text(), "&Open")
+        self.assertEqual(ui.actionSave.text(), "&Save")
+        self.assertEqual(ui.actionNew.text(), "&New")
+        self.assertEqual(ui.actionInfo.text(), "&Info")
+        self.assertEqual(ui.actionOverview.text(), "&Overview")
+        self.assertEqual(ui.actionPrintPreview.text(), "&Print Preview")
+        self.assertEqual(ui.actionLoad_file.text(), "&Load file")
+        self.assertEqual(ui.actionSave_file_as.text(), "&Save file as")
+        self.assertEqual(ui.actionCreateCertificates.text(), "&Create certificates")
+        self.assertEqual(ui.actionXLSX_Export.text(), "XLSX Export")
+        self.assertEqual(ui.actionCreateAddress.text(), "Create Address")
 
 
 if __name__ == "__main__":
