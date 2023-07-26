@@ -267,7 +267,8 @@ class ArcherrankDialog(QObject):
         newdata = DlgSqlTable.edit_values(self.main.session, datatable, model,
                                           tablemodel.data(ind, Qt.DisplayRole),
                                           test, parent=self.ui)
-        data = self.main.session.query(datatable).get(tablemodel.data(ind, Qt.DisplayRole))
+        data = self.main.session.query(datatable).filter_by(
+            id=tablemodel.data(ind, Qt.DisplayRole)).first()
         if newdata[1]:
             for key, value in newdata[0].items():
                 setattr(data, key, value)
@@ -286,7 +287,8 @@ class ArcherrankDialog(QObject):
             QtWidgets.QMessageBox.information(self.ui, self.tr('Info'), self.tr('No line select'))
             return
         ind = tablemodel.index(index.row(), 0)
-        data = self.main.session.query(datatable).get(tablemodel.data(ind, Qt.DisplayRole))
+        data = self.main.session.query(datatable).filter_by(
+            id=tablemodel.data(ind, Qt.DisplayRole)).first()
         if tablemodel == self.main.model_user:
             userdata = None
         elif tablemodel == self.main.model_club:
