@@ -86,6 +86,9 @@ class DlgSqlTable(QtWidgets.QDialog):
             }
         self.labels = [QtWidgets.QLabel(self) for _ in methods]
         self.field = {}
+        self.model_club = self.my_table_model(model.Club, session)
+        self.model_age = self.my_table_model(model.Age, session)
+        self.model_bow = self.my_table_model(model.Bow, session)
         for buttonnumber, name in enumerate(methods):
             if name in self.STRING:
                 self.field[name] = QtWidgets.QLineEdit(self)
@@ -98,18 +101,8 @@ class DlgSqlTable(QtWidgets.QDialog):
                 self.field[name].setToolTip(self.tr('Edit {}'.format(name)))
             elif name in ('club_id', 'bow_id', 'age_id'):
                 self.field[name] = QtWidgets.QComboBox(self)
-                if name in 'club_id':
-                    self.model_club = self.my_table_model(model.Club, session)
-                    self.field[name].setModel(self.model_club)
-                    self.field[name].setToolTip(self.tr('Select a club'))
-                elif name in 'bow_id':
-                    self.model_bow = self.my_table_model(model.Bow, session)
-                    self.field[name].setModel(self.model_bow)
-                    self.field[name].setToolTip(self.tr('Select a bow'))
-                elif name in 'age_id':
-                    self.model_age = self.my_table_model(model.Age, session)
-                    self.field[name].setModel(self.model_age)
-                    self.field[name].setToolTip(self.tr('Select a age'))
+                self.field[name].setModel(getattr(self, 'model_' + name[:-3]))
+                self.field[name].setToolTip(self.tr('Select a {}'.format(name[:-3])))
             elif name in self.ADVER:
                 self.field[name] = QtWidgets.QComboBox(self)
                 self.field[name].addItem(self.tr('Not Set'))
