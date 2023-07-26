@@ -22,14 +22,14 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import unittest
-from modules.gui.mainwindow import Ui_MainWindow
+from modules.gui import mainwindow
 
 
 class TestMainWindow(unittest.TestCase):
 
     def test_main_window(self):
         # Create a new Ui_MainWindow object
-        ui = Ui_MainWindow()
+        ui = mainwindow.Ui_MainWindow()
 
         # Check that the window title is correct
         self.assertEqual(ui.centralwidget.windowTitle(), "Archerrank2")
