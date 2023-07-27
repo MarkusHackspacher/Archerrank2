@@ -31,7 +31,7 @@ from PyQt5 import QtGui, QtWidgets
 from PyQt5.Qt import PYQT_VERSION_STR
 from PyQt5.QtCore import QDir, QLocale, Qt, QTimer, QTranslator, QObject
 from PyQt5.QtWidgets import (QDockWidget, QFileDialog, QMessageBox, QVBoxLayout,
-    QPushButton, QTableView, QWidget)
+                             QPushButton, QTableView, QWidget)
 from sqlalchemy import create_engine, orm
 
 from modules import VERSION_STR, model, writexlsx
@@ -616,7 +616,6 @@ class ArcherrankDialog(QObject):
         if test:
             QTimer(infobox).singleShot(500, infobox.reject)
         infobox.exec_()
-
 
     def on_exit(self):
         """exit and close
