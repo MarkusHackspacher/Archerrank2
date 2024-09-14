@@ -1,135 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0">
+<!DOCTYPE TS>
+<TS version="2.1">
 <context>
     <name>ArcherrankDialog</name>
     <message>
-        <location filename="../modules/main.py" line="486"/>
+        <location filename="../modules/main.py" line="611"/>
         <source>Info</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="217"/>
+        <location filename="../modules/main.py" line="226"/>
         <source>Add first Club</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="221"/>
+        <location filename="../modules/main.py" line="230"/>
         <source>Add first Age</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="225"/>
+        <location filename="../modules/main.py" line="234"/>
         <source>Add first Bow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="277"/>
+        <location filename="../modules/main.py" line="287"/>
         <source>No line select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="290"/>
+        <location filename="../modules/main.py" line="301"/>
         <source>Cannot delete, reference by {},{}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="353"/>
+        <location filename="../modules/main.py" line="364"/>
         <source>Same rank&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="355"/>
+        <location filename="../modules/main.py" line="366"/>
         <source>&lt;h1&gt;Overview&lt;/h1&gt;Rang Name Score Kill Rate Club&lt;br&gt;{}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="377"/>
+        <location filename="../modules/main.py" line="388"/>
         <source>Sorting User by Club&lt;br&gt;{}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="389"/>
+        <location filename="../modules/main.py" line="400"/>
         <source>Sorting Club&lt;br&gt;{}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="495"/>
+        <location filename="../modules/main.py" line="506"/>
         <source>A tool for the evaluation of archery tournaments.&lt;br&gt;Version {}&lt;br&gt;Archerrank2 is free software and use GNU General Public License &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;www.gnu.org/licenses&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="501"/>
+        <location filename="../modules/main.py" line="512"/>
         <source>More Information about the program at &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="556"/>
+        <location filename="../modules/main.py" line="567"/>
         <source>Open Directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="397"/>
+        <location filename="../modules/main.py" line="408"/>
         <source>Age</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="405"/>
+        <location filename="../modules/main.py" line="416"/>
         <source>add new age</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="406"/>
+        <location filename="../modules/main.py" line="417"/>
         <source>edit age</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="407"/>
+        <location filename="../modules/main.py" line="418"/>
         <source>delete age</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="414"/>
+        <location filename="../modules/main.py" line="425"/>
         <source>&amp;View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="417"/>
+        <location filename="../modules/main.py" line="428"/>
         <source>Bow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="425"/>
+        <location filename="../modules/main.py" line="436"/>
         <source>add new bow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="426"/>
+        <location filename="../modules/main.py" line="437"/>
         <source>edit bow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="427"/>
+        <location filename="../modules/main.py" line="438"/>
         <source>delete bow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="436"/>
+        <location filename="../modules/main.py" line="447"/>
         <source>Club</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="444"/>
+        <location filename="../modules/main.py" line="455"/>
         <source>add new club</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="445"/>
+        <location filename="../modules/main.py" line="456"/>
         <source>edit club</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="446"/>
+        <location filename="../modules/main.py" line="457"/>
         <source>delete club</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../modules/main.py" line="612"/>
+        <source>export successful&lt;br&gt;Version {}&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -239,136 +245,146 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/gui/dialogsqltable.py" line="98"/>
+        <location filename="../modules/gui/dialogsqltable.py" line="101"/>
         <source>Edit {}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/gui/dialogsqltable.py" line="103"/>
-        <source>Select a club</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../modules/gui/dialogsqltable.py" line="108"/>
-        <source>Select a bow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../modules/gui/dialogsqltable.py" line="113"/>
-        <source>Select a age</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../modules/gui/dialogsqltable.py" line="116"/>
         <source>Not Set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/gui/dialogsqltable.py" line="117"/>
+        <location filename="../modules/gui/dialogsqltable.py" line="109"/>
         <source>no advertising, no save address for further use</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/gui/dialogsqltable.py" line="118"/>
+        <location filename="../modules/gui/dialogsqltable.py" line="110"/>
         <source>can save address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/gui/dialogsqltable.py" line="119"/>
+        <location filename="../modules/gui/dialogsqltable.py" line="111"/>
         <source>by email</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/gui/dialogsqltable.py" line="120"/>
+        <location filename="../modules/gui/dialogsqltable.py" line="112"/>
         <source>by letter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/gui/dialogsqltable.py" line="121"/>
+        <location filename="../modules/gui/dialogsqltable.py" line="113"/>
         <source>by email and letter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/gui/dialogsqltable.py" line="122"/>
+        <location filename="../modules/gui/dialogsqltable.py" line="114"/>
         <source>Select advertising level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/gui/dialogsqltable.py" line="134"/>
+        <location filename="../modules/gui/dialogsqltable.py" line="126"/>
         <source>{} {}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../modules/gui/dialogsqltable.py" line="105"/>
+        <source>Select a {}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../modules/gui/dialogsqltable.py" line="143"/>
+        <source>{} members:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../modules/gui/dialogsqltable.py" line="145"/>
+        <source>Name: {} {}</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Main</name>
     <message>
-        <location filename="../modules/main.py" line="76"/>
+        <location filename="../modules/main.py" line="78"/>
         <source>You want load a file or create a new file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="129"/>
+        <location filename="../modules/main.py" line="135"/>
         <source>Question</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="131"/>
+        <location filename="../modules/main.py" line="137"/>
         <source>Load</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="132"/>
+        <location filename="../modules/main.py" line="138"/>
         <source>New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="133"/>
+        <location filename="../modules/main.py" line="139"/>
         <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="92"/>
+        <location filename="../modules/main.py" line="94"/>
         <source>Lastname</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="113"/>
+        <location filename="../modules/main.py" line="118"/>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="92"/>
+        <location filename="../modules/main.py" line="94"/>
         <source>Score</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="92"/>
+        <location filename="../modules/main.py" line="94"/>
         <source>Kill Points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="92"/>
+        <location filename="../modules/main.py" line="94"/>
         <source>Club</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="92"/>
+        <location filename="../modules/main.py" line="94"/>
         <source>Age</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="92"/>
+        <location filename="../modules/main.py" line="94"/>
         <source>Bow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="113"/>
+        <location filename="../modules/main.py" line="118"/>
         <source>Short</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../modules/main.py" line="102"/>
+        <location filename="../modules/main.py" line="104"/>
         <source>payment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../modules/main.py" line="118"/>
+        <source>members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../modules/main.py" line="104"/>
+        <source>address</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
