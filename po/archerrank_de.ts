@@ -46,7 +46,7 @@
     <message>
       <location filename="../modules/main.py" line="388"/>
       <source>Sorting User by Club&lt;br&gt;{}</source>
-      <translation>Benutzer nach Club sortiert &lt;br&gt;  {}</translation>
+      <translation>Benutzer nach Klub sortiert&lt;br&gt;{}</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="400"/>
@@ -292,12 +292,12 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="105"/>
       <source>Select a {}</source>
-      <translation type="unfinished">Select a {}</translation>
+      <translation>Auswahl {}</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="143"/>
       <source>{} members:</source>
-      <translation type="unfinished">{} members:</translation>
+      <translation>{} Mitglieder:</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="145"/>
@@ -380,12 +380,12 @@
     <message>
       <location filename="../modules/main.py" line="118"/>
       <source>members</source>
-      <translation type="unfinished">members</translation>
+      <translation>Mitglieder</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="104"/>
       <source>address</source>
-      <translation type="unfinished">address</translation>
+      <translation>Adresse</translation>
     </message>
   </context>
   <context>
@@ -423,7 +423,7 @@
     <message>
       <location filename="../modules/gui/main.ui" line="125"/>
       <source>I&amp;nfo</source>
-      <translation>I&amp;nfo</translation>
+      <translation>Info</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="131"/>
