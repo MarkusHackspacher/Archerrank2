@@ -4,7 +4,7 @@
 """
 Archerank2
 
-Copyright (C) <2018-2023> Markus Hackspacher
+Copyright (C) <2018-2024> Markus Hackspacher
 
 This file is part of Archerank2.
 

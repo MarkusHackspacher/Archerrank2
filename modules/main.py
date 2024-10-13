@@ -3,7 +3,7 @@
 """
 Archerank2
 
-Copyright (C) <2018-2023> Markus Hackspacher
+Copyright (C) <2018-2024> Markus Hackspacher
 
 This file is part of Archerank2.
 
@@ -29,16 +29,16 @@ from os.path import join
 
 from PyQt5 import QtGui, QtWidgets
 from PyQt5.Qt import PYQT_VERSION_STR
-from PyQt5.QtCore import QDir, QLocale, Qt, QTimer, QTranslator, QObject
-from PyQt5.QtWidgets import (QDockWidget, QFileDialog, QMessageBox, QVBoxLayout,
-                             QPushButton, QTableView, QWidget)
+from PyQt5.QtCore import QDir, QLocale, QObject, Qt, QTimer, QTranslator
+from PyQt5.QtWidgets import (QDockWidget, QFileDialog, QMessageBox,
+                             QPushButton, QTableView, QVBoxLayout, QWidget)
 from sqlalchemy import create_engine, orm
 
 from modules import VERSION_STR, model, writexlsx
 from modules.ext.alchemical_model import SqlAlchemyTableModel
 from modules.gui.dialogsqltable import DlgSqlTable
-from modules.gui.printdialog import DlgPrint
 from modules.gui.mainwindow import Ui_MainWindow
+from modules.gui.printdialog import DlgPrint
 
 import_mailmerge = True
 try:
@@ -60,7 +60,7 @@ class Main(QtWidgets.QApplication):
         super(Main, self).__init__(sys.argv)
         logging.basicConfig(format='%(levelname)s:%(message)s', level=arguments.log * 10)
         logging.info('Python Version: %s.%s', sys.version_info.major, sys.version_info.minor)
-        logging.info('PyQt5 Version: %s', PYQT_VERSION_STR)
+        logging.info('PyQt Version: %s', PYQT_VERSION_STR)
         logging.info('Archerrank2 Version: %s', VERSION_STR)
         if arguments.language:
             locale = arguments.language
@@ -137,7 +137,7 @@ class Main(QtWidgets.QApplication):
         msg_box.addButton(self.tr('Load'), QMessageBox.AcceptRole)
         msg_box.addButton(self.tr('New'), QMessageBox.AcceptRole)
         msg_box.addButton(self.tr('Exit'), QMessageBox.NoRole)
-        reply = msg_box.exec_()
+        reply = msg_box.exec()
         if reply == 0:
             fileName, _ = QFileDialog.getOpenFileName(
                 None, "QFileDialog.getOpenFileName()", "",
@@ -149,7 +149,7 @@ class Main(QtWidgets.QApplication):
             filedialog.setDefaultSuffix('sqlite')
             filedialog.setAcceptMode(QFileDialog.AcceptSave)
             filedialog.setNameFilters(["Acherrang2 Files (*.sqlite)"])
-            if filedialog.exec_() == QFileDialog.Accepted:
+            if filedialog.exec() == QFileDialog.Accepted:
                 return filedialog.selectedFiles()[0]
             return
         else:
@@ -160,7 +160,7 @@ class Main(QtWidgets.QApplication):
 
         :return:
         """
-        self.exec_()
+        self.exec()
 
 
 class ArcherrankDialog(QObject):
@@ -367,7 +367,7 @@ class ArcherrankDialog(QObject):
             '<h1>Overview</h1>Rang Name Score Kill Rate Club<br>{}'.format("".join(names))))
         if test:
             QTimer.singleShot(500, printdlg.reject)
-        printdlg.exec_()
+        printdlg.exec()
 
     def on_overview(self, test=None):
         """Set the text for the info message box in html format
@@ -402,7 +402,7 @@ class ArcherrankDialog(QObject):
         printdlg.editor.setHtml(text_user + text)
         if test:
             QTimer.singleShot(500, printdlg.reject)
-        printdlg.exec_()
+        printdlg.exec()
 
     def createDockWindows(self):
         dock = QDockWidget(self.tr("Age"), self.ui)
@@ -515,7 +515,7 @@ class ArcherrankDialog(QObject):
             'github.com/MarkusHackspacher/Archerrank2</a>'))
         if test:
             QTimer(infobox).singleShot(500, infobox.reject)
-        infobox.exec_()
+        infobox.exec()
 
     def on_create_winner(self):
         savedfilename = self.session.query(model.Setting).filter_by(name='last_winner_file').first()
@@ -615,7 +615,7 @@ class ArcherrankDialog(QObject):
             .format(VERSION_STR)))
         if test:
             QTimer(infobox).singleShot(500, infobox.reject)
-        infobox.exec_()
+        infobox.exec()
 
     def on_exit(self):
         """exit and close

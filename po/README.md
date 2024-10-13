@@ -19,3 +19,7 @@ At Linux should you install the pyqt5-dev-tools to use the pylupdate5 command an
 sudo apt install pyqt5-dev-tools qttools5-dev-tools
 sudo apt install qt5-default
 ```
+for PyQt6
+```sh
+apt-get install qt6-tools-dev-tools qt6-tools-dev-tools
+```

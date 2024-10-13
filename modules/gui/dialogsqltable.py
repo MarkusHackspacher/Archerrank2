@@ -202,7 +202,7 @@ class DlgSqlTable(QtWidgets.QDialog):
         dialog = DlgSqlTable(session, table, model, parent)
         if test:
             QTimer.singleShot(500, dialog.accept)
-        result = dialog.exec_()
+        result = dialog.exec()
         return dialog.values(), result == QtWidgets.QDialog.Accepted
 
     @staticmethod
@@ -225,7 +225,7 @@ class DlgSqlTable(QtWidgets.QDialog):
         dialog.load_values(idEdit, session, table)
         if test:
             QTimer.singleShot(500, dialog.accept)
-        result = dialog.exec_()
+        result = dialog.exec()
         return dialog.values(), result == QtWidgets.QDialog.Accepted
 
     @classmethod
