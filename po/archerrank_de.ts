@@ -302,7 +302,7 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="145"/>
       <source>Name: {} {}</source>
-      <translation type="unfinished">Name: {} {}</translation>
+      <translation>Name: {} {}</translation>
     </message>
   </context>
   <context>
