@@ -46,12 +46,12 @@
     <message>
       <location filename="../modules/main.py" line="388"/>
       <source>Sorting User by Club&lt;br&gt;{}</source>
-      <translation>Benutzer nach Klub&lt;br&gt;{}</translation>
+      <translation>Benutzer nach Club sortiert &lt;br&gt;  {}</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="400"/>
       <source>Sorting Club&lt;br&gt;{}</source>
-      <translation type="unfinished">Sorting Club&lt;br&gt;{}</translation>
+      <translation>Sortiere Klub&lt;br&gt;{}</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="506"/>
@@ -136,7 +136,7 @@
     <message>
       <location filename="../modules/main.py" line="612"/>
       <source>export successful&lt;br&gt;Version {}&lt;br&gt;</source>
-      <translation type="unfinished">export successful&lt;br&gt;Version {}&lt;br&gt;</translation>
+      <translation>Export erfolgreich&lt;br&gt;Version {}&lt;br&gt;</translation>
     </message>
   </context>
   <context>
