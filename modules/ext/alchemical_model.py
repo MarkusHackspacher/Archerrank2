@@ -4,9 +4,18 @@
 """
 Qt data models that bind to SQLAlchemy queries
 """
-from PyQt5.Qt import Qt, QVariant
-from PyQt5.QtSql import QSqlTableModel
-from PyQt5.QtWidgets import QMessageBox
+try:
+    from PyQt6.QtCore import Qt, QVariant
+    from PyQt6.QtSql import QSqlTableModel
+    from PyQt6.QtWidgets import QMessageBox
+except ImportError as err:
+    from PyQt5.Qt import Qt, QVariant
+    from PyQt5.QtSql import QSqlTableModel
+    from PyQt5.QtWidgets import QMessageBox
+    print(f"alchemical_model.py: ImportError {err=}, {type(err)=}")
+except Exception as err:
+    print(f"alchemical_model.py: Unexpected {err=}, {type(err)=}")
+    raise
 
 
 class SqlAlchemyTableModel(QSqlTableModel):
@@ -47,7 +56,7 @@ class SqlAlchemyTableModel(QSqlTableModel):
         self.refresh()
 
     def headerData(self, col, orientation, role):
-        if orientation == Qt.Horizontal and role == Qt.DisplayRole:
+        if orientation == Qt.Orientation.Horizontal and role == Qt.ItemDataRole.DisplayRole:
             return QVariant(self.fields[col][0])
         return QVariant()
 
@@ -69,7 +78,7 @@ class SqlAlchemyTableModel(QSqlTableModel):
         if self.sort is not None:
             order, col = self.sort
             col = self.fields[col][1]
-            if order == Qt.DescendingOrder:
+            if order == Qt.SortOrder.DescendingOrder:
                 col = col.desc()
         else:
             col = None
@@ -84,7 +93,7 @@ class SqlAlchemyTableModel(QSqlTableModel):
         self.layoutChanged.emit()
 
     def flags(self, index):
-        _flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
+        _flags = Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable
 
         if self.sort is not None:
             order, col = self.sort
@@ -99,12 +108,11 @@ class SqlAlchemyTableModel(QSqlTableModel):
         return _flags
 
     def supportedDropActions(self):
-        return Qt.MoveAction
+        return Qt.DropAction.MoveAction
 
     def dropMimeData(self, data, action, row, col, parent):
-        if action != Qt.MoveAction:
+        if action != Qt.DropAction.MoveAction:
             return
-
         return False
 
     def rowCount(self, parent=None):
@@ -117,7 +125,7 @@ class SqlAlchemyTableModel(QSqlTableModel):
         if not index.isValid():
             return QVariant()
 
-        elif role not in (Qt.DisplayRole, Qt.EditRole):
+        elif role not in (Qt.ItemDataRole.DisplayRole, Qt.ItemDataRole.EditRole):
             return QVariant()
 
         row = self.results[index.row()]
