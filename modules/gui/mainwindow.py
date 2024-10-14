@@ -1,7 +1,16 @@
 # -*- coding: utf-8 -*-
 
-
-from PyQt5 import QtCore, QtWidgets
+try:
+    from PyQt6 import QtCore, QtWidgets
+    from PyQt6.QtWidgets import QSizePolicy
+    from PyQt6.QtGui import QAction
+except ImportError as err:
+    from PyQt5 import QtCore, QtWidgets
+    from PyQt5.QtWidgets import QSizePolicy, QAction
+    print(f"mainwindow.py: ImportError {err=}, {type(err)=}")
+except Exception as err:
+    print(f"mainwindow.py: Unexpected {err=}, {type(err)=}")
+    raise
 
 
 class Ui_MainWindow(QtWidgets.QMainWindow):
@@ -9,14 +18,14 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         QtWidgets.QMainWindow.__init__(self)
         self.setObjectName("MainWindow")
         self.resize(785, 769)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
         self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setEnabled(True)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(2)
         sizePolicy.setVerticalStretch(2)
         sizePolicy.setHeightForWidth(self.centralwidget.sizePolicy().hasHeightForWidth())
@@ -26,20 +35,20 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
+        self.horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetNoConstraint)
         self.horizontalLayout.setContentsMargins(0, 0, -1, -1)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.verticalLayout = QtWidgets.QVBoxLayout()
-        self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
+        self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetNoConstraint)
         self.verticalLayout.setSpacing(6)
         self.verticalLayout.setObjectName("verticalLayout")
         self.label_user = QtWidgets.QLabel(self.centralwidget)
-        self.label_user.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_user.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_user.setObjectName("label_user")
         self.verticalLayout.addWidget(self.label_user)
         self.tableView_user = QtWidgets.QTableView(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(1)
         sizePolicy.setVerticalStretch(1)
         sizePolicy.setHeightForWidth(self.tableView_user.sizePolicy().hasHeightForWidth())
@@ -69,29 +78,29 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.menuEvaluation = QtWidgets.QMenu(self.menubar)
         self.menuEvaluation.setObjectName("menuEvaluation")
         self.setMenuBar(self.menubar)
-        self.actionExit = QtWidgets.QAction(self)
+        self.actionExit = QAction(self)
         self.actionExit.setObjectName("actionExit")
-        self.actionOpen = QtWidgets.QAction(self)
+        self.actionOpen = QAction(self)
         self.actionOpen.setObjectName("actionOpen")
-        self.actionSave = QtWidgets.QAction(self)
+        self.actionSave = QAction(self)
         self.actionSave.setObjectName("actionSave")
-        self.actionNew = QtWidgets.QAction(self)
+        self.actionNew = QAction(self)
         self.actionNew.setObjectName("actionNew")
-        self.actionInfo = QtWidgets.QAction(self)
+        self.actionInfo = QAction(self)
         self.actionInfo.setObjectName("actionInfo")
-        self.actionOverview = QtWidgets.QAction(self)
+        self.actionOverview = QAction(self)
         self.actionOverview.setObjectName("actionOverview")
-        self.actionPrintPreview = QtWidgets.QAction(self)
+        self.actionPrintPreview = QAction(self)
         self.actionPrintPreview.setObjectName("actionPrintPreview")
-        self.actionLoad_file = QtWidgets.QAction(self)
+        self.actionLoad_file = QAction(self)
         self.actionLoad_file.setObjectName("actionLoad_file")
-        self.actionSave_file_as = QtWidgets.QAction(self)
+        self.actionSave_file_as = QAction(self)
         self.actionSave_file_as.setObjectName("actionSave_file_as")
-        self.actionCreateCertificates = QtWidgets.QAction(self)
+        self.actionCreateCertificates = QAction(self)
         self.actionCreateCertificates.setObjectName("actionCreateCertificates")
-        self.actionXLSX_Export = QtWidgets.QAction(self)
+        self.actionXLSX_Export = QAction(self)
         self.actionXLSX_Export.setObjectName("actionXLSX_Export")
-        self.actionCreateAddress = QtWidgets.QAction(self)
+        self.actionCreateAddress = QAction(self)
         self.actionCreateAddress.setObjectName("actionCreateAddress")
         self.menuFile.addAction(self.actionExit)
         self.menuInfo.addAction(self.actionInfo)

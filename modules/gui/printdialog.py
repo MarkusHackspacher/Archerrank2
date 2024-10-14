@@ -24,7 +24,10 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import sys
 
-from PyQt5 import QtGui, QtPrintSupport, QtWidgets
+try:
+    from PyQt6 import QtGui, QtPrintSupport, QtWidgets
+except ImportError:
+    from PyQt5 import QtGui, QtPrintSupport, QtWidgets
 
 
 class DlgPrint(QtWidgets.QDialog):
