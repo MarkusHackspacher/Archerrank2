@@ -24,8 +24,12 @@ import logging
 import os
 import sys
 
-from PyQt5 import QtGui, QtWidgets
-from PyQt5.QtCore import Qt, QTimer
+try:
+    from PyQt6 import QtGui, QtWidgets
+    from PyQt6.QtCore import Qt, QTimer
+except ImportError:
+    from PyQt5 import QtGui, QtWidgets
+    from PyQt5.QtCore import Qt, QTimer
 
 from modules.ext.alchemical_model import SqlAlchemyTableModel
 
@@ -47,11 +51,11 @@ class DlgSqlTable(QtWidgets.QDialog):
 
         self.setModal(True)
         self.buttonBox = QtWidgets.QDialogButtonBox()
-        self.buttonBox.setOrientation(Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Ok |
-                                          QtWidgets.QDialogButtonBox.Cancel)
+        self.buttonBox.setOrientation(Qt.Orientation.Horizontal)
+        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.StandardButton.Ok |
+                                          QtWidgets.QDialogButtonBox.StandardButton.Cancel)
         self.boxLayout = QtWidgets.QBoxLayout(
-            QtWidgets.QBoxLayout.TopToBottom, self)
+            QtWidgets.QBoxLayout.Direction.TopToBottom, self)
         self.gridLayout = QtWidgets.QGridLayout()
         self.setWindowTitle(self.tr("Item"))
         try:
@@ -203,7 +207,7 @@ class DlgSqlTable(QtWidgets.QDialog):
         if test:
             QTimer.singleShot(500, dialog.accept)
         result = dialog.exec()
-        return dialog.values(), result == QtWidgets.QDialog.Accepted
+        return dialog.values(), result == QtWidgets.QDialog.DialogCode.Accepted
 
     @staticmethod
     def edit_values(session, table, model, idEdit, test=None, parent=None):
@@ -226,7 +230,7 @@ class DlgSqlTable(QtWidgets.QDialog):
         if test:
             QTimer.singleShot(500, dialog.accept)
         result = dialog.exec()
-        return dialog.values(), result == QtWidgets.QDialog.Accepted
+        return dialog.values(), result == QtWidgets.QDialog.DialogCode.Accepted
 
     @classmethod
     def my_table_model(cls, model, session):

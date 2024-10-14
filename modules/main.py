@@ -27,11 +27,25 @@ import os
 import sys
 from os.path import join
 
-from PyQt5 import QtGui, QtWidgets
-from PyQt5.Qt import PYQT_VERSION_STR
-from PyQt5.QtCore import QDir, QLocale, QObject, Qt, QTimer, QTranslator
-from PyQt5.QtWidgets import (QDockWidget, QFileDialog, QMessageBox,
-                             QPushButton, QTableView, QVBoxLayout, QWidget)
+try:
+    from PyQt6 import QtGui, QtWidgets
+    from PyQt6.QtCore import QDir, QLocale, QObject, Qt, QTimer, QTranslator, PYQT_VERSION_STR
+    from PyQt6.QtWidgets import (QDockWidget, QFileDialog, QMessageBox,
+                                 QPushButton, QTableView, QVBoxLayout, QWidget)
+    LeftDockWidgetArea = Qt.DockWidgetArea.LeftDockWidgetArea
+    RightDockWidgetArea = Qt.DockWidgetArea.RightDockWidgetArea
+except ImportError as err:
+    from PyQt5 import QtGui, QtWidgets
+    from PyQt5.Qt import PYQT_VERSION_STR
+    from PyQt5.QtCore import QDir, QLocale, QObject, Qt, QTimer, QTranslator
+    from PyQt5.QtWidgets import (QDockWidget, QFileDialog, QMessageBox,
+                                 QPushButton, QTableView, QVBoxLayout, QWidget)
+    LeftDockWidgetArea, RightDockWidgetArea = Qt.LeftDockWidgetArea, Qt.RightDockWidgetArea
+    print(f"main.py: ImportError {err=}, {type(err)=}")
+except Exception as err:
+    print(f"main.py: Unexpected {err=}, {type(err)=}")
+    raise
+
 from sqlalchemy import create_engine, orm
 
 from modules import VERSION_STR, model, writexlsx
@@ -406,7 +420,7 @@ class ArcherrankDialog(QObject):
 
     def createDockWindows(self):
         dock = QDockWidget(self.tr("Age"), self.ui)
-        dock.setAllowedAreas(Qt.LeftDockWidgetArea | Qt.RightDockWidgetArea)
+        dock.setAllowedAreas(LeftDockWidgetArea | RightDockWidgetArea)
         ageWidget = QWidget(dock)
         layout = QVBoxLayout()
 
@@ -421,12 +435,12 @@ class ArcherrankDialog(QObject):
         layout.addWidget(self.ui.pushButton_deleteage)
         ageWidget.setLayout(layout)
         dock.setWidget(ageWidget)
-        self.ui.addDockWidget(Qt.RightDockWidgetArea, dock)
+        self.ui.addDockWidget(RightDockWidgetArea, dock)
         self.ui.viewMenu = self.ui.menuBar().addMenu(self.tr("&View"))
         self.ui.viewMenu.addAction(dock.toggleViewAction())
 
         dock = QDockWidget(self.tr("Bow"), self.ui)
-        dock.setAllowedAreas(Qt.LeftDockWidgetArea | Qt.RightDockWidgetArea)
+        dock.setAllowedAreas(LeftDockWidgetArea | RightDockWidgetArea)
         ageWidget = QWidget(dock)
         layout = QVBoxLayout()
 
@@ -441,11 +455,11 @@ class ArcherrankDialog(QObject):
         layout.addWidget(self.ui.pushButton_deletebow)
         ageWidget.setLayout(layout)
         dock.setWidget(ageWidget)
-        self.ui.addDockWidget(Qt.LeftDockWidgetArea, dock)
+        self.ui.addDockWidget(LeftDockWidgetArea, dock)
         self.ui.viewMenu.addAction(dock.toggleViewAction())
 
         dock = QDockWidget(self.tr("Club"), self.ui)
-        dock.setAllowedAreas(Qt.LeftDockWidgetArea | Qt.RightDockWidgetArea)
+        dock.setAllowedAreas(LeftDockWidgetArea | RightDockWidgetArea)
         ageWidget = QWidget(dock)
         layout = QVBoxLayout()
 
@@ -460,7 +474,7 @@ class ArcherrankDialog(QObject):
         layout.addWidget(self.ui.pushButton_deleteclub)
         ageWidget.setLayout(layout)
         dock.setWidget(ageWidget)
-        self.ui.addDockWidget(Qt.RightDockWidgetArea, dock)
+        self.ui.addDockWidget(RightDockWidgetArea, dock)
         self.ui.viewMenu.addAction(dock.toggleViewAction())
 
         user_new = functools.partial(self.entry_new, model.User, self.main.model_user)
