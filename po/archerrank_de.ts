@@ -46,12 +46,12 @@
     <message>
       <location filename="../modules/main.py" line="388"/>
       <source>Sorting User by Club&lt;br&gt;{}</source>
-      <translation>Benutzer nach Klub&lt;br&gt;{}</translation>
+      <translation>Benutzer nach Klub sortiert&lt;br&gt;{}</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="400"/>
       <source>Sorting Club&lt;br&gt;{}</source>
-      <translation type="unfinished">Sorting Club&lt;br&gt;{}</translation>
+      <translation>Sortiere Klub&lt;br&gt;{}</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="506"/>
@@ -136,7 +136,7 @@
     <message>
       <location filename="../modules/main.py" line="612"/>
       <source>export successful&lt;br&gt;Version {}&lt;br&gt;</source>
-      <translation type="unfinished">export successful&lt;br&gt;Version {}&lt;br&gt;</translation>
+      <translation>Export erfolgreich&lt;br&gt;Version {}&lt;br&gt;</translation>
     </message>
   </context>
   <context>
@@ -292,17 +292,17 @@
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="105"/>
       <source>Select a {}</source>
-      <translation type="unfinished">Select a {}</translation>
+      <translation>Auswahl {}</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="143"/>
       <source>{} members:</source>
-      <translation type="unfinished">{} members:</translation>
+      <translation>{} Mitglieder:</translation>
     </message>
     <message>
       <location filename="../modules/gui/dialogsqltable.py" line="145"/>
       <source>Name: {} {}</source>
-      <translation type="unfinished">Name: {} {}</translation>
+      <translation>Name: {} {}</translation>
     </message>
   </context>
   <context>
@@ -380,12 +380,12 @@
     <message>
       <location filename="../modules/main.py" line="118"/>
       <source>members</source>
-      <translation type="unfinished">members</translation>
+      <translation>Mitglieder</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="104"/>
       <source>address</source>
-      <translation type="unfinished">address</translation>
+      <translation>Adresse</translation>
     </message>
   </context>
   <context>
@@ -423,7 +423,7 @@
     <message>
       <location filename="../modules/gui/main.ui" line="125"/>
       <source>I&amp;nfo</source>
-      <translation>I&amp;nfo</translation>
+      <translation>Info</translation>
     </message>
     <message>
       <location filename="../modules/gui/main.ui" line="131"/>
