@@ -29,7 +29,8 @@ from os.path import join
 
 try:
     from PyQt6 import QtGui, QtWidgets
-    from PyQt6.QtCore import QDir, QLocale, QObject, Qt, QTimer, QTranslator, PYQT_VERSION_STR
+    from PyQt6.QtCore import (PYQT_VERSION_STR, QDir, QLocale, QObject, Qt,
+                              QTimer, QTranslator)
     from PyQt6.QtWidgets import (QDockWidget, QFileDialog, QMessageBox,
                                  QPushButton, QTableView, QVBoxLayout, QWidget)
     LeftDockWidgetArea = Qt.DockWidgetArea.LeftDockWidgetArea
@@ -279,10 +280,10 @@ class ArcherrankDialog(QObject):
             return
         ind = tablemodel.index(index.row(), 0)
         newdata = DlgSqlTable.edit_values(self.main.session, datatable, model,
-                                          tablemodel.data(ind, Qt.DisplayRole),
+                                          tablemodel.data(ind, Qt.ItemDataRole.DisplayRole),
                                           test, parent=self.ui)
         data = self.main.session.query(datatable).filter_by(
-            id=tablemodel.data(ind, Qt.DisplayRole)).first()
+            id=tablemodel.data(ind, Qt.ItemDataRole.DisplayRole)).first()
         if newdata[1]:
             for key, value in newdata[0].items():
                 setattr(data, key, value)
@@ -302,7 +303,7 @@ class ArcherrankDialog(QObject):
             return
         ind = tablemodel.index(index.row(), 0)
         data = self.main.session.query(datatable).filter_by(
-            id=tablemodel.data(ind, Qt.DisplayRole)).first()
+            id=tablemodel.data(ind, Qt.ItemDataRole.DisplayRole)).first()
         if tablemodel == self.main.model_user:
             userdata = None
         elif tablemodel == self.main.model_club:
