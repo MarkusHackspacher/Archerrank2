@@ -3,7 +3,7 @@
 """
 Archerank2
 
-Copyright (C) <2019,2023> Markus Hackspacher
+Copyright (C) <2019-2024> Markus Hackspacher
 
 This file is part of Archerank2.
 
@@ -23,7 +23,10 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 
 from unittest import TestCase
 
-from PyQt5.Qt import QMetaType, QModelIndex, Qt
+try:
+    from PyQt6.Qt import QMetaType, QModelIndex, Qt
+except ImportError:
+    from PyQt5.Qt import QMetaType, QModelIndex, Qt
 from sqlalchemy import create_engine, orm
 
 from modules import model
@@ -63,7 +66,7 @@ class TestSqlAlchemyTableModel(TestCase):
         self.assertEqual(header.canConvert(QMetaType.QString), True)
         self.assertEqual(header.value(), 'Lastname')
 
-        header = self.model_user.headerData(0, Qt.Vertical, Qt.DisplayRole)
+        header = self.model_user.headerData(0, Qt.Vertical, Qt.ItemDataRole.DisplayRole)
         self.assertEqual(header.value(), None)
 
     def test_setFilter(self):
@@ -85,7 +88,7 @@ class TestSqlAlchemyTableModel(TestCase):
             self.model_user.dropMimeData('name', Qt.MoveAction, 0, 2, index), False)
         self.assertEqual(
             self.model_user.dropMimeData('a', Qt.DropAction, 0, 2, index), None)
-        self.assertEqual(self.model_user.data(index, Qt.DisplayRole), 'John')
+        self.assertEqual(self.model_user.data(index, Qt.ItemDataRole.DisplayRole), 'John')
 
     def test_rowCount(self):
         self.assertEqual(self.model_user.rowCount(), 0)
@@ -106,11 +109,11 @@ class TestSqlAlchemyTableModel(TestCase):
         self.model_user.refresh()
         index = self.model_user.createIndex(0, 1)
         self.assertEqual(index.isValid(), True)
-        self.assertEqual(self.model_user.data(index, Qt.DisplayRole), 'Dow')
+        self.assertEqual(self.model_user.data(index, Qt.ItemDataRole.DisplayRole), 'Dow')
         index = self.model_user.createIndex(0, 2)
-        self.assertEqual(self.model_user.data(index, Qt.DisplayRole), 'John')
+        self.assertEqual(self.model_user.data(index, Qt.ItemDataRole.DisplayRole), 'John')
         self.assertEqual(self.model_user.setData(index, 'Jonny'), True)
-        self.assertEqual(self.model_user.data(index, Qt.DisplayRole), 'Jonny')
+        self.assertEqual(self.model_user.data(index, Qt.ItemDataRole.DisplayRole), 'Jonny')
 
     def test_refresh(self):
         self.session.add(model.User(name='John', lastname='Dow'))
