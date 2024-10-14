@@ -178,13 +178,13 @@ class DlgSqlTable(QtWidgets.QDialog):
                 valve[name] = self.field[name].text()
             elif name in 'age_id':
                 ind = self.model_age.index(self.field[name].currentIndex(), 1)
-                valve[name] = self.model_age.data(ind, Qt.DisplayRole)
+                valve[name] = self.model_age.data(ind, Qt.ItemDataRole.DisplayRole)
             elif name in 'bow_id':
                 ind = self.model_bow.index(self.field[name].currentIndex(), 1)
-                valve[name] = self.model_bow.data(ind, Qt.DisplayRole)
+                valve[name] = self.model_bow.data(ind, Qt.ItemDataRole.DisplayRole)
             elif name in 'club_id':
                 ind = self.model_club.index(self.field[name].currentIndex(), 1)
-                valve[name] = self.model_club.data(ind, Qt.DisplayRole)
+                valve[name] = self.model_club.data(ind, Qt.ItemDataRole.DisplayRole)
             elif name in self.ADVER:
                 valve[name] = self.field[name].currentIndex()
         return valve
@@ -241,5 +241,5 @@ class DlgSqlTable(QtWidgets.QDialog):
     @classmethod
     def matchIndex(cls, model, index):
         return model.match(
-            model.index(0, 1), Qt.DisplayRole,
-            index, 1, Qt.MatchExactly)
+            model.index(0, 1), Qt.ItemDataRole.DisplayRole,
+            index, 1, Qt.MatchFlag.MatchExactly)

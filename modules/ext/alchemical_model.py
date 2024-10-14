@@ -99,11 +99,10 @@ class SqlAlchemyTableModel(QSqlTableModel):
             order, col = self.sort
 
             if self.fields[col][3].get('dnd', False) and index.column() == col:
-
-                _flags |= Qt.ItemIsDragEnabled | Qt.ItemIsDropEnabled
+                _flags |= Qt.ItemFlag.ItemIsDragEnabled | Qt.ItemFlag.ItemIsDropEnabled
 
         if self.fields[index.column()][3].get('editable', False):
-            _flags |= Qt.ItemIsEditable
+            _flags |= Qt.ItemFlag.ItemIsEditable
 
         return _flags
 
