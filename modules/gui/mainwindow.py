@@ -2,11 +2,11 @@
 
 try:
     from PyQt6 import QtCore, QtWidgets
-    from PyQt6.QtWidgets import QSizePolicy
     from PyQt6.QtGui import QAction
+    from PyQt6.QtWidgets import QSizePolicy
 except ImportError as err:
     from PyQt5 import QtCore, QtWidgets
-    from PyQt5.QtWidgets import QSizePolicy, QAction
+    from PyQt5.QtWidgets import QAction, QSizePolicy
     print(f"mainwindow.py: ImportError {err=}, {type(err)=}")
 except Exception as err:
     print(f"mainwindow.py: Unexpected {err=}, {type(err)=}")
