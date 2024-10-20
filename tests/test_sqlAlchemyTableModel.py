@@ -24,11 +24,10 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 from unittest import TestCase
 
 try:
-    from PyQt6.Qt import QMetaType, QModelIndex, Qt
-    from PyQt6.QtCore import QVariant
+    from PyQt6.Qt import QModelIndex, Qt
+    from PyQt6.QtCore import PYQT_VERSION_STR
 except ImportError:
-    from PyQt5.Qt import QMetaType, QModelIndex, Qt
-    from PyQt5.QtCore import QVariant
+    from PyQt5.Qt import PYQT_VERSION_STR, QModelIndex, Qt
 
 from sqlalchemy import create_engine, orm
 
@@ -79,9 +78,11 @@ class TestSqlAlchemyTableModel(TestCase):
 
     def test_flags(self):
         index = QModelIndex()
-        print(dir(self.model_user.flags(index)))
-        self.assertEqual(self.model_user.flags(index).value, 33 )
-        self.assertEqual(self.model_user.flags(index).name, 'ItemIsSelectable|ItemIsEnabled')
+        if int(PYQT_VERSION_STR[0]) >= 6:
+            self.assertEqual(self.model_user.flags(index).value, 33)
+            self.assertEqual(self.model_user.flags(index).name, 'ItemIsSelectable|ItemIsEnabled')
+        else:
+            self.assertEqual(self.model_user.flags(index).__int__(), 33)
 
     def test_supportedDropActions(self):
         self.model_user.supportedDropActions()
@@ -90,8 +91,13 @@ class TestSqlAlchemyTableModel(TestCase):
         self.session.add(model.User(name='John', lastname='Dow'))
         self.model_user.refresh()
         index = self.model_user.createIndex(0, 2)
-        self.assertEqual(
-            self.model_user.dropMimeData('name', Qt.MoveAction, 0, 2, index), None)
+        if int(PYQT_VERSION_STR[0]) >= 6:
+            self.assertEqual(
+                self.model_user.dropMimeData('name', Qt.MoveAction, 0, 2, index), None)
+        else:
+            self.assertEqual(
+                self.model_user.dropMimeData('name', Qt.MoveAction, 0, 2, index), False)
+
         self.assertEqual(
             self.model_user.dropMimeData('a', Qt.DropAction, 0, 2, index), None)
         self.assertEqual(self.model_user.data(index, Qt.ItemDataRole.DisplayRole), 'John')
