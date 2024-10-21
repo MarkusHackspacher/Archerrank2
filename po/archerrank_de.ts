@@ -4,137 +4,137 @@
   <context>
     <name>ArcherrankDialog</name>
     <message>
-      <location filename="../modules/main.py" line="626"/>
+      <location filename="../modules/main.py" line="628"/>
       <source>Info</source>
       <translation>Info</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="241"/>
+      <location filename="../modules/main.py" line="243"/>
       <source>Add first Club</source>
       <translation>Zuerst Klub hinzufügen</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="245"/>
+      <location filename="../modules/main.py" line="247"/>
       <source>Add first Age</source>
       <translation>Zuerst Alter hinzufügen</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="249"/>
+      <location filename="../modules/main.py" line="251"/>
       <source>Add first Bow</source>
       <translation>Zuerst Bogenklasse hinzufügen</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="302"/>
+      <location filename="../modules/main.py" line="304"/>
       <source>No line select</source>
       <translation>Keine Zeile ausgewählt</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="316"/>
+      <location filename="../modules/main.py" line="318"/>
       <source>Cannot delete, reference by {},{}</source>
       <translation>Kann Eintrag nicht löschen, referenziert von {},{}</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="379"/>
+      <location filename="../modules/main.py" line="381"/>
       <source>Same rank&lt;br&gt;</source>
       <translation>Gleicher Rang&lt;br&gt;</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="381"/>
+      <location filename="../modules/main.py" line="383"/>
       <source>&lt;h1&gt;Overview&lt;/h1&gt;Rang Name Score Kill Rate Club&lt;br&gt;{}</source>
       <translation>&lt;h1&gt;Übersicht&lt;/h1&gt;Rang Name Punkte Kill Rate Klub&lt;br&gt;{}</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="403"/>
+      <location filename="../modules/main.py" line="405"/>
       <source>Sorting User by Club&lt;br&gt;{}</source>
       <translation>Benutzer nach Klub sortiert&lt;br&gt;{}</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="415"/>
+      <location filename="../modules/main.py" line="417"/>
       <source>Sorting Club&lt;br&gt;{}</source>
       <translation>Sortiere Klub&lt;br&gt;{}</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="521"/>
+      <location filename="../modules/main.py" line="523"/>
       <source>A tool for the evaluation of archery tournaments.&lt;br&gt;Version {}&lt;br&gt;Archerrank2 is free software and use GNU General Public License &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;www.gnu.org/licenses&lt;/a&gt;</source>
       <translation>Ein Werkzeug zur Bewertung von Bogenschießen-Turnieren.&lt;br&gt;Version {}&lt;br&gt;Archerrank2 ist freie Software und benutzt GNU General Public License &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;www.gnu.org/licenses&lt;/a&gt;</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="527"/>
+      <location filename="../modules/main.py" line="529"/>
       <source>More Information about the program at &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</source>
       <translation>Weitere Informationen gibt es auf &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="582"/>
+      <location filename="../modules/main.py" line="584"/>
       <source>Open Directory</source>
       <translation>Verzeichnis öffnen</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="423"/>
+      <location filename="../modules/main.py" line="425"/>
       <source>Age</source>
       <translation>Alter</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="431"/>
+      <location filename="../modules/main.py" line="433"/>
       <source>add new age</source>
       <translation>neue Altersklasse hinzufügen</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="432"/>
+      <location filename="../modules/main.py" line="434"/>
       <source>edit age</source>
       <translation>Altersklasse bearbeiten</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="433"/>
+      <location filename="../modules/main.py" line="435"/>
       <source>delete age</source>
       <translation>lösche Altersklasse</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="440"/>
+      <location filename="../modules/main.py" line="442"/>
       <source>&amp;View</source>
       <translation>&amp;Ansicht</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="443"/>
+      <location filename="../modules/main.py" line="445"/>
       <source>Bow</source>
       <translation>Bogen</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="451"/>
+      <location filename="../modules/main.py" line="453"/>
       <source>add new bow</source>
       <translation>neue Bogenklasse hinzufügen</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="452"/>
+      <location filename="../modules/main.py" line="454"/>
       <source>edit bow</source>
       <translation>bearbeite Bogenklasse</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="453"/>
+      <location filename="../modules/main.py" line="455"/>
       <source>delete bow</source>
       <translation>lösche Bogenklasse</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="462"/>
+      <location filename="../modules/main.py" line="464"/>
       <source>Club</source>
       <translation>Klub</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="470"/>
+      <location filename="../modules/main.py" line="472"/>
       <source>add new club</source>
       <translation>neuen Klub hinzufügen</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="471"/>
+      <location filename="../modules/main.py" line="473"/>
       <source>edit club</source>
       <translation>bearbeite Klub</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="472"/>
+      <location filename="../modules/main.py" line="474"/>
       <source>delete club</source>
       <translation>Klub löschen</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="627"/>
+      <location filename="../modules/main.py" line="629"/>
       <source>export successful&lt;br&gt;Version {}&lt;br&gt;</source>
       <translation>Export erfolgreich&lt;br&gt;Version {}&lt;br&gt;</translation>
     </message>
@@ -308,84 +308,84 @@
   <context>
     <name>Main</name>
     <message>
-      <location filename="../modules/main.py" line="93"/>
+      <location filename="../modules/main.py" line="95"/>
       <source>You want load a file or create a new file</source>
       <translation>Sie möchten eine Datei laden oder eine neue Datei erstellen</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="150"/>
+      <location filename="../modules/main.py" line="152"/>
       <source>Question</source>
       <translation>Frage</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="152"/>
-      <source>Load</source>
-      <translation>Laden</translation>
-    </message>
-    <message>
-      <location filename="../modules/main.py" line="153"/>
+      <location filename="../modules/main.py" line="155"/>
       <source>New</source>
       <translation>Neu</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="154"/>
+      <location filename="../modules/main.py" line="156"/>
       <source>Exit</source>
       <translation>Beenden</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="109"/>
+      <location filename="../modules/main.py" line="111"/>
       <source>Lastname</source>
       <translation>Nachname</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="133"/>
+      <location filename="../modules/main.py" line="135"/>
       <source>Name</source>
       <translation>Name</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="109"/>
+      <location filename="../modules/main.py" line="111"/>
       <source>Score</source>
       <translation>Ergebnis</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="109"/>
+      <location filename="../modules/main.py" line="111"/>
       <source>Kill Points</source>
       <translation>Kill Punkte</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="109"/>
+      <location filename="../modules/main.py" line="111"/>
       <source>Club</source>
       <translation>Klub</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="109"/>
+      <location filename="../modules/main.py" line="111"/>
       <source>Age</source>
       <translation>Alter</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="109"/>
+      <location filename="../modules/main.py" line="111"/>
       <source>Bow</source>
       <translation>Bogen</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="133"/>
+      <location filename="../modules/main.py" line="135"/>
       <source>Short</source>
       <translation>Kurzbezeichnung</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="119"/>
+      <location filename="../modules/main.py" line="121"/>
       <source>payment</source>
       <translation>Zahlung</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="133"/>
+      <location filename="../modules/main.py" line="135"/>
       <source>members</source>
       <translation>Mitglieder</translation>
     </message>
     <message>
-      <location filename="../modules/main.py" line="119"/>
+      <location filename="../modules/main.py" line="121"/>
       <source>address</source>
       <translation>Adresse</translation>
+    </message>
+    <message>
+      <location filename="../modules/main.py" line="154"/>
+      <source>Open</source>
+      <translation type="unfinished">Open</translation>
     </message>
   </context>
   <context>
