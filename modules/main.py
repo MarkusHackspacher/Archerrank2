@@ -61,6 +61,7 @@ try:
 except ImportError:
     print('Not found docx-mailmerge, no export docx possible')
     import_mailmerge = False
+logger = logging.getLogger(__name__)
 
 
 class Main(QtWidgets.QApplication):
@@ -73,15 +74,16 @@ class Main(QtWidgets.QApplication):
         :returns: none
         """
         super(Main, self).__init__(sys.argv)
+        print(arguments.log * 10)
         logging.basicConfig(format='%(levelname)s:%(message)s', level=arguments.log * 10)
-        logging.info('Python Version: %s.%s', sys.version_info.major, sys.version_info.minor)
-        logging.info('PyQt Version: %s', PYQT_VERSION_STR)
-        logging.info('Archerrank2 Version: %s', VERSION_STR)
+        logging.info(f'Python Version: {sys.version_info.major}.{sys.version_info.minor}')
+        logging.info(f'PyQt Version: {PYQT_VERSION_STR}')
+        logging.info(f'Archerrank2 Version: {VERSION_STR}')
         if arguments.language:
             locale = arguments.language
         else:
             locale = str(QLocale.system().name())
-        logging.info("locale: %s", locale)
+        logging.info(f'locale: {locale}')
         translator = QTranslator(self)
         translator.load(join("po", "archerrank_" + locale))
         self.installTranslator(translator)
@@ -94,7 +96,7 @@ class Main(QtWidgets.QApplication):
         if 'exit' == filename:
             sys.exit(1)
         # Create an engine and create all the tables we need
-        logging.info("database: %s", filename)
+        logging.info(f'database: {filename}')
         engine = create_engine('sqlite:///{}'.format(filename), echo=False)
         model.Base.metadata.bind = engine
         model.Base.metadata.create_all(engine)
@@ -138,7 +140,7 @@ class Main(QtWidgets.QApplication):
 
     def file_dlg(self, text):
         msg_box = QMessageBox()
-        msg_box.setIcon(QMessageBox.Question)
+        msg_box.setIcon(QMessageBox.Icon.Question)
         try:
             msg_box.setWindowIcon(
                 QtGui.QIcon(os.path.join(
@@ -149,22 +151,22 @@ class Main(QtWidgets.QApplication):
                     os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
         msg_box.setText(self.tr("Question"))
         msg_box.setInformativeText(text)
-        msg_box.addButton(self.tr('Load'), QMessageBox.AcceptRole)
-        msg_box.addButton(self.tr('New'), QMessageBox.AcceptRole)
-        msg_box.addButton(self.tr('Exit'), QMessageBox.NoRole)
-        reply = msg_box.exec()
-        if reply == 0:
+        open_button = msg_box.addButton(self.tr('Open'), QMessageBox.ButtonRole.AcceptRole)
+        new_button = msg_box.addButton(self.tr('New'), QMessageBox.ButtonRole.AcceptRole)
+        msg_box.addButton(self.tr('Exit'), QMessageBox.ButtonRole.NoRole)
+        msg_box.exec()
+        if msg_box.clickedButton() == open_button:
             fileName, _ = QFileDialog.getOpenFileName(
                 None, "QFileDialog.getOpenFileName()", "",
                 "Acherrang2 Files (*.sqlite)")
             return fileName
-        elif reply == 1:
+        elif msg_box.clickedButton() == new_button:
             filedialog = QFileDialog(msg_box)
-            filedialog.setFilter(filedialog.filter() | QDir.Hidden)
+            filedialog.setFilter(filedialog.filter() | QDir.Filter.Hidden)
+            filedialog.setFileMode(QFileDialog.FileMode.AnyFile)
             filedialog.setDefaultSuffix('sqlite')
-            filedialog.setAcceptMode(QFileDialog.AcceptSave)
             filedialog.setNameFilters(["Acherrang2 Files (*.sqlite)"])
-            if filedialog.exec() == QFileDialog.Accepted:
+            if filedialog.exec():
                 return filedialog.selectedFiles()[0]
             return
         else:
