@@ -385,7 +385,7 @@
     <message>
       <location filename="../modules/main.py" line="154"/>
       <source>Open</source>
-      <translation>Offen</translation>
+      <translation>Öffnen</translation>
     </message>
   </context>
   <context>
