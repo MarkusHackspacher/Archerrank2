@@ -520,16 +520,16 @@ class ArcherrankDialog(QObject):
             infobox.setWindowIcon(
                 QtGui.QIcon(os.path.abspath(os.path.join(
                     os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
-        infobox.setText(self.tr(
-            'A tool for the evaluation of archery tournaments.<br>'
-            'Version {}<br>'
-            'Archerrank2 is free software and use GNU General Public License '
-            '<a href="http://www.gnu.org/licenses/">www.gnu.org/licenses</a>')
-            .format(VERSION_STR))
-        infobox.setInformativeText(self.tr(
-            'More Information about the program at '
-            '<a href="https://github.com/MarkusHackspacher/Archerrank2">'
-            'github.com/MarkusHackspacher/Archerrank2</a>'))
+
+        infobox.setText(self.tr(f'''
+A tool for the evaluation of archery tournaments. Version {VERSION_STR}<br>
+Archerrank2 is free software and use GNU General Public License
+<a href="http://www.gnu.org/licenses/">www.gnu.org/licenses</a>'''))
+
+        infobox.setInformativeText(self.tr('''
+More Information about the program at <a href="https://github.com/MarkusHackspacher/Archerrank2">
+github.com/MarkusHackspacher/Archerrank2</a>'''))
+
         if test:
             QTimer(infobox).singleShot(500, infobox.reject)
         infobox.exec()
@@ -557,7 +557,7 @@ class ArcherrankDialog(QObject):
                                'bowname': userdata.bowname})
             document.merge_pages(winner)
             document.write(fileName)
-            logging.info('Save as {fileName}'.format(fileName=fileName))
+            logging.info(f'Save as {fileName}')
             if not savedfilename:
                 self.main.session.add(model.Setting(name='last_winner_file', value=fileName))
             else:
@@ -577,7 +577,7 @@ class ArcherrankDialog(QObject):
                                'advertising': str(userdata.advertising)})
             document.merge_pages(adress)
             document.write('output_adress.docx')
-            logging.info('Save as ...docx')
+            logging.info(f'Save as output_adress.docx')
 
     def on_xlsx_export(self, test=None):
         if (self.exportDir or not test):
@@ -585,16 +585,39 @@ class ArcherrankDialog(QObject):
                 None, self.tr("Open Directory"), "")
 
         xlsxexport = writexlsx.writexlsx()
-        xlsxexport.winner(('clubname', 'name', 'lastname', 'bowname', 'agename'))
-        users = self.main.session.query(model.User).order_by(model.User.club_id).all()
+        xlsxexport.winner(('score', 'name', 'lastname', 'bowname', 'agename',
+                           'clubname', 'killpt', 'rank', 'rate', 'other'))
+        users = self.main.session.query(model.User).order_by(model.User.score).all()
         for userdata in users:
             logging.info(userdata)
             xlsxexport.winner((
+                userdata.score,
+                userdata.name,
+                userdata.lastname,
+                userdata.bowname,
+                userdata.agename,
+                userdata.clubname,
+                userdata.killpt,
+                userdata.rank,
+                userdata.rate,
+                userdata.other))
+
+        xlsxexport.user(('clubname', 'name', 'lastname', 'bowname', 'agename',
+                         'score', 'killpt', 'rank', 'rate', 'other'))
+        users = self.main.session.query(model.User).order_by(model.User.club_id).all()
+        for userdata in users:
+            logging.info(userdata)
+            xlsxexport.user((
                 userdata.clubname,
                 userdata.name,
                 userdata.lastname,
                 userdata.bowname,
-                userdata.agename))
+                userdata.agename,
+                userdata.score,
+                userdata.killpt,
+                userdata.rank,
+                userdata.rate,
+                userdata.other))
 
         xlsxexport.adresse(('name', 'short', 'email', 'address', 'payment', 'advertising'))
         clubs = self.main.session.query(model.Club).all()
@@ -616,20 +639,22 @@ class ArcherrankDialog(QObject):
                 userdata.name,
                 userdata.short))
 
-        xlsxexport.age(('name', 'short'))
-        ages = self.main.session.query(model.Age).all()
+        xlsxexport.age(('sorting', 'name', 'short', 'adult', 'sep'))
+        ages = self.main.session.query(model.Age).order_by(model.Age.sorting).all()
         for userdata in ages:
             logging.info(userdata)
             xlsxexport.age((
+                userdata.sorting,
                 userdata.name,
-                userdata.short))
+                userdata.short,
+                userdata.adult,
+                userdata.sep))
         xlsxexport.save('table.xlsx')
         infobox = QtWidgets.QMessageBox(self.ui)
         infobox.setWindowTitle(self.tr('Info'))
-        infobox.setText(self.tr(
-            'export successful<br>'
-            'Version {}<br>'
-            .format(VERSION_STR)))
+        infobox.setText(self.tr(f'''
+export successful<br>Version {VERSION_STR}<br>
+{self.exportDir} table.xlsx'''))
         if test:
             QTimer(infobox).singleShot(500, infobox.reject)
         infobox.exec()
