@@ -34,8 +34,9 @@ class writexlsx:
         self.wb = Workbook()
         self.wsWinner = self.wb.active
         self.wsWinner.title = "winner"
-        self.wsAddress = self.wb.create_sheet("address")
-        self.wsBow = self.wb.create_sheet("club")
+        self.wsUser = self.wb.create_sheet("user")
+        self.wsAddress = self.wb.create_sheet("club")
+        self.wsBow = self.wb.create_sheet("bow")
         self.wsAge = self.wb.create_sheet("age")
 
     def save(self, filename):
@@ -44,6 +45,10 @@ class writexlsx:
     def winner(self, data):
         """write winner data in sheet"""
         self.wsWinner.append(data)
+
+    def user(self, data):
+        """write user data in sheet"""
+        self.wsUser.append(data)
 
     def adresse(self, data):
         """write adresse data in sheet"""
