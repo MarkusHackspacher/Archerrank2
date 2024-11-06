@@ -3,7 +3,7 @@
 """
 Archerank2
 
-Copyright (C) <2018-2023> Markus Hackspacher
+Copyright (C) <2018-2024> Markus Hackspacher
 
 This file is part of Archerank2.
 
@@ -57,7 +57,7 @@ class DlgSqlTable(QtWidgets.QDialog):
         self.boxLayout = QtWidgets.QBoxLayout(
             QtWidgets.QBoxLayout.Direction.TopToBottom, self)
         self.gridLayout = QtWidgets.QGridLayout()
-        self.setWindowTitle(self.tr("Item"))
+        self.setWindowTitle(table.__tablename__)
         try:
             self.setWindowIcon(
                 QtGui.QIcon(os.path.abspath(os.path.join(
@@ -96,17 +96,17 @@ class DlgSqlTable(QtWidgets.QDialog):
         for buttonnumber, name in enumerate(methods):
             if name in self.STRING:
                 self.field[name] = QtWidgets.QLineEdit(self)
-                self.field[name].setToolTip(self.tr('Edit {}'.format(name)))
+                self.field[name].setToolTip(self.tr(f'Edit {name}'))
             elif name in self.TEXT:
                 self.field[name] = QtWidgets.QTextEdit(self)
-                self.field[name].setToolTip(self.tr('Edit {}'.format(name)))
+                self.field[name].setToolTip(self.tr(f'Edit {name}'))
             elif name in self.INT:
                 self.field[name] = QtWidgets.QSpinBox(self)
-                self.field[name].setToolTip(self.tr('Edit {}'.format(name)))
+                self.field[name].setToolTip(self.tr(f'Edit {name}'))
             elif name in ('club_id', 'bow_id', 'age_id'):
                 self.field[name] = QtWidgets.QComboBox(self)
                 self.field[name].setModel(getattr(self, 'model_' + name[:-3]))
-                self.field[name].setToolTip(self.tr('Select a {}'.format(name[:-3])))
+                self.field[name].setToolTip(self.tr(f'Select a {name[:-3]}'))
             elif name in self.ADVER:
                 self.field[name] = QtWidgets.QComboBox(self)
                 self.field[name].addItem(self.tr('Not Set'))
@@ -119,7 +119,7 @@ class DlgSqlTable(QtWidgets.QDialog):
                 # self.field[name].setItemData(0, self.tr('Tooltip for [0]'), Qt.ToolTipRole)
             else:
                 self.field[name] = QtWidgets.QLabel(self)
-                logging.debug("for %s no box def", name)
+                logging.debug(f"for {name} no box def")
             self.gridLayout.addWidget(
                 self.field[name], buttonnumber, 2, 1, 1)
 
@@ -127,7 +127,7 @@ class DlgSqlTable(QtWidgets.QDialog):
             label.setAutoFillBackground(True)
             self.gridLayout.addWidget(
                 label, buttonnumber, 1, 1, 1)
-            label.setText(self.tr("{} {}".format(buttonnumber, methodsname[methods[buttonnumber]])))
+            label.setText(self.tr(f"{buttonnumber} {methodsname[methods[buttonnumber]]}"))
 
         self.members = QtWidgets.QTextEdit(self)
         self.gridLayout.addWidget(self.members,  buttonnumber+1, 1, 1, 2)
@@ -144,18 +144,18 @@ class DlgSqlTable(QtWidgets.QDialog):
         """
         dataset = session.query(table).filter_by(id=index).first()
         if not table.__tablename__ == "users":
-            self.members.setText(self.tr("{} members:".format(len(dataset.members))))
+            self.members.setText(self.tr(f"{len(dataset.members)} members:"))
             for members in dataset.members:
                 self.members.append(self.tr(
-                    "Name: {} {}".format(members.name, members.lastname)))
+                    f"Name: {members.name} {members.lastname}"))
         for name in self.field:
             if name in self.STRING or name in self.TEXT:
                 self.field[name].setText(dataset.__dict__[name])
             elif name in self.INT:
                 self.field[name].setValue(dataset.__dict__[name])
             elif name in ('age_id', 'bow_id', 'club_id'):
-                logging.debug("Show %s index %s from user %s",
-                              name, dataset.__dict__[name], dataset.__dict__['name'])
+                logging.debug(f'''Show {name} index {dataset.__dict__[name]}
+                              from user {dataset.__dict__['name']}''')
                 matches = self.matchIndex(getattr(
                     self, 'model_' + name[:-3]), dataset.__dict__[name])
                 if matches:
