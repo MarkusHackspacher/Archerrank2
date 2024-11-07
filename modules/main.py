@@ -147,7 +147,7 @@ class Main(QtWidgets.QApplication):
         except FileNotFoundError:
             msg_box.setWindowIcon(
                 QtGui.QIcon(abspath(join(
-                    os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+                    dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
         msg_box.setText(self.tr("Question"))
         msg_box.setInformativeText(text)
         open_button = msg_box.addButton(self.tr('Open'), QMessageBox.ButtonRole.AcceptRole)
@@ -518,7 +518,7 @@ class ArcherrankDialog(QObject):
         except FileNotFoundError:
             infobox.setWindowIcon(
                 QtGui.QIcon(abspath(join(
-                    os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+                    dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
 
         infobox.setText(self.tr(f'''
 A tool for the evaluation of archery tournaments. Version {VERSION_STR}<br>
@@ -584,7 +584,7 @@ github.com/MarkusHackspacher/Archerrank2</a>'''))
                                'members': str(userdata.membersCount)})
             document.merge_pages(adress)
             document.write(self.exportDir + '\\output_adress.docx')
-            logging.info(f'Save as output_adress.docx')
+            logging.info('Save as output_adress.docx')
             infobox = QtWidgets.QMessageBox(self.ui)
             infobox.setWindowTitle(self.tr('Info'))
             infobox.setText(self.tr(f'''
@@ -594,15 +594,15 @@ export successful<br>
                 QTimer(infobox).singleShot(500, infobox.reject)
             infobox.exec()
 
-
     def on_xlsx_export(self, test=None):
+        """export data in a xlsx file"""
         if (self.exportDir or not test):
             self.exportDir = QFileDialog.getExistingDirectory(
                 None, self.tr("Open Directory"), "")
 
         xlsxexport = writexlsx.writexlsx()
         iterList = ('score', 'name', 'lastname', 'bowname', 'agename',
-                           'clubname', 'killpt', 'rank', 'rate', 'other')
+                    'clubname', 'killpt', 'rank', 'rate', 'other')
         xlsxexport.winner((iterList))
         users = self.main.session.query(model.User).order_by(model.User.score).all()
         for userdata in users:
@@ -611,7 +611,7 @@ export successful<br>
                 tuple([getattr(userdata, x) for x in iterList]))
 
         iterList = ('clubname', 'name', 'lastname', 'bowname', 'agename',
-                         'score', 'killpt', 'rank', 'rate', 'other')
+                    'score', 'killpt', 'rank', 'rate', 'other')
         xlsxexport.user((iterList))
         users = self.main.session.query(model.User).order_by(model.User.club_id).all()
         for userdata in users:
@@ -646,7 +646,7 @@ export successful<br>
         try:
             xlsxexport.save('table.xlsx')
         except PermissionError:
-            logging.info(f'Permission denied table.xlsx')
+            logging.info('Permission denied table.xlsx')
             infobox = QtWidgets.QMessageBox(self.ui)
             infobox.setWindowTitle(self.tr('Error'))
             infobox.setText(self.tr(f'''
@@ -656,8 +656,8 @@ Permission denied:<br>
                 QTimer(infobox).singleShot(500, infobox.reject)
             infobox.exec()
             return
-       
-        logging.info(f'Save as table.xlsx')
+
+        logging.info('Save as table.xlsx')
         infobox = QtWidgets.QMessageBox(self.ui)
         infobox.setWindowTitle(self.tr('Info'))
         infobox.setText(self.tr(f'''
