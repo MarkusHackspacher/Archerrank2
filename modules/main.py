@@ -23,9 +23,8 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 
 import functools
 import logging
-import os
 import sys
-from os.path import join
+from os.path import abspath, dirname, join
 
 try:
     from PyQt6 import QtGui, QtWidgets
@@ -143,11 +142,11 @@ class Main(QtWidgets.QApplication):
         msg_box.setIcon(QMessageBox.Icon.Question)
         try:
             msg_box.setWindowIcon(
-                QtGui.QIcon(os.path.join(
+                QtGui.QIcon(join(
                     "misc", "archerrank2.svg")))
         except FileNotFoundError:
             msg_box.setWindowIcon(
-                QtGui.QIcon(os.path.abspath(os.path.join(
+                QtGui.QIcon(abspath(join(
                     os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
         msg_box.setText(self.tr("Question"))
         msg_box.setInformativeText(text)
@@ -204,12 +203,12 @@ class ArcherrankDialog(QObject):
         self.ui = Ui_MainWindow()
         try:
             self.ui.setWindowIcon(
-                QtGui.QIcon(os.path.abspath(os.path.join(
+                QtGui.QIcon(abspath(join(
                     "misc", "archerrank2.svg"))))
         except FileNotFoundError:
             self.ui.setWindowIcon(
-                QtGui.QIcon(os.path.abspath(os.path.join(
-                    os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
+                QtGui.QIcon(abspath(join(
+                    dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
         self.createDockWindows()
         self.ui.tableView_user.setModel(self.main.model_user)
         self.ui.tableView_club.setModel(self.main.model_club)
@@ -514,11 +513,11 @@ class ArcherrankDialog(QObject):
         infobox.setWindowTitle(self.tr('Info'))
         try:
             infobox.setWindowIcon(
-                QtGui.QIcon(os.path.join(
+                QtGui.QIcon(join(
                     "misc", "archerrank2.svg")))
         except FileNotFoundError:
             infobox.setWindowIcon(
-                QtGui.QIcon(os.path.abspath(os.path.join(
+                QtGui.QIcon(abspath(join(
                     os.path.dirname(sys.argv[0]), "misc", "archerrank2.svg"))))
 
         infobox.setText(self.tr(f'''
@@ -535,7 +534,8 @@ github.com/MarkusHackspacher/Archerrank2</a>'''))
         infobox.exec()
 
     def on_create_winner(self):
-        savedfilename = self.session.query(model.Setting).filter_by(name='last_winner_file').first()
+        """create a word file with all to print"""
+        savedfilename = self.main.session.query(model.Setting).filter_by(name='last_winner_file').first()
         if not savedfilename:
             lastdir = ''
         else:
@@ -564,20 +564,36 @@ github.com/MarkusHackspacher/Archerrank2</a>'''))
                 savedfilename.value = fileName
             self.main.session.commit()
 
-    def on_create_adress(self):
+    def on_create_adress(self, test=None):
+        if (self.exportDir or not test):
+            self.exportDir = QFileDialog.getExistingDirectory(
+                None, self.tr("Open Directory"), "")
         with MailMerge('input_adress.docx') as document:
             logging.info(document.get_merge_fields())
             clubs = self.main.session.query(model.Club).order_by(model.Club.name).all()
             adress = []
             for userdata in clubs:
+                logging.info(userdata.members)
+
                 adress.append({'short': userdata.short,
                                'name': userdata.name,
                                'email': userdata.email,
                                'payment': str(userdata.payment),
-                               'advertising': str(userdata.advertising)})
+                               'advertising': str(userdata.advertising),
+                               'address': str(userdata.address),
+                               'members': str(userdata.membersCount)})
             document.merge_pages(adress)
-            document.write('output_adress.docx')
+            document.write(self.exportDir + '\\output_adress.docx')
             logging.info(f'Save as output_adress.docx')
+            infobox = QtWidgets.QMessageBox(self.ui)
+            infobox.setWindowTitle(self.tr('Info'))
+            infobox.setText(self.tr(f'''
+export successful<br>
+{self.exportDir}  output_adress.docx'''))
+            if test:
+                QTimer(infobox).singleShot(500, infobox.reject)
+            infobox.exec()
+
 
     def on_xlsx_export(self, test=None):
         if (self.exportDir or not test):
@@ -585,75 +601,67 @@ github.com/MarkusHackspacher/Archerrank2</a>'''))
                 None, self.tr("Open Directory"), "")
 
         xlsxexport = writexlsx.writexlsx()
-        xlsxexport.winner(('score', 'name', 'lastname', 'bowname', 'agename',
-                           'clubname', 'killpt', 'rank', 'rate', 'other'))
+        iterList = ('score', 'name', 'lastname', 'bowname', 'agename',
+                           'clubname', 'killpt', 'rank', 'rate', 'other')
+        xlsxexport.winner((iterList))
         users = self.main.session.query(model.User).order_by(model.User.score).all()
         for userdata in users:
             logging.info(userdata)
-            xlsxexport.winner((
-                userdata.score,
-                userdata.name,
-                userdata.lastname,
-                userdata.bowname,
-                userdata.agename,
-                userdata.clubname,
-                userdata.killpt,
-                userdata.rank,
-                userdata.rate,
-                userdata.other))
+            xlsxexport.winner(
+                tuple([getattr(userdata, x) for x in iterList]))
 
-        xlsxexport.user(('clubname', 'name', 'lastname', 'bowname', 'agename',
-                         'score', 'killpt', 'rank', 'rate', 'other'))
+        iterList = ('clubname', 'name', 'lastname', 'bowname', 'agename',
+                         'score', 'killpt', 'rank', 'rate', 'other')
+        xlsxexport.user((iterList))
         users = self.main.session.query(model.User).order_by(model.User.club_id).all()
         for userdata in users:
             logging.info(userdata)
-            xlsxexport.user((
-                userdata.clubname,
-                userdata.name,
-                userdata.lastname,
-                userdata.bowname,
-                userdata.agename,
-                userdata.score,
-                userdata.killpt,
-                userdata.rank,
-                userdata.rate,
-                userdata.other))
+            xlsxexport.user(
+                tuple([getattr(userdata, x) for x in iterList]))
 
-        xlsxexport.adresse(('name', 'short', 'email', 'address', 'payment', 'advertising'))
+        iterList = ('name', 'short', 'email', 'address', 'payment', 'advertising', 'membersCount')
+        xlsxexport.adresse((iterList))
         clubs = self.main.session.query(model.Club).all()
         for userdata in clubs:
             logging.info(userdata)
-            xlsxexport.adresse((
-                userdata.name,
-                userdata.short,
-                userdata.email,
-                userdata.address,
-                userdata.payment,
-                userdata.advertising))
+            xlsxexport.adresse(
+                tuple([getattr(userdata, x) for x in iterList]))
 
-        xlsxexport.bow(('name', 'short'))
-        bows = self.main.session.query(model.Bow).all()
+        iterList = ('name', 'short', 'sorting')
+        xlsxexport.bow((iterList))
+        bows = self.main.session.query(model.Bow).order_by(model.Bow.sorting).all()
         for userdata in bows:
             logging.info(userdata)
-            xlsxexport.bow((
-                userdata.name,
-                userdata.short))
+            xlsxexport.bow(
+                tuple([getattr(userdata, x) for x in iterList]))
 
-        xlsxexport.age(('sorting', 'name', 'short', 'adult', 'sep'))
+        iterList = ('name', 'short', 'adult', 'sep', 'sorting')
+        xlsxexport.age((iterList))
         ages = self.main.session.query(model.Age).order_by(model.Age.sorting).all()
         for userdata in ages:
             logging.info(userdata)
-            xlsxexport.age((
-                userdata.sorting,
-                userdata.name,
-                userdata.short,
-                userdata.adult,
-                userdata.sep))
-        xlsxexport.save('table.xlsx')
+            xlsxexport.age(
+                tuple([getattr(userdata, x) for x in iterList]))
+
+        try:
+            xlsxexport.save('table.xlsx')
+        except PermissionError:
+            logging.info(f'Permission denied table.xlsx')
+            infobox = QtWidgets.QMessageBox(self.ui)
+            infobox.setWindowTitle(self.tr('Error'))
+            infobox.setText(self.tr(f'''
+Permission denied:<br>
+{self.exportDir} table.xlsx'''))
+            if test:
+                QTimer(infobox).singleShot(500, infobox.reject)
+            infobox.exec()
+            return
+       
+        logging.info(f'Save as table.xlsx')
         infobox = QtWidgets.QMessageBox(self.ui)
         infobox.setWindowTitle(self.tr('Info'))
         infobox.setText(self.tr(f'''
-export successful<br>Version {VERSION_STR}<br>
+export successful<br>
 {self.exportDir} table.xlsx'''))
         if test:
             QTimer(infobox).singleShot(500, infobox.reject)
