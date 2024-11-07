@@ -3,7 +3,7 @@
 """
 Archerank2
 
-Copyright (C) <2018-2023> Markus Hackspacher
+Copyright (C) <2018-2024> Markus Hackspacher
 
 This file is part of Archerank2.
 
@@ -56,12 +56,12 @@ class DlgPrint(QtWidgets.QDialog):
 
     def handle_print(self):
         dialog = QtPrintSupport.QPrintDialog(self)
-        if dialog.exec() == QtWidgets.QDialog.Accepted:
-            self.editor.document().print_(dialog.printer())
+        if dialog.exec() == QtWidgets.QDialog.accepted:
+            self.editor.document().print(dialog.printer())
 
     def handle_preview(self):
         dialog = QtPrintSupport.QPrintPreviewDialog(self)
-        dialog.paintRequested.connect(self.editor.print_)
+        dialog.paintRequested.connect(self.editor.print)
         dialog.exec()
 
     def handleTextChanged(self):
