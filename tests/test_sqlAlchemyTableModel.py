@@ -24,10 +24,9 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 from unittest import TestCase
 
 try:
-    from PyQt6.Qt import QModelIndex, Qt
-    from PyQt6.QtCore import PYQT_VERSION_STR
+    from PyQt6.QtCore import QModelIndex, QT_VERSION, Qt
 except ImportError:
-    from PyQt5.Qt import PYQT_VERSION_STR, QModelIndex, Qt
+    from PyQt5.Qt import QT_VERSION, QModelIndex, Qt
 
 from sqlalchemy import create_engine, orm
 
@@ -78,7 +77,7 @@ class TestSqlAlchemyTableModel(TestCase):
 
     def test_flags(self):
         index = QModelIndex()
-        if int(PYQT_VERSION_STR[0]) >= 6:
+        if QT_VERSION >= 0x060100:
             self.assertEqual(self.model_user.flags(index).value, 33)
             self.assertEqual(self.model_user.flags(index).name, 'ItemIsSelectable|ItemIsEnabled')
         else:
@@ -91,15 +90,11 @@ class TestSqlAlchemyTableModel(TestCase):
         self.session.add(model.User(name='John', lastname='Dow'))
         self.model_user.refresh()
         index = self.model_user.createIndex(0, 2)
-        if int(PYQT_VERSION_STR[0]) >= 6:
-            self.assertEqual(
-                self.model_user.dropMimeData('name', Qt.MoveAction, 0, 2, index), None)
-        else:
-            self.assertEqual(
-                self.model_user.dropMimeData('name', Qt.MoveAction, 0, 2, index), False)
-
         self.assertEqual(
-            self.model_user.dropMimeData('a', Qt.DropAction, 0, 2, index), None)
+            self.model_user.dropMimeData('name', Qt.DropAction.MoveAction, 0, 2, index), False)
+ 
+        self.assertEqual(
+            self.model_user.dropMimeData('a', Qt.DropAction.MoveAction, 0, 2, index), False)
         self.assertEqual(self.model_user.data(index, Qt.ItemDataRole.DisplayRole), 'John')
 
     def test_rowCount(self):
@@ -116,7 +111,7 @@ class TestSqlAlchemyTableModel(TestCase):
         index = QModelIndex()
         index.sibling(0, 0)
         self.assertEqual(index.isValid(), False)
-        self.assertEqual(self.model_user.data(index, Qt.DisplayRole).value(), None)
+        self.assertEqual(self.model_user.data(index, Qt.ItemDataRole.DisplayRole).value(), None)
         self.session.add(model.User(name='John', lastname='Dow'))
         self.model_user.refresh()
         index = self.model_user.createIndex(0, 1)
