@@ -193,11 +193,11 @@ class ArcherrankDialog(QObject):
         # Set up the user interface from Designer.
         """
         try:
-            self.ui = uic.loadUi(os.path.abspath(os.path.join(
+            self.ui = uic.loadUi(abspath(join(
                 os.path.dirname(sys.argv[0]),
                 "modules", "gui", "main.ui")))
         except FileNotFoundError:
-            self.ui = uic.loadUi(os.path.join(
+            self.ui = uic.loadUi(join(
                 "modules", "gui", "main.ui"))
         """
         self.ui = Ui_MainWindow()
@@ -250,7 +250,6 @@ class ArcherrankDialog(QObject):
                 QtWidgets.QMessageBox.information(self.ui, self.tr('Info'), self.tr(
                     'Add first Bow'))
                 return
-        # data = DlgSqlTable(self.main.session, datatable, model, parent=self.ui)
         newdata = DlgSqlTable.get_values(self.main.session, datatable, model, test, parent=self.ui)
         if newdata[1]:
             self.main.session.add(datatable(**newdata[0]))
@@ -316,8 +315,7 @@ class ArcherrankDialog(QObject):
         if userdata:
             QtWidgets.QMessageBox.information(
                 self.ui, self.tr('Info'),
-                self.tr('Cannot delete, reference by {},{}'.format(
-                    userdata.name, userdata.lastname)))
+                self.tr(f'Cannot delete, reference by {userdata.name},{userdata.lastname}'))
             return
         self.main.session.delete(data)
         self.main.session.commit()
@@ -387,35 +385,29 @@ class ArcherrankDialog(QObject):
 
     def on_overview(self, test=None):
         """Set the text for the info message box in html format
+        To have a overview about the clubs with the members
 
         :returns: none
         """
-        users = self.main.session.query(model.User).order_by(model.User.club_id).all()
+        same_rank, users = self.user_rang_refresh()
+        clubs = self.main.session.query(model.Club).order_by(model.Club.name).all()
         names = []
-        for userdata in users:
-            names.append('{}: {}, {}, {}, {} {} {}<br>'.format(
-                userdata.clubname,
-                userdata.name,
-                userdata.lastname,
-                userdata.clubs.payment,
-                userdata.clubs.advertising,
-                userdata.bowname,
-                userdata.agename))
-        text_user = self.tr('Sorting User by Club<br>{}'.format("".join(names)))
-        clubs = self.main.session.query(model.Club).all()
-        names = []
-        for userdata in clubs:
-            names.append('{}: {}, {}, {}, {} {} {}<br>'.format(
-                userdata.name,
-                userdata.short,
-                userdata.email,
-                userdata.payment,
-                userdata.advertising,
-                [user.name for user in userdata.members],
-                userdata.id))
-        text = self.tr('Sorting Club<br>{}'.format("".join(names)))
+        names.append(self.tr('<h3>Overview, sorting by club</h3>'))
+        for club in clubs:
+            names.append(f'''
+<p>{club.name}: {club.short}, {club.email}, Pay for: {club.payment} members {len(club.members)}:</p>''')
+            if not club.payment == len(club.members):
+                names.append(self.tr('<p style="color:#FF0000";>payment and club members are not even</p>'))
+            for user in club.members:
+                names.append(f'''
+<p>{user.name} {user.lastname}: {user.agename}, {user.bowname} Rang:{user.rank} </p>''')
+        names.append(self.tr('<h3>Rang:</h3>'))
+        for user in users:
+            names.append(f'''
+<p>Rang:{user.rank} in {user.agename}, {user.bowname}: {user.name} {user.lastname} {user.clubname}</p>''')
+
         printdlg = DlgPrint(self.ui)
-        printdlg.editor.setHtml(text_user + text)
+        printdlg.editor.setHtml("".join(names))
         if test:
             QTimer.singleShot(500, printdlg.reject)
         printdlg.exec()
