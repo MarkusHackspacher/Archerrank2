@@ -24,7 +24,7 @@ along with Archerank2.  If not, see <http://www.gnu.org/licenses/>.
 from unittest import TestCase
 
 try:
-    from PyQt6.QtCore import QModelIndex, QT_VERSION, Qt
+    from PyQt6.QtCore import QT_VERSION, QModelIndex, Qt
 except ImportError:
     from PyQt5.Qt import QT_VERSION, QModelIndex, Qt
 
@@ -92,7 +92,7 @@ class TestSqlAlchemyTableModel(TestCase):
         index = self.model_user.createIndex(0, 2)
         self.assertEqual(
             self.model_user.dropMimeData('name', Qt.DropAction.MoveAction, 0, 2, index), False)
- 
+
         self.assertEqual(
             self.model_user.dropMimeData('a', Qt.DropAction.MoveAction, 0, 2, index), False)
         self.assertEqual(self.model_user.data(index, Qt.ItemDataRole.DisplayRole), 'John')
