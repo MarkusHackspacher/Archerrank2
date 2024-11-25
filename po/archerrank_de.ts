@@ -111,17 +111,17 @@
     <message>
       <location filename="../modules/main.py" line="316"/>
       <source>Cannot delete, reference by {userdata.name},{userdata.lastname}</source>
-      <translation type="unfinished">Cannot delete, reference by {userdata.name},{userdata.lastname}</translation>
+      <translation>Kann Datensatz nicht löschen, Verweis von {userdata.name},{userdata.lastname}</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="395"/>
       <source>&lt;h3&gt;Overview, sorting by club&lt;/h3&gt;</source>
-      <translation type="unfinished">&lt;h3&gt;Overview, sorting by club&lt;/h3&gt;</translation>
+      <translation>&lt;h3&gt;Übersicht, Sortierung nach Club&lt;/h3&gt;</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="400"/>
       <source>&lt;p style=&quot;color:#FF0000&quot;;&gt;payment and club members are not even&lt;/p&gt;</source>
-      <translation type="unfinished">&lt;p style=&quot;color:#FF0000&quot;;&gt;payment and club members are not even&lt;/p&gt;</translation>
+      <translation>&lt;p style=&quot;color:#FF0000&quot;;&gt;Zahlung und Clubmitglieder stimmen nicht überein&lt;/p&gt;</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="404"/>
@@ -134,9 +134,9 @@
 A tool for the evaluation of archery tournaments. Version {VERSION_STR}&lt;br&gt;
 Archerrank2 is free software and use GNU General Public License
 &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;www.gnu.org/licenses&lt;/a&gt;</source>
-      <translation type="unfinished">
-A tool for the evaluation of archery tournaments. Version {VERSION_STR}&lt;br&gt;
-Archerrank2 is free software and use GNU General Public License
+      <translation>
+Ein Werkzeug zur Auswertung von Bogenturnieren. Version {VERSION_STR}&lt;br&gt;
+Archerrank2 ist freie Software und verwende GNU General Public License
 &lt;a href=&quot;http://www.gnu.org/licenses/&quot;&gt;www.gnu.org/licenses&lt;/a&gt;</translation>
     </message>
     <message>
@@ -144,8 +144,8 @@ Archerrank2 is free software and use GNU General Public License
       <source>
 More Information about the program at &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;
 github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</source>
-      <translation type="unfinished">
-More Information about the program at &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;
+      <translation>
+Weitere Informationen über das Programm unter &lt;a href=&quot;https://github.com/MarkusHackspacher/Archerrank2&quot;&gt;
 github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</translation>
     </message>
     <message>
@@ -153,22 +153,22 @@ github.com/MarkusHackspacher/Archerrank2&lt;/a&gt;</translation>
       <source>
 export successful&lt;br&gt;
 {self.exportDir}  output_adress.docx</source>
-      <translation type="unfinished">
-export successful&lt;br&gt;
+      <translation>
+Export erfolgreich&lt;br&gt;
 {self.exportDir}  output_adress.docx</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="643"/>
       <source>Error</source>
-      <translation type="unfinished">Error</translation>
+      <translation>Fehler</translation>
     </message>
     <message>
       <location filename="../modules/main.py" line="644"/>
       <source>
 Permission denied:&lt;br&gt;
 {self.exportDir} table.xlsx</source>
-      <translation type="unfinished">
-Permission denied:&lt;br&gt;
+      <translation>
+Zugriff verweigert:&lt;br&gt;
 {self.exportDir} table.xlsx</translation>
     </message>
     <message>
@@ -176,8 +176,8 @@ Permission denied:&lt;br&gt;
       <source>
 export successful&lt;br&gt;
 {self.exportDir} table.xlsx</source>
-      <translation type="unfinished">
-export successful&lt;br&gt;
+      <translation>
+Export erfolgreich&lt;br&gt;
 {self.exportDir} table.xlsx</translation>
     </message>
   </context>
