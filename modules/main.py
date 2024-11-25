@@ -359,12 +359,11 @@ class ArcherrankDialog(QObject):
         """Print Preview"""
         same_rank, users = self.user_rang_refresh()
         names = []
+        names.append(self.tr('<h1>Overview</h1>'))
         save_bow_age = ['', '']
         for userdata in users:
             if save_bow_age != [userdata.bowname, userdata.agename]:
-                names.append('<h2>{}, {}</h2>'.format(
-                    userdata.bowname,
-                    userdata.agename))
+                names.append(f'<h2>{userdata.bowname}, {userdata.agename}</h2>')
                 save_bow_age = [userdata.bowname, userdata.agename]
             names.append('{} {}, {}, {}, {}, {}, {}<br>'.format(
                 userdata.rank,
@@ -375,10 +374,9 @@ class ArcherrankDialog(QObject):
                 userdata.rate,
                 userdata.clubname))
             if userdata.id in same_rank:
-                names.append(self.tr('Same rank<br>'))
+                names.append(self.tr('<p>Same rank</p>'))
         printdlg = DlgPrint(self.ui)
-        printdlg.editor.setHtml(self.tr(
-            '<h1>Overview</h1>Rang Name Score Kill Rate Club<br>{}'.format("".join(names))))
+        printdlg.editor.setHtml("".join(names))
         if test:
             QTimer.singleShot(500, printdlg.reject)
         printdlg.exec()
@@ -392,12 +390,13 @@ class ArcherrankDialog(QObject):
         same_rank, users = self.user_rang_refresh()
         clubs = self.main.session.query(model.Club).order_by(model.Club.name).all()
         names = []
-        names.append(self.tr('<h3>Overview, sorting by club</h3>'))
+        names.append(self.tr('<h1>Overview</h1><h3>sorting by club</h3>'))
         for club in clubs:
             names.append(f'''
-<p>{club.name}: {club.short}, {club.email}, Pay for: {club.payment} members {len(club.members)}:</p>''')
+<p style="font-weight: bold";>{club.name}: {club.short}, {club.email},
+Pay for: {club.payment} members {len(club.members)}:</p>''')
             if not club.payment == len(club.members):
-                names.append(self.tr('<p style="color:#FF0000";>payment and club members are not even</p>'))
+                names.append(self.tr('<p style="color:red";>payment and club members are not even</p>'))
             for user in club.members:
                 names.append(f'''
 <p>{user.name} {user.lastname}: {user.agename}, {user.bowname} Rang:{user.rank} </p>''')
