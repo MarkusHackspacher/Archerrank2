@@ -30,7 +30,7 @@ git clone https://github.com/MarkusHackspacher/Archerrank2.git
 
 Download and install Python 3.6 or higher from www.python.org
 
-Install pyqt5 and sqlalchemy
+Install pyqt6 and sqlalchemy
 
 ```bash
 pip3 install -r requirements.txt
